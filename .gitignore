@@ -1,0 +1,11 @@
+
+/node_modules
+/coverage
+.env
+api/config/dev.config.js
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+./idea
+./vscode
+./DS_Store
