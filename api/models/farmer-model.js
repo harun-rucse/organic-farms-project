@@ -30,7 +30,7 @@ const farmerSchema = new Schema(
     description: String,
     branchOffice: {
       type: Schema.Types.ObjectId,
-      ref: 'BranchOffice',
+      ref: 'Branch',
       required: true,
     },
     createdBy: {
@@ -47,19 +47,28 @@ const farmerSchema = new Schema(
   }
 );
 
+farmerSchema.pre(/^find/, function (next) {
+  this.populate('branchOffice', 'name address phone');
+  this.populate('createdBy', 'name phone');
+  this.populate('lastUpdatedBy', 'name phone');
+
+  next();
+});
+
 const validateFarmer = (farmer) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),
     address: Joi.string().required().label('Address'),
     phone: Joi.string().min(11).max(14).required().label('Phone Number'),
     receivePayment: Joi.object({
-      type: Joi.string().required().label('Payment Type'),
-      number: Joi.string().required().label('Payment Number'),
+      type: Joi.string().required().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
+      number: Joi.string().required().min(11).max(14).label('Payment Number'),
     })
+      .or('type', 'number')
       .required()
       .label('Receive Payment'),
     description: Joi.string().label('Description'),
-    branchOffice: Joi.string().required().label('Branch Office'),
+    branchOffice: Joi.string().label('Branch Office'),
   });
 
   return schema.validate(farmer);
@@ -71,10 +80,10 @@ const validateFarmerUpdate = (farmer) => {
     address: Joi.string().label('Address'),
     phone: Joi.string().min(11).max(14).label('Phone Number'),
     receivePayment: Joi.object({
-      type: Joi.string().label('Payment Type'),
-      number: Joi.string().label('Payment Number'),
+      type: Joi.string().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
+      number: Joi.string().min(11).max(14).label('Payment Number'),
     })
-      .required()
+      .or('type', 'number')
       .label('Receive Payment'),
     description: Joi.string().label('Description'),
   });

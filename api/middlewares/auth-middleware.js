@@ -29,7 +29,8 @@ const auth = catchAsync(async (req, res, next) => {
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = currentUser;
+  req.user = { ...currentUser._doc, branchOffice: currentUser.employee[0]?.branchOffice };
+
   next();
 });
 

@@ -18,7 +18,7 @@ const getAllBranches = catchAsync(async (req, res, next) => {
 /**
  * @desc    Get single branch
  * @route   GET /api/branches/id
- * @access  Public
+ * @access  Private(admin)
  */
 const getOneBranch = catchAsync(async (req, res, next) => {
   const branch = await branchService.getOneBranch({ _id: req.params.id });
@@ -30,7 +30,7 @@ const getOneBranch = catchAsync(async (req, res, next) => {
 /**
  * @desc    Create new branch
  * @route   POST /api/branches
- * @access  Privae(admin)
+ * @access  Private(admin)
  */
 const createNewBranch = catchAsync(async (req, res, next) => {
   const { error } = validateBranch(req.body);
@@ -48,7 +48,7 @@ const createNewBranch = catchAsync(async (req, res, next) => {
 /**
  * @desc    Update single branch
  * @route   PATCH /api/branches/id
- * @access  Privae(admin)
+ * @access  Private(admin)
  */
 const updateOneBranch = catchAsync(async (req, res, next) => {
   const { error } = validateBranchUpdate(req.body);
@@ -66,8 +66,8 @@ const updateOneBranch = catchAsync(async (req, res, next) => {
 
 /**
  * @desc    Delete single branch
- * @route   PATCH /api/branches/id
- * @access  Privae(admin)
+ * @route   DELETE /api/branches/id
+ * @access  Private(admin)
  */
 const deleteOneBranch = catchAsync(async (req, res, next) => {
   const deleteBranch = await branchService.deleteOneBranch({ _id: req.params.id });
