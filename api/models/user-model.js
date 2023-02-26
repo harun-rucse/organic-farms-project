@@ -2,6 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { Schema, model } = mongoose;
+require('./employee-model');
 
 const roles_enum = [
   'admin',
@@ -51,9 +52,17 @@ const userSchema = new Schema(
     },
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
     timestamps: true,
   }
 );
+
+userSchema.virtual('employee', {
+  ref: 'Employee',
+  foreignField: 'user',
+  localField: '_id',
+});
 
 // Pre save hook that hash the password
 userSchema.pre('save', async function (next) {
@@ -68,6 +77,13 @@ userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangeAt = Date.now() - 1000;
+
+  next();
+});
+
+// Pre find hook that populate employee branch office
+userSchema.pre('findOne', function (next) {
+  this.populate('employee', 'branchOffice -user');
 
   next();
 });

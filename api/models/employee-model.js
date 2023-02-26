@@ -11,7 +11,7 @@ const employeeSchema = new Schema(
     },
     branchOffice: {
       type: Schema.Types.ObjectId,
-      ref: 'BranchOffice',
+      ref: 'Branch',
       required: true,
     },
     salary: {
@@ -31,6 +31,12 @@ const employeeSchema = new Schema(
     timestamps: true,
   }
 );
+
+employeeSchema.pre(/^find/, function (next) {
+  this.populate('user');
+
+  next();
+});
 
 const validateEmployee = (employee) => {
   const schema = Joi.object({

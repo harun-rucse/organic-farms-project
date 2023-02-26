@@ -1,8 +1,8 @@
-const { BranchOffice } = require('../../models/branch-office-model');
+const { Branch } = require('../../models/branch-model');
 
 module.exports = async (type) => {
   if (type === 'seed') {
-    await BranchOffice.create({
+    await Branch.create({
       _id: '5f9f1b9b8b8c1c2b8c8b8b90',
       name: 'Rajshahi Branch Office',
       address: 'Rajshahi, Bangladesh',
@@ -12,7 +12,7 @@ module.exports = async (type) => {
       costPercentage: 10,
     });
 
-    await BranchOffice.create({
+    await Branch.create({
       _id: '5f9f1b9b8b8c1c2b8c8b8b91',
       name: 'Dhaka Branch Office',
       address: 'Dhaka, Bangladesh',
@@ -22,6 +22,6 @@ module.exports = async (type) => {
       costPercentage: 10,
     });
   } else if (type === 'drop') {
-    await BranchOffice.deleteMany({});
+    await Branch.deleteMany({});
   }
 };
