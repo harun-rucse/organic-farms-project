@@ -30,24 +30,6 @@ module.exports = async (type) => {
     });
 
     await User.create({
-      _id: '5f9f1b9b8b7c1c2b8c8b8b8e',
-      name: 'Farmer 1',
-      phone: '01790362668',
-      address: 'Rajshahi, Bangladesh',
-      password: 'password',
-      role: 'farmer',
-    });
-
-    await User.create({
-      _id: '5f9f1b9b8b7c1c2b8c8b8b8f',
-      name: 'Farmer 2',
-      phone: '01790362669',
-      address: 'Dhaka, Bangladesh',
-      password: 'password',
-      role: 'farmer',
-    });
-
-    await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b90',
       name: 'Office Employee 1',
       phone: '01790362670',
