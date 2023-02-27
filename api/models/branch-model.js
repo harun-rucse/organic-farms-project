@@ -40,6 +40,13 @@ const branchSchema = new Schema(
   }
 );
 
+branchSchema.pre(/^find/, function (next) {
+  this.populate('createdBy', 'name phone');
+  this.populate('lastUpdatedBy', 'name phone');
+
+  next();
+});
+
 const validateBranch = (branch) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),

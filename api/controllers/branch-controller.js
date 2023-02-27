@@ -59,7 +59,7 @@ const updateOneBranch = catchAsync(async (req, res, next) => {
 
   const payload = _.pick(req.body, ['name', 'address', 'phone', 'deliveryFee', 'costPercentage', 'lastUpdatedBy']);
   const updateBranch = await branchService.updateOneBranch({ _id: req.params.id }, payload);
-  if (!updateBranch) return next(new AppError('No brabch found with this id.', 404));
+  if (!updateBranch) return next(new AppError('No branch found with this id.', 404));
 
   res.status(200).json(updateBranch);
 });
@@ -71,7 +71,7 @@ const updateOneBranch = catchAsync(async (req, res, next) => {
  */
 const deleteOneBranch = catchAsync(async (req, res, next) => {
   const deleteBranch = await branchService.deleteOneBranch({ _id: req.params.id });
-  if (!deleteBranch) return next(new AppError('No brabch found with this id.', 404));
+  if (!deleteBranch) return next(new AppError('No branch found with this id.', 404));
 
   res.status(204).send();
 });
