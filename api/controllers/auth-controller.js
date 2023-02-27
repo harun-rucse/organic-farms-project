@@ -37,7 +37,19 @@ const login = catchAsync(async (req, res, next) => {
   res.status(200).json(token);
 });
 
+/**
+ * @desc    Get user profile
+ * @route   GET /api/auth/profile
+ * @access  Private
+ */
+const getProfile = catchAsync(async (req, res, next) => {
+  const user = await authService.getProfile(req.user._id);
+
+  res.status(200).json(user);
+});
+
 module.exports = {
   register,
   login,
+  getProfile,
 };

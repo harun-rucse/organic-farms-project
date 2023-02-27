@@ -1,6 +1,9 @@
 const request = require('supertest');
 const app = require('../../app');
 const { User } = require('../../models/user-model');
+const { Employee } = require('../../models/employee-model');
+const { Branch } = require('../../models/branch-model');
+const tokenService = require('../../services/token-service');
 
 describe('/api/auth', () => {
   describe('POST /login', () => {
@@ -140,6 +143,81 @@ describe('/api/auth', () => {
       const res = await exec();
 
       expect(res.status).toBe(201);
+    });
+  });
+
+  describe('GET /profile', () => {
+    let token;
+
+    const exec = () => {
+      return request(app).get('/api/auth/profile').set('Authorization', `Bearer ${token}`);
+    };
+
+    beforeEach(async () => {
+      const user = new User({
+        name: 'test',
+        phone: '01234567890',
+        address: 'test address',
+        password: 'password',
+      });
+      await user.save();
+
+      token = tokenService.generateJwtToken({ id: user._id });
+    });
+
+    it('should return 401 if user is not logged in', async () => {
+      token = '';
+      const res = await exec();
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 200 if user is logged in', async () => {
+      const res = await exec();
+
+      expect(res.status).toBe(200);
+    });
+
+    it('should return user profile if user is logged in', async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('name', 'test');
+      expect(res.body).toHaveProperty('phone', '01234567890');
+      expect(res.body).toHaveProperty('address', 'test address');
+    });
+
+    it('should return branch information if user is employee', async () => {
+      await User.deleteMany({});
+      const user = await User.create({
+        name: 'test user',
+        phone: '01234567890',
+        address: 'test address',
+        password: 'password',
+        role: 'branch-manager',
+      });
+
+      const branch = await Branch.create({
+        name: 'test',
+        address: 'test address',
+        phone: '01234567890',
+        deliveryFee: 1,
+        costPercentage: 1,
+      });
+
+      await Employee.create({
+        user: user._id,
+        branchOffice: branch._id,
+        salary: 1,
+      });
+
+      token = tokenService.generateJwtToken({ id: user._id });
+
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('branch');
+      expect(res.body.branch).toHaveProperty('name', 'test');
+      expect(res.body.branch).toHaveProperty('address', 'test address');
+      expect(res.body.branch).toHaveProperty('phone', '01234567890');
     });
   });
 });
