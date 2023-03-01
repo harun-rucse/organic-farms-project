@@ -25,6 +25,10 @@ const handleFileUploadError = () => {
   return new AppError('Image Upload failed. Please try again.', 400);
 };
 
+const handleSMSError = () => {
+  return new AppError('SMS sending failed. Please try again.', 400);
+};
+
 const sendErrorDev = (err, req, res) => {
   // console.error('ERROR LOG:', err);
   res.status(err.statusCode).json({
@@ -35,8 +39,17 @@ const sendErrorDev = (err, req, res) => {
   });
 };
 
+const sendErrorTest = (err, req, res) => {
+  console.error('ERROR LOG:', err);
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
+    error: err,
+    stack: err.stack,
+  });
+};
+
 const sendErrorProd = (err, req, res) => {
-  // console.error('ERROR LOG:', err);
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -45,10 +58,7 @@ const sendErrorProd = (err, req, res) => {
   } else {
     res.status(500).json({
       status: 'error',
-      // message: 'Something went wrong!',
-      message: err.message,
-      error: err,
-      stack: err.stack,
+      message: 'Something went wrong!',
     });
   }
 };
@@ -57,7 +67,7 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
     error.name = err.name;
@@ -67,9 +77,12 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
     if (req.file) error = handleFileUploadError();
+    if (error.code === 21211) error = handleSMSError();
 
     sendErrorProd(error, req, res);
   } else if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, req, res);
+  } else if (process.env.NODE_ENV === 'test') {
+    sendErrorTest(err, req, res);
   }
 };

@@ -1,5 +1,6 @@
 const userService = require('../services/user-service');
 const tokenService = require('../services/token-service');
+const otpService = require('../services/otp-service');
 const AppError = require('../utils/app-error');
 const catchAsync = require('../utils/catch-async');
 
@@ -50,4 +51,29 @@ const restrictTo = (...roles) => {
   };
 };
 
-module.exports = { auth, verified, restrictTo };
+const verifyOTP = (req, res, next) => {
+  const { otp, hash, phone } = req.body;
+
+  if (!otp || !hash || !phone) {
+    return next(new AppError('OTP is required.', 400));
+  }
+
+  const [hashedOtp, expires] = hash.split('.');
+  if (Date.now() > expires) {
+    return next(new AppError('OTP has expired.', 400));
+  }
+
+  const data = `${phone}.${otp}.${expires}`;
+  const isValid = otpService.verifyOTP(hashedOtp, data);
+  if (!isValid) {
+    return next(new AppError('OTP is invalid.', 400));
+  }
+
+  // Remove otp and hash from body
+  delete req.body.otp;
+  delete req.body.hash;
+
+  next();
+};
+
+module.exports = { auth, verified, restrictTo, verifyOTP };
