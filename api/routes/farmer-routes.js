@@ -11,7 +11,7 @@ router.route('/').get(farmerController.getAllFarmers).post(verifyOTP, farmerCont
 router
   .route('/:id')
   .get(farmerController.getOneFarmer)
-  .patch(farmerController.updateOneFarmer)
+  .patch(verifyOTP, farmerController.updateOneFarmer)
   .delete(farmerController.deleteOneFarmer);
 
 module.exports = router;

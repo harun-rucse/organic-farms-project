@@ -63,13 +63,7 @@ const sendOTP = catchAsync(async (req, res, next) => {
   }
 
   const otp = otpService.generateOTP();
-
-  await otpService.sendOTP(phone, otp);
-  // try {
-  // } catch (error) {
-  //   console.log(error);
-  //   return next(new AppError('Error sending SMS', 500));
-  // }
+  // await otpService.sendOTP(phone, otp);
 
   const expires = Date.now() + config.OTP_EXPIRES_IN * 60 * 1000;
   const data = `${phone}.${otp}.${expires}`;

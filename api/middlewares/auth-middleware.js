@@ -1,6 +1,7 @@
 const userService = require('../services/user-service');
 const tokenService = require('../services/token-service');
 const otpService = require('../services/otp-service');
+const farmerService = require('../services/farmer-service');
 const AppError = require('../utils/app-error');
 const catchAsync = require('../utils/catch-async');
 
@@ -51,8 +52,14 @@ const restrictTo = (...roles) => {
   };
 };
 
-const verifyOTP = (req, res, next) => {
-  const { otp, hash, phone } = req.body;
+const verifyOTP = async (req, res, next) => {
+  const { otp, hash } = req.body;
+  let phone = req.body.phone;
+
+  if (req.params.id) {
+    const farmer = await farmerService.getOneFarmer({ _id: req.params.id });
+    phone = farmer.phone;
+  }
 
   if (!otp || !hash || !phone) {
     return next(new AppError('OTP is required.', 400));

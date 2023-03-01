@@ -48,7 +48,7 @@ const farmerSchema = new Schema(
 );
 
 farmerSchema.pre(/^find/, function (next) {
-  this.populate('branchOffice', 'name address phone');
+  this.populate('branchOffice', 'name address phone -createdBy -lastUpdatedBy');
   this.populate('createdBy', 'name phone');
   this.populate('lastUpdatedBy', 'name phone');
 
