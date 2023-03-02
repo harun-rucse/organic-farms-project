@@ -33,15 +33,18 @@ const employeeSchema = new Schema(
 );
 
 employeeSchema.pre(/^find/, function (next) {
-  this.populate('user');
+  this.populate('user', 'name phone address role image verified');
+  this.populate('branchOffice', 'name phone address -createdBy -lastUpdatedBy');
+  this.populate('createdBy', 'name phone');
+  this.populate('lastUpdatedBy', 'name phone');
 
   next();
 });
 
 const validateEmployee = (employee) => {
   const schema = Joi.object({
-    user: Joi.string().required().label('User'),
-    branchOffice: Joi.string().required().label('Branch Office'),
+    user: Joi.string().label('User'),
+    branchOffice: Joi.string().label('Branch Office'),
     salary: Joi.number().required().label('Salary'),
   });
 
@@ -51,6 +54,7 @@ const validateEmployee = (employee) => {
 const validateEmployeeUpdate = (employee) => {
   const schema = Joi.object({
     salary: Joi.number().label('Salary'),
+    branchOffice: Joi.string().label('Branch Office'),
   });
 
   return schema.validate(employee);
