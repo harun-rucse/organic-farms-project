@@ -1,5 +1,7 @@
+const config = require('../config');
 const authService = require('../services/auth-service');
 const tokenService = require('../services/token-service');
+const otpService = require('../services/otp-service');
 const { validateUser } = require('../models/user-model');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
@@ -48,8 +50,34 @@ const getProfile = catchAsync(async (req, res, next) => {
   res.status(200).json(user);
 });
 
+/**
+ * @desc    Send OTP
+ * @route   GET /api/auth/send-otp
+ * @access  Public
+ */
+const sendOTP = catchAsync(async (req, res, next) => {
+  const { phone } = req.body;
+
+  if (!phone) {
+    return next(new AppError('Phone is required.', 400));
+  }
+
+  const otp = otpService.generateOTP();
+  // await otpService.sendOTP(phone, otp);
+
+  const expires = Date.now() + config.OTP_EXPIRES_IN * 60 * 1000;
+  const data = `${phone}.${otp}.${expires}`;
+  const hash = otpService.hashOTP(data);
+
+  res.status(200).json({
+    hash: `${hash}.${expires}`,
+    otp, // For testing purpose
+  });
+});
+
 module.exports = {
   register,
   login,
   getProfile,
+  sendOTP,
 };

@@ -4,15 +4,7 @@ const bcrypt = require('bcryptjs');
 const { Schema, model } = mongoose;
 require('./employee-model');
 
-const roles_enum = [
-  'admin',
-  'branch-manager',
-  'farmer',
-  'office-employee',
-  'warehouse-employee',
-  'delivery-person',
-  'customer',
-];
+const roles_enum = ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person', 'customer'];
 
 const userSchema = new Schema(
   {
@@ -109,7 +101,10 @@ const validateUser = (user) => {
     address: Joi.string().required().label('Address'),
     password: Joi.string().min(4).max(20).required().label('Password'),
     image: Joi.string().label('Image'),
-    role: Joi.string().valid(roles_enum.join(', ')).label('Role'),
+    role: Joi.string()
+      .valid('admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person', 'customer')
+      .label('Role'),
+    verified: Joi.boolean().label('Verified'),
   });
 
   return schema.validate(user);
@@ -121,7 +116,10 @@ const validateUserUpdate = (user) => {
     phone: Joi.string().min(11).max(14).label('Phone Number'),
     address: Joi.string().label('Address'),
     image: Joi.string().label('Image'),
-    role: Joi.string().valid(roles_enum.join(', ')).label('Role'),
+    role: Joi.string()
+      .valid('admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person', 'customer')
+      .label('Role'),
+    verified: Joi.boolean().label('Verified'),
   });
 
   return schema.validate(user);
