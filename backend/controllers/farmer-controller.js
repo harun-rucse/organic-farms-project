@@ -52,6 +52,8 @@ const createNewFarmer = catchAsync(async (req, res, next) => {
     'phone',
     'receivePayment',
     'description',
+    'identity',
+    'image',
     'branchOffice',
     'createdBy',
   ]);
@@ -74,7 +76,16 @@ const updateOneFarmer = catchAsync(async (req, res, next) => {
   const filter =
     req.user.role === 'admin' ? { _id: req.params.id } : { _id: req.params.id, branchOffice: req.user.branchOffice };
 
-  const payload = _.pick(req.body, ['name', 'address', 'phone', 'receivePayment', 'description', 'lastUpdatedBy']);
+  const payload = _.pick(req.body, [
+    'name',
+    'address',
+    'phone',
+    'receivePayment',
+    'description',
+    'identity',
+    'image',
+    'lastUpdatedBy',
+  ]);
   const updateFarmer = await farmerService.updateOneFarmer(filter, payload);
   if (!updateFarmer) return next(new AppError('No farmer found with this id.', 404));
 
