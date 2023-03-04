@@ -28,6 +28,15 @@ const farmerSchema = new Schema(
       },
     },
     description: String,
+    identity: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    image: {
+      type: String,
+      default: 'default.jpeg',
+    },
     branchOffice: {
       type: Schema.Types.ObjectId,
       ref: 'Branch',
@@ -68,7 +77,9 @@ const validateFarmer = (farmer) => {
       .required()
       .label('Receive Payment'),
     description: Joi.string().label('Description'),
+    identity: Joi.string().required().label('Identity'),
     branchOffice: Joi.string().label('Branch Office'),
+    image: Joi.string().label('Image'),
   });
 
   return schema.validate(farmer);
@@ -86,6 +97,8 @@ const validateFarmerUpdate = (farmer) => {
       .or('type', 'number')
       .label('Receive Payment'),
     description: Joi.string().label('Description'),
+    identity: Joi.string().label('Identity'),
+    image: Joi.string().label('Image'),
   });
 
   return schema.validate(farmer);
