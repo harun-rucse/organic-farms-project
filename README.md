@@ -37,6 +37,18 @@ yarn
 yarn dev
 ```
 
+## Run in Docker
+
+```
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+## Seed development data into databse
+
+```
+yarn run seed --refresh
+```
+
 ## Deployment
 
 Add additional notes about how to deploy this on a live system.
