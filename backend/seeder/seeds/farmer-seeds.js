@@ -7,6 +7,7 @@ module.exports = async (type) => {
       name: 'Farmer 1',
       address: 'Rajshahi, Bangladesh',
       phone: '+8801234567890',
+      identity: '1234567890',
       receivePayment: {
         type: 'bKash',
         number: '+8801234567890',
@@ -21,6 +22,7 @@ module.exports = async (type) => {
       name: 'Farmer 2',
       address: 'Dhaka, Bangladesh',
       phone: '+8801234567891',
+      identity: '1234567891',
       receivePayment: {
         type: 'bKash',
         number: '+8801234567891',

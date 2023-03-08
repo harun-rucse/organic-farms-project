@@ -2,6 +2,8 @@ const userSeeds = require('./seeds/user-seeds');
 const branchSeeds = require('./seeds/branch-seeds');
 const employeeSeeds = require('./seeds/employee-seeds');
 const farmerSeeds = require('./seeds/farmer-seeds');
+const categorySeeds = require('./seeds/category-seeds');
+const subCategorySeeds = require('./seeds/subcategory-seeds');
 
 const seed = async () => {
   if (process.argv[2] === '--import') {
@@ -21,6 +23,8 @@ const seedAll = async () => {
   await branchSeeds('seed');
   await employeeSeeds('seed');
   await farmerSeeds('seed');
+  await categorySeeds('seed');
+  await subCategorySeeds('seed');
   console.log('Seeding complete!');
 };
 
@@ -30,6 +34,8 @@ const dropAll = async () => {
   await branchSeeds('drop');
   await employeeSeeds('drop');
   await farmerSeeds('drop');
+  await categorySeeds('drop');
+  await subCategorySeeds('drop');
   console.log('Dropping complete!');
 };
 
