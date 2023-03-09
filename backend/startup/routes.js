@@ -5,6 +5,7 @@ const employeeRouter = require('../routes/employee-routes');
 const farmerCardRouter = require('../routes/farmer-card-routes');
 const categoryRouter = require('../routes/category-routes');
 const subCategoryRouter = require('../routes/subcategory-routes');
+const productRouter = require('../routes/product-routes');
 const globalErrorHandler = require('../controllers/error-controller');
 const AppError = require('../utils/app-error');
 
@@ -16,6 +17,7 @@ module.exports = (app) => {
   app.use('/api/farmer-cards', farmerCardRouter);
   app.use('/api/categories', categoryRouter);
   app.use('/api/sub-categories', subCategoryRouter);
+  app.use('/api/products', productRouter);
 
   app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.method} ${req.originalUrl} on this server.`, 404));
