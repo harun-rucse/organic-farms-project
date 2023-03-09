@@ -28,7 +28,7 @@ const subCategorySchema = new Schema(
 );
 
 subCategorySchema.pre(/^find/, function (next) {
-  this.populate('category', 'name icon -createdBy');
+  this.populate('category', 'name icon -createdBy -lastUpdatedBy');
   this.populate('createdBy', 'name phone');
   this.populate('lastUpdatedBy', 'name phone');
 

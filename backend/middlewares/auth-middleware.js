@@ -2,6 +2,7 @@ const userService = require('../services/user-service');
 const tokenService = require('../services/token-service');
 const otpService = require('../services/otp-service');
 const farmerService = require('../services/farmer-service');
+const productService = require('../services/product-service');
 const AppError = require('../utils/app-error');
 const catchAsync = require('../utils/catch-async');
 
@@ -52,13 +53,44 @@ const restrictTo = (...roles) => {
   };
 };
 
-const verifyOTP = async (req, res, next) => {
+const verifyOTP = catchAsync(async (req, res, next) => {
+  const module = req.baseUrl.split('/')[2];
   const { otp, hash } = req.body;
-  let phone = req.body.phone;
+  let phone;
 
-  if (req.params.id) {
-    const farmer = await farmerService.getOneFarmer({ _id: req.params.id });
+  if (module === 'products') {
+    let { farmer: farmerId } = req.body;
+
+    if (req.params.id) {
+      const filter =
+        req.user.role === 'admin'
+          ? { _id: req.params.id }
+          : { _id: req.params.id, branchOffice: req.user.branchOffice };
+      const product = await productService.getOneProduct(filter);
+      if (!product) return next(new AppError('Product not found.', 404));
+
+      farmerId = product.farmer;
+    }
+
+    const farmer = await farmerService.getOneFarmer({ _id: farmerId });
+    if (!farmer) return next(new AppError('Farmer not found.', 404));
+
     phone = farmer.phone;
+  } else if (module === 'farmers') {
+    phone = req.body.phone;
+
+    if (req.params.id) {
+      const filter =
+        req.user.role === 'admin'
+          ? { _id: req.params.id }
+          : { _id: req.params.id, branchOffice: req.user.branchOffice };
+      const farmer = await farmerService.getOneFarmer(filter);
+      if (!farmer) return next(new AppError('Farmer not found.', 404));
+
+      phone = farmer.phone;
+    }
+  } else {
+    return next(new AppError('Invalid module.', 400));
   }
 
   if (!otp || !hash || !phone) {
@@ -81,6 +113,6 @@ const verifyOTP = async (req, res, next) => {
   delete req.body.hash;
 
   next();
-};
+});
 
 module.exports = { auth, verified, restrictTo, verifyOTP };
