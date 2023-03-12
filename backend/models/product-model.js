@@ -69,11 +69,19 @@ const productSchema = new Schema(
     },
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
     timestamps: true,
   }
 );
 
 productSchema.index({ name: 1, farmer: 1 }, { unique: true });
+
+productSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'product',
+  localField: '_id',
+});
 
 productSchema.pre(/^find/, function (next) {
   this.populate('subcategory', 'name category -createdBy -lastUpdatedBy');
@@ -81,6 +89,12 @@ productSchema.pre(/^find/, function (next) {
   this.populate('branchOffice', 'name phone address -createdBy -lastUpdatedBy');
   this.populate('createdBy', 'name phone');
   this.populate('lastUpdatedBy', 'name phone');
+
+  next();
+});
+
+productSchema.pre(/^findOne/, function (next) {
+  this.populate('reviews', 'review rating -product -branchOffice');
 
   next();
 });
