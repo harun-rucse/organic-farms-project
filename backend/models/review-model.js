@@ -64,7 +64,7 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
 };
 
 reviewSchema.pre(/^find/, function (next) {
-  this.populate('product', 'name subcategory -farmer -branchOffice -createdBy -lastUpdatedBy');
+  this.populate('product', 'name price -farmer -branchOffice');
   this.populate('user', 'name phone');
   this.populate('branchOffice', 'name address phone -createdBy -lastUpdatedBy');
 
