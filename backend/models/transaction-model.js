@@ -65,6 +65,16 @@ const transactionSchema = new Schema(
   }
 );
 
+transactionSchema.pre(/^find/, function (next) {
+  this.populate('farmer', 'name phone address image receivePayment -branchOffice -createdBy -lastUpdatedBy');
+  this.populate('customer', 'name phone address image');
+  this.populate('products.product', 'name price images -farmer -subcategory -branchOffice -createdBy -lastUpdatedBy');
+  this.populate('branchOffice', 'name phone address -createdBy -lastUpdatedBy');
+  this.populate('lastUpdatedBy', 'name phone');
+
+  next();
+});
+
 const validateTransactionUpdate = (transaction) => {
   const schema = Joi.object({
     paymentMethod: Joi.string().valid('Bkash', 'Rocket', 'Nagad', 'Bank'),
