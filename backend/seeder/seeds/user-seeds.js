@@ -67,6 +67,15 @@ module.exports = async (type) => {
 
     await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b94',
+      name: 'Delivery Person 2',
+      phone: '+8801790362675',
+      address: 'Dhaka, Bangladesh',
+      password: 'password',
+      role: 'delivery-person',
+    });
+
+    await User.create({
+      _id: '5f9f1b9b8b7c1c2b8c8b8b95',
       name: 'Customer 1',
       phone: '+8801790362672',
       address: 'Rajshahi, Bangladesh',

@@ -18,6 +18,7 @@ const createNewEmployee = async (payload) => {
   const employee = new Employee({
     user: user._id,
     branchOffice,
+    role,
     salary,
     createdBy,
   });
@@ -49,6 +50,7 @@ const updateOneEmployee = async (filter, payload) => {
   await user.save();
 
   if (salary) employee.salary = salary;
+  if (role) employee.role = role;
   if (branchOffice) employee.branchOffice = branchOffice;
   if (lastUpdatedBy) employee.lastUpdatedBy = lastUpdatedBy;
 

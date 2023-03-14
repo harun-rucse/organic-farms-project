@@ -9,6 +9,10 @@ const employeeSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    role: {
+      type: String,
+      required: true,
+    },
     branchOffice: {
       type: Schema.Types.ObjectId,
       ref: 'Branch',
@@ -43,7 +47,7 @@ employeeSchema.pre(/^find/, function (next) {
 
 const validateEmployee = (employee) => {
   const schema = Joi.object({
-    user: Joi.string().label('User'),
+    role: Joi.string().required().label('Role'),
     branchOffice: Joi.string().label('Branch Office'),
     salary: Joi.number().required().label('Salary'),
   });
