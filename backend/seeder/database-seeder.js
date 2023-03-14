@@ -5,6 +5,8 @@ const farmerSeeds = require('./seeds/farmer-seeds');
 const categorySeeds = require('./seeds/category-seeds');
 const subCategorySeeds = require('./seeds/subcategory-seeds');
 const productSeeds = require('./seeds/product-seeds');
+const { Order } = require('../models/order-model');
+const { Transaction } = require('../models/transaction-model');
 
 const seed = async () => {
   if (process.argv[2] === '--import') {
@@ -39,6 +41,8 @@ const dropAll = async () => {
   await categorySeeds('drop');
   await subCategorySeeds('drop');
   await productSeeds('drop');
+  await Order.deleteMany({});
+  await Transaction.deleteMany({});
   console.log('Dropping complete!');
 };
 

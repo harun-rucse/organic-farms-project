@@ -7,6 +7,18 @@ const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 
 /**
+ * @desc    Get all delivery persons
+ * @route   GET /api/emloyees/delivery-persons
+ * @access  Private(admin, branch-manager, warehouse-employee)
+ */
+const getAllDeliveryPersons = catchAsync(async (req, res, next) => {
+  const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice, role: 'delivery-person' };
+  const allDeliveryPersons = await employeeService.getAllEmployees(filter);
+
+  res.status(200).json(allDeliveryPersons);
+});
+
+/**
  * @desc    Get all employees
  * @route   GET /api/emloyees
  * @access  Private(admin, branch-manager)
@@ -46,7 +58,7 @@ const createNewEmployee = catchAsync(async (req, res, next) => {
 
   if (userError) return next(new AppError(userError.details[0].message, 400));
   if (employeeError) return next(new AppError(employeeError.details[0].message, 400));
-  if (!req.body.role) return next(new AppError('Role is required.', 400));
+  // if (!req.body.role) return next(new AppError('Role is required.', 400));
 
   req.body.createdBy = req.user._id;
 
@@ -148,6 +160,7 @@ const deleteOneEmployee = catchAsync(async (req, res, next) => {
 });
 
 module.exports = {
+  getAllDeliveryPersons,
   getAllEmployees,
   getOneEmployee,
   createNewEmployee,

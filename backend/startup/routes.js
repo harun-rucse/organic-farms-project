@@ -8,6 +8,8 @@ const subCategoryRouter = require('../routes/subcategory-routes');
 const productRouter = require('../routes/product-routes');
 const reviewRouter = require('../routes/review-routes');
 const salaryRouter = require('../routes/salary-routes');
+const orderRouter = require('../routes/order-routes');
+const transactionRouter = require('../routes/transaction-routes');
 const globalErrorHandler = require('../controllers/error-controller');
 const AppError = require('../utils/app-error');
 
@@ -22,6 +24,8 @@ module.exports = (app) => {
   app.use('/api/products', productRouter);
   app.use('/api/reviews', reviewRouter);
   app.use('/api/salaries', salaryRouter);
+  app.use('/api/orders', orderRouter);
+  app.use('/api/transactions', transactionRouter);
 
   app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.method} ${req.originalUrl} on this server.`, 404));
