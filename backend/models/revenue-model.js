@@ -31,6 +31,10 @@ const revenueSchema = new Schema({
     ref: 'Branch',
     required: true,
   },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 revenueSchema.pre(/^find/, function (next) {

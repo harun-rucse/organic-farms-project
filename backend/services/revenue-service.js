@@ -16,9 +16,43 @@ const deleteManyRevenues = (filter) => {
   return Revenue.deleteMany(filter);
 };
 
+const getRevenueStatistics = (filter) => {
+  return Revenue.aggregate([
+    {
+      $match: filter,
+    },
+    {
+      $group: {
+        _id: '$branchOffice',
+        totalAmount: { $sum: '$revenueAmount' },
+      },
+    },
+    {
+      $lookup: {
+        from: 'branches',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'branchOffice',
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        totalAmount: 1,
+        branchOffice: {
+          name: 1,
+          address: 1,
+          phone: 1,
+        },
+      },
+    },
+  ]);
+};
+
 module.exports = {
   getAllRevenues,
   getOneRevenue,
   updateOneRevenue,
   deleteManyRevenues,
+  getRevenueStatistics,
 };
