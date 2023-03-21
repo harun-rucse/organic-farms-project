@@ -132,14 +132,17 @@ orderSchema.post('save', async function (doc) {
       const totalAmount = products.reduce((acc, item) => acc + item.price, 0);
 
       const branchDetails = await branchService.getOneBranch({ _id: order.branchOffice });
-      const payableAmount = totalAmount - (branchDetails.costPercentage / 100) * totalAmount;
+      const chargeAmount = (branchDetails.costPercentage / 100) * totalAmount;
+      const payableAmount = totalAmount - chargeAmount;
 
       const transaction = new Transaction({
         farmer: farmer,
         customer: order.customer,
         products: products,
         order: order._id,
-        totalAmount: payableAmount,
+        totalAmount: totalAmount,
+        chargeAmount: chargeAmount,
+        payableAmount: payableAmount,
         branchOffice: order.branchOffice,
       });
 

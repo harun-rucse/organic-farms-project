@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
+const { Revenue } = require('./revenue-model');
 
 const transactionSchema = new Schema(
   {
@@ -34,6 +35,8 @@ const transactionSchema = new Schema(
       },
     ],
     totalAmount: Number,
+    chargeAmount: Number,
+    payableAmount: Number,
     paymentMethod: {
       type: String,
       enum: ['Bkash', 'Rocket', 'Nagad', 'Bank'],
@@ -45,10 +48,10 @@ const transactionSchema = new Schema(
       default: 'Unpaid',
     },
     paymentDate: Date,
-    orderStatus: {
+    status: {
       type: String,
-      enum: ['Placed', 'Cancelled'],
-      default: 'Placed',
+      enum: ['Pending', 'Completed', 'Cancelled'],
+      default: 'Pending',
     },
     branchOffice: {
       type: Schema.Types.ObjectId,
@@ -73,6 +76,26 @@ transactionSchema.pre(/^find/, function (next) {
   this.populate('lastUpdatedBy', 'name phone');
 
   next();
+});
+
+transactionSchema.post('insertMany', async function (doc) {
+  const transactions = doc;
+  if (!transactions) return;
+
+  await Promise.all(
+    transactions.map(async (transaction) => {
+      const revenue = new Revenue({
+        farmer: transaction.farmer,
+        customer: transaction.customer,
+        order: transaction.order,
+        transaction: transaction._id,
+        revenueAmount: transaction.chargeAmount,
+        branchOffice: transaction.branchOffice,
+      });
+
+      await revenue.save();
+    })
+  );
 });
 
 const validateTransactionUpdate = (transaction) => {

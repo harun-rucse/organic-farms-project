@@ -3,6 +3,7 @@ const { validateOrder, validateOrderUpdate } = require('../models/order-model');
 const orderService = require('../services/order-service');
 const productService = require('../services/product-service');
 const transactionService = require('../services/transaction-service');
+const revenueService = require('../services/revenue-service');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -117,7 +118,12 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
 
   // if order status is Cancelled, update all the transaction orderStatus to Cancelled
   if (payload.orderStatus === 'Cancelled') {
-    await transactionService.updateManyTransactions({ order: req.params.id }, { orderStatus: 'Cancelled' });
+    await transactionService.updateManyTransactions({ order: req.params.id }, { status: 'Cancelled' });
+    await revenueService.deleteManyRevenues({ order: req.params.id });
+  }
+
+  if (payload.orderStatus === 'Delivered') {
+    await transactionService.updateManyTransactions({ order: req.params.id }, { status: 'Completed' });
   }
 
   res.status(200).json(updateOrder);
