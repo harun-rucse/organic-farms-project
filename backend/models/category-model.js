@@ -10,9 +10,9 @@ const categorySchema = new Schema(
       required: true,
     },
     description: String,
-    icon: {
+    image: {
       type: String,
-      default: 'default-icon.jpeg',
+      default: 'https://res.cloudinary.com/harun-rucse/image/upload/v1679509376/categories/default-icon.png',
     },
     createdBy: {
       type: Schema.Types.ObjectId,
@@ -39,7 +39,7 @@ const validateCategory = (category) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),
     description: Joi.string().label('Description'),
-    icon: Joi.string().label('Icon'),
+    image: Joi.string().label('Image'),
   });
 
   return schema.validate(category);
@@ -49,7 +49,7 @@ const validateCategoryUpdate = (category) => {
   const schema = Joi.object({
     name: Joi.string().label('Name'),
     description: Joi.string().label('Description'),
-    icon: Joi.string().label('Icon'),
+    image: Joi.string().label('Image'),
   });
 
   return schema.validate(category);

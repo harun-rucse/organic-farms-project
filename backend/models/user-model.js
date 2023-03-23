@@ -28,7 +28,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: 'default.jpeg',
+      default: 'https://res.cloudinary.com/harun-rucse/image/upload/v1679509330/users/default.png',
     },
     role: {
       type: String,
@@ -97,7 +97,10 @@ userSchema.methods.passwordChangeAfter = function (JWTTimestamp) {
 const validateUser = (user) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),
-    phone: Joi.string().min(11).max(14).required().label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` })
+      .required(),
     address: Joi.string().required().label('Address'),
     password: Joi.string().min(4).max(20).required().label('Password'),
     image: Joi.string().label('Image'),
@@ -113,7 +116,9 @@ const validateUser = (user) => {
 const validateUserUpdate = (user) => {
   const schema = Joi.object({
     name: Joi.string().label('Name'),
-    phone: Joi.string().min(11).max(14).label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` }),
     address: Joi.string().label('Address'),
     image: Joi.string().label('Image'),
     role: Joi.string()
