@@ -1,4 +1,5 @@
 const multer = require('multer');
+const sharp = require('sharp');
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const catchAsync = require('../utils/catch-async');
@@ -44,10 +45,14 @@ const upload = multer({
 });
 
 const uploadImage = upload.single('image');
+const uploadImages = upload.array('images', 5);
 
 const saveImageUrl = (folderName) => {
   return catchAsync(async (req, res, next) => {
     if (!req.file) return next();
+
+    // Resize image
+    req.file.buffer = await sharp(req.file.buffer).resize(500, 500).toFormat('jpeg').jpeg({ quality: 90 }).toBuffer();
 
     const result = await uploadCloud(req.file.buffer, folderName);
     req.body[req.file.fieldname] = result.url;
@@ -56,7 +61,29 @@ const saveImageUrl = (folderName) => {
   });
 };
 
+const saveImagesUrl = (folderName) => {
+  return catchAsync(async (req, res, next) => {
+    if (!req.files) return next();
+
+    // Resize images and upload to cloud
+    const images = await Promise.all(
+      req.files.map(async (file) => {
+        file.buffer = await sharp(file.buffer).resize(500, 500).toFormat('jpeg').jpeg({ quality: 90 }).toBuffer();
+
+        const result = await uploadCloud(file.buffer, folderName);
+        return result.url;
+      })
+    );
+
+    req.body[req.files[0].fieldname] = images;
+
+    next();
+  });
+};
+
 module.exports = {
   uploadImage,
   saveImageUrl,
+  uploadImages,
+  saveImagesUrl,
 };

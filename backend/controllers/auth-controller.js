@@ -61,6 +61,13 @@ const sendOTP = catchAsync(async (req, res, next) => {
     return next(new AppError('Phone is required.', 400));
   }
 
+  // Validate phone number using regex for Bangladesh
+  const regex = /^\+8801[3-9]{1}[0-9]{8}$/;
+
+  if (!regex.test(phone)) {
+    return next(new AppError('Invalid phone number.', 400));
+  }
+
   const otp = otpService.generateOTP();
   // await otpService.sendOTP(phone, otp);
 

@@ -35,7 +35,7 @@ const farmerSchema = new Schema(
     },
     image: {
       type: String,
-      default: 'default.jpeg',
+      default: 'https://res.cloudinary.com/harun-rucse/image/upload/v1679509502/farmers/default.png',
     },
     branchOffice: {
       type: Schema.Types.ObjectId,
@@ -68,10 +68,16 @@ const validateFarmer = (farmer) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),
     address: Joi.string().required().label('Address'),
-    phone: Joi.string().min(11).max(14).required().label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` })
+      .required(),
     receivePayment: Joi.object({
       type: Joi.string().required().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
-      number: Joi.string().required().min(11).max(14).label('Payment Number'),
+      number: Joi.string()
+        .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+        .messages({ 'string.pattern.base': `Phone number is not valid.` })
+        .required(),
     })
       .or('type', 'number')
       .required()
@@ -89,10 +95,14 @@ const validateFarmerUpdate = (farmer) => {
   const schema = Joi.object({
     name: Joi.string().label('Name'),
     address: Joi.string().label('Address'),
-    phone: Joi.string().min(11).max(14).label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` }),
     receivePayment: Joi.object({
       type: Joi.string().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
-      number: Joi.string().min(11).max(14).label('Payment Number'),
+      number: Joi.string()
+        .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+        .messages({ 'string.pattern.base': `Phone number is not valid.` }),
     })
       .or('type', 'number')
       .label('Receive Payment'),

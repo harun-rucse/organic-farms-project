@@ -12,7 +12,7 @@ const register = async (payload) => {
   }
 
   // Save to the database
-  const user = await userService.createNewUser(_.pick(payload, ['name', 'phone', 'address', 'password']));
+  const user = await userService.createNewUser(_.pick(payload, ['name', 'phone', 'address', 'password', 'image']));
 
   return user;
 };

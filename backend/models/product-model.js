@@ -49,7 +49,7 @@ const productSchema = new Schema(
     },
     images: {
       type: [String],
-      default: ['default.jpg'],
+      default: ['https://res.cloudinary.com/harun-rucse/image/upload/v1679509832/products/default-product.png'],
     },
     active: {
       type: Boolean,

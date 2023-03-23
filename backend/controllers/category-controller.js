@@ -39,7 +39,7 @@ const createNewCategory = catchAsync(async (req, res, next) => {
   // Set createdBy to the logged in user
   req.body.createdBy = req.user._id;
 
-  const payload = _.pick(req.body, ['name', 'description', 'icon', 'createdBy']);
+  const payload = _.pick(req.body, ['name', 'description', 'image', 'createdBy']);
   const newCategory = await categoryService.createNewCategory(payload);
 
   res.status(201).json(newCategory);
@@ -57,7 +57,7 @@ const updateOneCategory = catchAsync(async (req, res, next) => {
   // Set lastUpdatedBy to the logged in user
   req.body.lastUpdatedBy = req.user._id;
 
-  const payload = _.pick(req.body, ['name', 'description', 'icon', 'lastUpdatedBy']);
+  const payload = _.pick(req.body, ['name', 'description', 'image', 'lastUpdatedBy']);
   const updateCategory = await categoryService.updateOneCategory({ _id: req.params.id }, payload);
   if (!updateCategory) return next(new AppError('No category found with this id.', 404));
 
