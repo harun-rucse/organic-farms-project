@@ -37,10 +37,16 @@ yarn
 yarn dev
 ```
 
-## Run in Docker
+## Run Docker in development
 
 ```
 docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+## Run Docker in production
+
+```
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
 ## Seed development data into databse

@@ -1,5 +1,5 @@
 FROM node:18-alpine
-WORKDIR /backend
+WORKDIR /admin
 
 COPY package.json .
 COPY yarn.lock .
@@ -8,6 +8,6 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 4000
+EXPOSE 3001
 
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "dev", "--host" ]
