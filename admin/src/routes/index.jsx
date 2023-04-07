@@ -1,11 +1,13 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import DashboardLayout from './layouts/dashboard';
-import SimpleLayout from './layouts/simple';
-import EmployeeList from './pages/employee/list';
-import EmployeeCreate from './pages/employee/create';
-import Page404 from './pages/Page404';
-import DashboardAppPage from './pages/DashboardAppPage';
-import LoginPage from './pages/LoginPage';
+import DashboardLayout from '../layouts/dashboard';
+import SimpleLayout from '../layouts/simple';
+import EmployeeList from '../pages/employee/list';
+import EmployeeCreate from '../pages/employee/create';
+import Page404 from '../pages/Page404';
+import DashboardAppPage from '../pages/DashboardAppPage';
+import LoginPage from '../pages/LoginPage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 export default function Router() {
   const routes = useRoutes([
@@ -14,14 +16,25 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: 'app', element: <DashboardAppPage /> },
+        {
+          path: 'app',
+          element: (
+            <PrivateRoute>
+              <DashboardAppPage />
+            </PrivateRoute>
+          ),
+        },
         { path: 'employee/create', element: <EmployeeCreate /> },
         { path: 'employee', element: <EmployeeList /> },
       ],
     },
     {
       path: 'login',
-      element: <LoginPage />,
+      element: (
+        <PublicRoute>
+          <LoginPage />
+        </PublicRoute>
+      ),
     },
     {
       element: <SimpleLayout />,
