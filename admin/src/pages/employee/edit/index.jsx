@@ -1,22 +1,25 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Typography, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import EmployeeCreateForm from './CreateForm';
+import { useNavigate, useParams } from 'react-router-dom';
+import EmployeeEditForm from './EditForm';
 import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetAllBranchesQuery } from '@/store/apiSlices/branchApiSlice';
-import { useCreateEmployeeMutation } from '@/store/apiSlices/employeeApiSlice';
+import { useGetEmployeeQuery, useUpdateEmployeeMutation } from '@/store/apiSlices/employeeApiSlice';
 
-function EmployeeCreate() {
+function EmployeeUpdate() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const notification = useNotification();
-  const { data: branches, isLoading } = useGetAllBranchesQuery();
-  const [createEmployee, { isLoading: loading, isSuccess, isError, error }] = useCreateEmployeeMutation();
+
+  const { data: employee, isLoading: isEmployeeLoading } = useGetEmployeeQuery(id);
+  const { data: branches, isLoading: isBranchLoading } = useGetAllBranchesQuery();
+  const [updateEmployee, { isLoading: loading, isSuccess, isError, error }] = useUpdateEmployeeMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      notification('Employee created successfully', 'success');
+      notification('Employee updated successfully', 'success');
       navigate('/dashboard/employees');
     }
   }, [isSuccess, navigate, notification]);
@@ -27,30 +30,29 @@ function EmployeeCreate() {
     formData.append('name', values.name);
     formData.append('phone', values.phone);
     formData.append('address', values.address);
-    formData.append('password', values.password);
     formData.append('role', values.role);
     formData.append('salary', values.salary);
     formData.append('verified', values.verified);
     formData.append('branchOffice', values.branchOffice);
-    if (values.image.length) formData.append('image', values.image[0]);
+    if (values.image?.length && typeof values.image === 'object') formData.append('image', values.image[0]);
 
-    createEmployee(formData);
+    updateEmployee({ id, body: formData });
   };
 
-  if (isLoading) {
-    return <Loader isLoading={isLoading} />;
+  if (isEmployeeLoading || isBranchLoading) {
+    return <Loader isLoading={isEmployeeLoading || isBranchLoading} />;
   }
 
   return (
     <>
       <Helmet>
-        <title> Organic-farms | Create new employee </title>
+        <title> Organic-farms | Update employee </title>
       </Helmet>
 
       <Container>
         <Stack mb={4}>
           <Typography variant="h4" gutterBottom>
-            Create new employee
+            Update employee
           </Typography>
         </Stack>
         {isError && (
@@ -58,10 +60,10 @@ function EmployeeCreate() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <EmployeeCreateForm handleOnSubmit={handleSubmit} branches={branches} loading={loading} />
+        <EmployeeEditForm handleOnSubmit={handleSubmit} employee={employee} branches={branches} loading={loading} />
       </Container>
     </>
   );
 }
 
-export default EmployeeCreate;
+export default EmployeeUpdate;

@@ -7,20 +7,20 @@ import PageToolbar from '@/components/PageToolbar';
 import useNotification from '@/hooks/useNotification';
 import Loader from '@/components/Loader';
 import ConfirmDeleteModal from '@/components/ConfirmDelete';
-import { useGetAllEmployeesQuery, useDeleteEmployeeMutation } from '@/store/apiSlices/employeeApiSlice';
+import { useGetAllCategoriesQuery, useDeleteCategoryMutation } from '@/store/apiSlices/categoryApiSlice';
 
 export default function List() {
   const navigate = useNavigate();
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading } = useGetAllEmployeesQuery();
-  const [deleteEmployee, { isLoading: isDeleting, isSuccess }] = useDeleteEmployeeMutation();
+  const { data = [], isLoading } = useGetAllCategoriesQuery();
+  const [deleteCategory, { isLoading: isDeleting, isSuccess }] = useDeleteCategoryMutation();
 
   useEffect(() => {
     if (isSuccess) {
       setOpen(false);
-      notification('Employee deleted successfully', 'success');
+      notification('Category deleted successfully', 'success');
     }
   }, [isSuccess]);
 
@@ -30,7 +30,7 @@ export default function List() {
   };
 
   const handleDelete = () => {
-    deleteEmployee(deleteId);
+    deleteCategory(deleteId);
   };
 
   if (isLoading) {
@@ -40,14 +40,14 @@ export default function List() {
   return (
     <>
       <Helmet>
-        <title> Organic-farms | Employees </title>
+        <title> Organic-farms | Categories </title>
       </Helmet>
 
       <Container>
         <PageToolbar
-          title="Employees"
-          buttonLabel="Add new employee"
-          handleOnClick={() => navigate('/dashboard/employee/create')}
+          title="Categories"
+          buttonLabel="Add new category"
+          handleOnClick={() => navigate('/dashboard/category/create')}
         />
         <Result data={data} handleDeleteClick={handleDeleteClick} />
       </Container>
@@ -55,8 +55,8 @@ export default function List() {
         open={open}
         handleClose={() => setOpen(false)}
         handleDelete={handleDelete}
-        title="Delete Employee"
-        description="Are you sure you want to delete this employee?"
+        title="Delete Category"
+        description="Are you sure you want to delete this category?"
         isDeleting={isDeleting}
       />
     </>

@@ -7,5 +7,12 @@ export default function useTokenDecode() {
 
   const currentUser = jwt_decode(token);
 
+  // check if token is expired
+  const currentTime = Date.now() / 1000;
+  if (currentUser.exp < currentTime) {
+    localStorage.removeItem('jwt-token');
+    return null;
+  }
+
   return currentUser;
 }

@@ -1,31 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button, Avatar, Box } from '@mui/material';
+import { Card, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
-import Label from '@/components/label';
 import Table from '@/components/Table';
-
-const getColor = (value) => {
-  return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
-};
+import Label from '@/components/label/Label';
 
 function Result({ data, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
-    {
-      name: 'avatar',
-      label: 'Avatar',
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="rounded" />;
-        },
-      },
-    },
     {
       name: 'name',
       label: 'Name',
@@ -51,30 +36,25 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
-      name: 'role',
-      label: 'Role',
+      name: 'deliveryFee',
+      label: 'Delivery Fee',
       options: {
         filter: false,
         sort: true,
         customBodyRender: (value) => {
-          return <Label color={getColor(value)}>{value}</Label>;
+          return <Label color="primary">Tk. {value}/kg</Label>;
         },
       },
     },
     {
-      name: 'branch',
-      label: 'Branch',
+      name: 'costPercentage',
+      label: 'Cost Percentage',
       options: {
         filter: false,
         sort: true,
-      },
-    },
-    {
-      name: 'salary',
-      label: 'Salary',
-      options: {
-        filter: false,
-        sort: true,
+        customBodyRender: (value) => {
+          return <Label color="error">{value}%</Label>;
+        },
       },
     },
     {
@@ -90,7 +70,7 @@ function Result({ data, handleDeleteClick }) {
       label: 'Action',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return (
             <Box
@@ -112,7 +92,7 @@ function Result({ data, handleDeleteClick }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/employee/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/branch/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -141,14 +121,12 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data.map((item) => ({
-    avatar: item.user.image,
-    name: item.user.name,
-    phone: item.user.phone,
-    address: item.user.address,
-    role: item.user.role,
-    branch: item.branchOffice.name,
-    salary: item.salary,
+  const branches = data?.map((item) => ({
+    name: item.name,
+    phone: item.phone,
+    address: item.address,
+    deliveryFee: item.deliveryFee,
+    costPercentage: item.costPercentage,
     createdBy: item.createdBy.name,
     action: item._id,
   }));
@@ -157,10 +135,10 @@ function Result({ data, handleDeleteClick }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Employee List"
-          data={customers}
+          title="Branch List"
+          data={branches}
           columns={columns}
-          searchPlaceholder="Search employee"
+          searchPlaceholder="Search branch"
           rowsPerPage={10}
         />
       </PerfectScrollbar>

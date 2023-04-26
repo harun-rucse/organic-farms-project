@@ -12,8 +12,12 @@ const authReducer = createSlice({
       state.token = action.payload;
       localStorage.setItem('jwt-token', action.payload);
     },
+    removeToken(state) {
+      state.token = null;
+      localStorage.removeItem('jwt-token');
+    },
   },
 });
 
-export const { setToken } = authReducer.actions;
+export const { setToken, removeToken } = authReducer.actions;
 export default authReducer.reducer;

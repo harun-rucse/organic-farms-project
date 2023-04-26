@@ -1,13 +1,20 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import DashboardLayout from '../layouts/dashboard';
-import SimpleLayout from '../layouts/simple';
-import EmployeeList from '../pages/employee/list';
-import EmployeeCreate from '../pages/employee/create';
-import Page404 from '../pages/Page404';
-import DashboardAppPage from '../pages/DashboardAppPage';
-import LoginPage from '../pages/LoginPage';
+import DashboardLayout from '@/layouts/dashboard';
+import SimpleLayout from '@/layouts/simple';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import DashboardAppPage from '@/pages/DashboardAppPage';
+import EmployeeList from '@/pages/employee/list';
+import EmployeeCreate from '@/pages/employee/create';
+import EmployeeEdit from '@/pages/employee/edit';
+import BranchList from '@/pages/branch/list';
+import BranchCreate from '@/pages/branch/create';
+import BranchEdit from '@/pages/branch/edit';
+import CategoryList from '@/pages/category/list';
+import CategoryCreate from '@/pages/category/create';
+import CategoryEdit from '@/pages/category/edit';
+import LoginPage from '@/pages/LoginPage';
+import Page404 from '@/pages/Page404';
 
 export default function Router() {
   const routes = useRoutes([
@@ -25,7 +32,14 @@ export default function Router() {
           ),
         },
         { path: 'employee/create', element: <EmployeeCreate /> },
-        { path: 'employee', element: <EmployeeList /> },
+        { path: 'employee/edit/:id', element: <EmployeeEdit /> },
+        { path: 'employees', element: <EmployeeList /> },
+        { path: 'branch/create', element: <BranchCreate /> },
+        { path: 'branch/edit/:id', element: <BranchEdit /> },
+        { path: 'branches', element: <BranchList /> },
+        { path: 'category/create', element: <CategoryCreate /> },
+        { path: 'category/edit/:id', element: <CategoryEdit /> },
+        { path: 'categories', element: <CategoryList /> },
       ],
     },
     {

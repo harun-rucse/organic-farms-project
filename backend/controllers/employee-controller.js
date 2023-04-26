@@ -54,7 +54,7 @@ const createNewEmployee = catchAsync(async (req, res, next) => {
   const { error: userError } = validateUser(
     _.pick(req.body, ['name', 'address', 'phone', 'password', 'image', 'role', 'verified'])
   );
-  const { error: employeeError } = validateEmployee(_.pick(req.body, ['salary', 'branchOffice']));
+  const { error: employeeError } = validateEmployee(_.pick(req.body, ['salary', 'role', 'branchOffice']));
 
   if (userError) return next(new AppError(userError.details[0].message, 400));
   if (employeeError) return next(new AppError(employeeError.details[0].message, 400));
@@ -95,15 +95,14 @@ const createNewEmployee = catchAsync(async (req, res, next) => {
  */
 const updateOneEmployee = catchAsync(async (req, res, next) => {
   const { error: userError } = validateUserUpdate(
-    _.pick(req.body, ['name', 'address', 'phone', 'password', 'image', 'role', 'verified'])
+    _.pick(req.body, ['name', 'address', 'phone', 'image', 'role', 'verified'])
   );
   const { error: employeeError } = validateEmployeeUpdate(_.pick(req.body, ['salary', 'branchOffice']));
 
   if (userError) return next(new AppError(userError.details[0].message, 400));
   if (employeeError) return next(new AppError(employeeError.details[0].message, 400));
 
-  if (req.body.role === 'customer' || req.body.role === 'admin')
-    return next(new AppError(`"${req.body.role}" is not allowed.`, 403));
+  if (req.body.role === 'customer') return next(new AppError(`"${req.body.role}" role is not allowed.`, 403));
 
   // Set lastUpdatedBy to the logged in user
   req.body.lastUpdatedBy = req.user._id;
@@ -114,7 +113,7 @@ const updateOneEmployee = catchAsync(async (req, res, next) => {
     delete req.body.verified;
     delete req.body.branchOffice;
 
-    if (req.body.role === 'branch-manager')
+    if (req.body.role === 'branch-manager' || req.body.role === 'admin')
       return next(new AppError(`You are not authorized to update "${req.body.role}".`, 403));
   }
 

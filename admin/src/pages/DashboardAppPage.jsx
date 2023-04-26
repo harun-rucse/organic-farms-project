@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '../sections/@dashboard/app';
+import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '@/sections/@dashboard/app';
 
 export default function DashboardAppPage() {
   const theme = useTheme();

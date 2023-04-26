@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { SnackbarProvider } from 'notistack';
 import Router from './routes';
 import ThemeProvider from './theme';
 import { StyledChart } from './components/chart';
@@ -10,9 +11,11 @@ function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ThemeProvider>
-          <ScrollToTop />
-          <StyledChart />
-          <Router />
+          <SnackbarProvider maxSnack={3}>
+            <ScrollToTop />
+            <StyledChart />
+            <Router />
+          </SnackbarProvider>
         </ThemeProvider>
       </BrowserRouter>
     </HelmetProvider>

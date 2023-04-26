@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
-import account from '../../../_mock/account';
-import useResponsive from '../../../hooks/useResponsive';
-import Logo from '../../../components/logo';
-import Scrollbar from '../../../components/scrollbar';
-import NavSection from '../../../components/nav-section';
+import account from '@/_mock/account';
+import useResponsive from '@/hooks/useResponsive';
+import Logo from '@/components/logo';
+import Scrollbar from '@/components/scrollbar';
+import NavSection from '@/components/nav-section';
 import navConfig from './config';
 
 const NAV_WIDTH = 280;

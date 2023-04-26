@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Link, Stack, IconButton, InputAdornment, Alert } from '@mui/material';
-import Iconify from '../../components/iconify';
-import { Form, FormTextField, FormSubmitButton } from '../../components/form';
-import { useLoginMutation } from '../../store/apiSlices/authApiSlice';
-import { setToken } from '../../store/reducers/authReducer';
+import Iconify from '@/components/iconify';
+import { Form, FormTextField, FormSubmitButton } from '@/components/form';
+import { useLoginMutation } from '@/store/apiSlices/authApiSlice';
+import { setToken } from '@/store/reducers/authReducer';
 
 const validationSchema = Yup.object().shape({
   phone: Yup.string()

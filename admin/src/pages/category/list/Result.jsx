@@ -4,25 +4,20 @@ import { Card, Button, Avatar, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
-import Label from '@/components/label';
 import Table from '@/components/Table';
-
-const getColor = (value) => {
-  return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
-};
 
 function Result({ data, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
     {
-      name: 'avatar',
-      label: 'Avatar',
+      name: 'image',
+      label: 'Image',
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="rounded" />;
+          return <Avatar alt="Image" src={value} variant="rounded" />;
         },
       },
     },
@@ -35,46 +30,11 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
-      name: 'phone',
-      label: 'Phone',
+      name: 'description',
+      label: 'Description',
       options: {
         filter: false,
         sort: false,
-      },
-    },
-    {
-      name: 'address',
-      label: 'Address',
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: 'role',
-      label: 'Role',
-      options: {
-        filter: false,
-        sort: true,
-        customBodyRender: (value) => {
-          return <Label color={getColor(value)}>{value}</Label>;
-        },
-      },
-    },
-    {
-      name: 'branch',
-      label: 'Branch',
-      options: {
-        filter: false,
-        sort: true,
-      },
-    },
-    {
-      name: 'salary',
-      label: 'Salary',
-      options: {
-        filter: false,
-        sort: true,
       },
     },
     {
@@ -112,7 +72,7 @@ function Result({ data, handleDeleteClick }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/employee/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/category/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -141,14 +101,10 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data.map((item) => ({
-    avatar: item.user.image,
-    name: item.user.name,
-    phone: item.user.phone,
-    address: item.user.address,
-    role: item.user.role,
-    branch: item.branchOffice.name,
-    salary: item.salary,
+  const categories = data?.map((item) => ({
+    image: item.image,
+    name: item.name,
+    description: item.description,
     createdBy: item.createdBy.name,
     action: item._id,
   }));
@@ -157,10 +113,10 @@ function Result({ data, handleDeleteClick }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Employee List"
-          data={customers}
+          title="Category List"
+          data={categories}
           columns={columns}
-          searchPlaceholder="Search employee"
+          searchPlaceholder="Search category"
           rowsPerPage={10}
         />
       </PerfectScrollbar>

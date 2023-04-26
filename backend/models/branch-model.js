@@ -51,7 +51,10 @@ const validateBranch = (branch) => {
   const schema = Joi.object({
     name: Joi.string().required().label('Name'),
     address: Joi.string().required().label('Address'),
-    phone: Joi.string().min(11).max(14).required().label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` })
+      .required(),
     deliveryFee: Joi.number().min(1).required().label('Delivery Fee'),
     costPercentage: Joi.number().min(1).required().label('Cost Percentage'),
   });
@@ -63,7 +66,9 @@ const validateBranchUpdate = (branch) => {
   const schema = Joi.object({
     name: Joi.string().label('Name'),
     address: Joi.string().label('Address'),
-    phone: Joi.string().min(11).max(14).label('Phone Number'),
+    phone: Joi.string()
+      .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
+      .messages({ 'string.pattern.base': `Phone number is not valid.` }),
     deliveryFee: Joi.number().min(1).label('Delivery Fee'),
     costPercentage: Joi.number().min(1).label('Cost Percentage'),
   });
