@@ -14,7 +14,7 @@ const createNewEmployee = async (payload) => {
   const user = new User(_.pick(payload, ['name', 'phone', 'address', 'password', 'role', 'image', 'verified']));
   await user.save();
 
-  const { branchOffice, salary, createdBy } = payload;
+  const { branchOffice, salary, role, createdBy } = payload;
   const employee = new Employee({
     user: user._id,
     branchOffice,

@@ -1,15 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, Button, Avatar, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import Iconify from '../../../components/iconify';
-import Label from '../../../components/label';
-import Table from '../../../components/Table';
+import Iconify from '@/components/iconify';
+import Label from '@/components/label';
+import Table from '@/components/Table';
 
 const getColor = (value) => {
   return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
 };
 
-function Result() {
+function Result({ data, handleDeleteClick }) {
+  const navigate = useNavigate();
+
   const columns = [
     {
       name: 'avatar',
@@ -18,7 +22,7 @@ function Result() {
         filter: false,
         sort: false,
         customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="square" />;
+          return <Avatar alt="Avatar" src={value} variant="rounded" />;
         },
       },
     },
@@ -108,6 +112,7 @@ function Result() {
                   minWidth: 50,
                   px: 1,
                 }}
+                onClick={() => navigate(`/dashboard/employee/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -123,6 +128,9 @@ function Result() {
                   minWidth: 50,
                   px: 1,
                 }}
+                onClick={() => {
+                  handleDeleteClick(value);
+                }}
               >
                 <Iconify icon="eva:trash-2-fill" />
               </Button>
@@ -133,49 +141,36 @@ function Result() {
     },
   ];
 
-  const data = [
-    {
-      avatar: '/assets/images/avatars/avatar_1.jpg',
-      name: 'John',
-      phone: '01730362665',
-      address: 'Dhaka',
-      role: 'branch-manager',
-      branch: 'Dhaka',
-      salary: 10000,
-      createdBy: 'Admin',
-      action: 1,
-    },
-    {
-      avatar: '/assets/images/avatars/avatar_2.jpg',
-      name: 'John',
-      phone: '01730362665',
-      address: 'Dhaka',
-      role: 'office-employee',
-      branch: 'Dhaka',
-      salary: 10000,
-      createdBy: 'Admin',
-      action: 2,
-    },
-    {
-      avatar: '/assets/images/avatars/avatar_3.jpg',
-      name: 'John',
-      phone: '01730362665',
-      address: 'Dhaka',
-      role: 'office-employee',
-      branch: 'Dhaka',
-      salary: 10000,
-      createdBy: 'Admin',
-      action: 3,
-    },
-  ];
+  const customers = data.map((item) => ({
+    avatar: item.user.image,
+    name: item.user.name,
+    phone: item.user.phone,
+    address: item.user.address,
+    role: item.user.role,
+    branch: item.branchOffice.name,
+    salary: item.salary,
+    createdBy: item.createdBy.name,
+    action: item._id,
+  }));
 
   return (
     <Card>
       <PerfectScrollbar>
-        <Table title="Employee List" data={data} columns={columns} searchPlaceholder="Search employee" />
+        <Table
+          title="Employee List"
+          data={customers}
+          columns={columns}
+          searchPlaceholder="Search employee"
+          rowsPerPage={10}
+        />
       </PerfectScrollbar>
     </Card>
   );
 }
+
+Result.propTypes = {
+  data: PropTypes.array.isRequired,
+  handleDeleteClick: PropTypes.func.isRequired,
+};
 
 export default Result;

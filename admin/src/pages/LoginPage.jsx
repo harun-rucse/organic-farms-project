@@ -2,8 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import { styled } from '@mui/material/styles';
 import { Container, Typography } from '@mui/material';
 import useResponsive from '../hooks/useResponsive';
-import Logo from '../components/logo';
-import { LoginForm } from '../sections/auth';
+import Logo from '@/components/logo';
+import { LoginForm } from '@/sections/auth';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {

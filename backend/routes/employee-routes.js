@@ -1,6 +1,7 @@
 const express = require('express');
 const employeeController = require('../controllers/employee-controller');
 const { auth, restrictTo } = require('../middlewares/auth-middleware');
+const { uploadImage, saveImageUrl } = require('../middlewares/upload-middleware');
 
 const router = express.Router();
 
@@ -13,12 +14,15 @@ router.get(
 
 router.use(restrictTo('admin', 'branch-manager'));
 
-router.route('/').get(employeeController.getAllEmployees).post(employeeController.createNewEmployee);
+router
+  .route('/')
+  .get(employeeController.getAllEmployees)
+  .post([uploadImage, saveImageUrl('employees')], employeeController.createNewEmployee);
 
 router
   .route('/:id')
   .get(employeeController.getOneEmployee)
-  .patch(employeeController.updateOneEmployee)
+  .patch([uploadImage, saveImageUrl('employees')], employeeController.updateOneEmployee)
   .delete(employeeController.deleteOneEmployee);
 
 module.exports = router;

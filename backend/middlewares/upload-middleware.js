@@ -52,7 +52,7 @@ const saveImageUrl = (folderName) => {
     if (!req.file) return next();
 
     // Resize image
-    req.file.buffer = await sharp(req.file.buffer).resize(500, 500).toFormat('jpeg').jpeg({ quality: 90 }).toBuffer();
+    req.file.buffer = await sharp(req.file.buffer).resize(200, 200).toFormat('jpeg').jpeg({ quality: 90 }).toBuffer();
 
     const result = await uploadCloud(req.file.buffer, folderName);
     req.body[req.file.fieldname] = result.url;

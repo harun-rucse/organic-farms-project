@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener } from '@mui/material';
-import { bgBlur } from '../../../utils/cssStyles';
-import Iconify from '../../../components/iconify';
+import { bgBlur } from '@/utils/cssStyles';
+import Iconify from '@/components/iconify';
 
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;

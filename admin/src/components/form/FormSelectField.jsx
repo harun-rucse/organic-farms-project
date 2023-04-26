@@ -11,7 +11,7 @@ function FormSelectField({ name, label, children, ...rest }) {
       select
       name={name}
       label={label}
-      SelectProps={{ native: true }}
+      margin="normal"
       onBlur={() => setFieldTouched(name)}
       onChange={(e) => setFieldValue(name, e.target.value)}
       value={values[name]}
