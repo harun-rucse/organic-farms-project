@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Grid, MenuItem, InputAdornment, IconButton, Button } from '@mui/material';
 import { Form, FormTextField, FormSelectField, FormImagePicker, FormSwitch, FormSubmitButton } from '@/components/form';
 import Iconify from '@/components/iconify';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
@@ -21,11 +22,15 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().label('Image'),
 });
 
-const roles = ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person'];
-
 function CreateForm({ handleOnSubmit, branches, loading }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const { data: currentUser } = useGetProfileQuery();
+
+  const roles =
+    currentUser?.role === 'admin'
+      ? ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person']
+      : ['office-employee', 'warehouse-employee', 'delivery-person'];
 
   return (
     <Form
@@ -37,7 +42,7 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
         role: '',
         salary: '',
         verified: false,
-        branchOffice: '',
+        branchOffice: currentUser?.role !== 'admin' ? currentUser?.branch._id : '',
         image: '',
       }}
       onSubmit={handleOnSubmit}
@@ -60,9 +65,11 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
                     ))}
                   </FormSelectField>
                 </Grid>
-                <Grid item md={12} xs={12}>
-                  <FormSwitch name="verified" label="Employee Verified" required />
-                </Grid>
+                {currentUser?.role === 'admin' && (
+                  <Grid item md={12} xs={12}>
+                    <FormSwitch name="verified" label="Employee Verified" required />
+                  </Grid>
+                )}
               </Grid>
             </CardContent>
           </Card>
@@ -85,7 +92,13 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
                 </Grid>
 
                 <Grid item md={6} xs={12}>
-                  <FormSelectField label="Select branch" name="branchOffice" fullWidth required>
+                  <FormSelectField
+                    label="Select branch"
+                    name="branchOffice"
+                    fullWidth
+                    required
+                    disabled={currentUser?.role !== 'admin'}
+                  >
                     {branches?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
@@ -108,6 +121,7 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
                         </InputAdornment>
                       ),
                     }}
+                    fullWidth
                   />
                 </Grid>
 

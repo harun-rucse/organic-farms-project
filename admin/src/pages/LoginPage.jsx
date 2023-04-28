@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material';
 import useResponsive from '../hooks/useResponsive';
 import Logo from '@/components/logo';
 import { LoginForm } from '@/sections/auth';
+import SimpleLayout from '@/layouts/simple';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -35,7 +36,7 @@ export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
 
   return (
-    <>
+    <SimpleLayout>
       <Helmet>
         <title> Organic-farms | Login </title>
       </Helmet>
@@ -67,6 +68,6 @@ export default function LoginPage() {
           </StyledContent>
         </Container>
       </StyledRoot>
-    </>
+    </SimpleLayout>
   );
 }

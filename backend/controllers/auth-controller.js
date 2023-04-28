@@ -39,6 +39,25 @@ const login = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @desc    Login for organization
+ * @route   POST /api/auth/login-organization
+ * @access  Public
+ */
+
+const loginOrganization = catchAsync(async (req, res, next) => {
+  const { phone, password } = req.body;
+
+  if (!phone || !password) {
+    return next(new AppError('Phone and password is required.', 400));
+  }
+
+  const user = await authService.loginOrganization(phone, password);
+  const token = tokenService.generateJwtToken({ id: user._id, role: user.role });
+
+  res.status(200).json(token);
+});
+
+/**
  * @desc    Get user profile
  * @route   GET /api/auth/profile
  * @access  Private
@@ -84,6 +103,7 @@ const sendOTP = catchAsync(async (req, res, next) => {
 module.exports = {
   register,
   login,
+  loginOrganization,
   getProfile,
   sendOTP,
 };

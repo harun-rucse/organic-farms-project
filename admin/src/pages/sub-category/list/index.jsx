@@ -8,6 +8,7 @@ import useNotification from '@/hooks/useNotification';
 import Loader from '@/components/Loader';
 import ConfirmDeleteModal from '@/components/ConfirmDelete';
 import { useGetAllSubCategoriesQuery, useDeleteSubCategoryMutation } from '@/store/apiSlices/subCategoryApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function List() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Sub-categories </title>
       </Helmet>
@@ -59,6 +60,6 @@ export default function List() {
         description="Are you sure you want to delete this subcategory?"
         isDeleting={isDeleting}
       />
-    </>
+    </DashboardLayout>
   );
 }

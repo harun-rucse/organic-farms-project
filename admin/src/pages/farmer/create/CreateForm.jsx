@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Grid, MenuItem, Button } from '@mui/material';
 import { Form, FormTextField, FormSelectField, FormImagePicker, FormSubmitButton } from '@/components/form';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
@@ -27,6 +28,7 @@ const types = ['bKash', 'Rocket', 'Nagad', 'Bank'];
 
 function CreateForm({ handleOnSubmit, branches, loading }) {
   const navigate = useNavigate();
+  const { data: currentUser } = useGetProfileQuery();
 
   return (
     <Form
@@ -38,7 +40,7 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
         receivePaymentNumber: '+880',
         description: '',
         identity: '',
-        branchOffice: '',
+        branchOffice: currentUser?.role !== 'admin' ? currentUser?.branch._id : '',
         image: '',
       }}
       onSubmit={handleOnSubmit}
@@ -53,7 +55,13 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
                   <FormImagePicker name="image" label="Upload image (optional)" />
                 </Grid>
                 <Grid item md={12} xs={12}>
-                  <FormSelectField label="Select branch" name="branchOffice" fullWidth required>
+                  <FormSelectField
+                    label="Select branch"
+                    name="branchOffice"
+                    fullWidth
+                    required
+                    disabled={currentUser?.role !== 'admin'}
+                  >
                     {branches?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}

@@ -7,6 +7,7 @@ import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetAllCategoriesQuery } from '@/store/apiSlices/categoryApiSlice';
 import { useCreateSubCategoryMutation } from '@/store/apiSlices/subCategoryApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function SubCategoryCreate() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function SubCategoryCreate() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Create new subcategory </title>
       </Helmet>
@@ -46,7 +47,7 @@ function SubCategoryCreate() {
         )}
         <SubCategoryCreateForm handleOnSubmit={handleSubmit} categories={categories} loading={loading} />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

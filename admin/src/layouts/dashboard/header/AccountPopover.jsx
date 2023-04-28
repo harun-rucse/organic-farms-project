@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
-import account from '@/_mock/account';
 import { removeToken } from '@/store/reducers/authReducer';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 const MENU_OPTIONS = [
   {
@@ -23,6 +23,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(null);
+  const { data: account } = useGetProfileQuery();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -35,6 +36,7 @@ export default function AccountPopover() {
   const handleLogout = () => {
     handleClose();
     dispatch(removeToken());
+    window.location.reload();
   };
 
   return (
@@ -56,7 +58,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={account?.image} alt="photoURL" />
       </IconButton>
 
       <Popover
@@ -80,10 +82,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {account?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {account?.phone}
           </Typography>
         </Box>
 

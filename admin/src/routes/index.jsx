@@ -1,8 +1,6 @@
-import { Navigate, useRoutes } from 'react-router-dom';
-import DashboardLayout from '@/layouts/dashboard';
-import SimpleLayout from '@/layouts/simple';
-import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import PrivateOutlet from './PrivateOutlet';
+import PublicOutlet from './PublicOutlet';
 import DashboardAppPage from '@/pages/DashboardAppPage';
 import EmployeeList from '@/pages/employee/list';
 import EmployeeCreate from '@/pages/employee/create';
@@ -21,60 +19,44 @@ import FarmerCreate from '@/pages/farmer/create';
 import FarmerEdit from '@/pages/farmer/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
+import { roles } from '@/utils/access-roles';
 
 export default function Router() {
-  const routes = useRoutes([
-    {
-      path: '/dashboard',
-      element: <DashboardLayout />,
-      children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
-        {
-          path: 'app',
-          element: (
-            <PrivateRoute>
-              <DashboardAppPage />
-            </PrivateRoute>
-          ),
-        },
-        { path: 'employee/create', element: <EmployeeCreate /> },
-        { path: 'employee/edit/:id', element: <EmployeeEdit /> },
-        { path: 'employees', element: <EmployeeList /> },
-        { path: 'branch/create', element: <BranchCreate /> },
-        { path: 'branch/edit/:id', element: <BranchEdit /> },
-        { path: 'branches', element: <BranchList /> },
-        { path: 'category/create', element: <CategoryCreate /> },
-        { path: 'category/edit/:id', element: <CategoryEdit /> },
-        { path: 'categories', element: <CategoryList /> },
-        { path: 'sub-category/create', element: <SubCategoryCreate /> },
-        { path: 'sub-category/edit/:id', element: <SubCategoryEdit /> },
-        { path: 'sub-categories', element: <SubCategoryList /> },
-        { path: 'farmer/create', element: <FarmerCreate /> },
-        { path: 'farmer/edit/:id', element: <FarmerEdit /> },
-        { path: 'farmers', element: <FarmerList /> },
-      ],
-    },
-    {
-      path: 'login',
-      element: (
-        <PublicRoute>
-          <LoginPage />
-        </PublicRoute>
-      ),
-    },
-    {
-      element: <SimpleLayout />,
-      children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" /> },
-      ],
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
-  ]);
-
-  return routes;
+  return (
+    <Routes>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.dashboard} />}>
+        <Route path="app" element={<DashboardAppPage />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.employee} />}>
+        <Route path="employee/create" element={<EmployeeCreate />} />
+        <Route path="employee/edit/:id" element={<EmployeeEdit />} />
+        <Route path="employees" element={<EmployeeList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.branch} />}>
+        <Route path="branch/create" element={<BranchCreate />} />
+        <Route path="branch/edit/:id" element={<BranchEdit />} />
+        <Route path="branches" element={<BranchList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.category} />}>
+        <Route path="category/create" element={<CategoryCreate />} />
+        <Route path="category/edit/:id" element={<CategoryEdit />} />
+        <Route path="categories" element={<CategoryList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.subCategory} />}>
+        <Route path="sub-category/create" element={<SubCategoryCreate />} />
+        <Route path="sub-category/edit/:id" element={<SubCategoryEdit />} />
+        <Route path="sub-categories" element={<SubCategoryList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.farmer} />}>
+        <Route path="farmer/create" element={<FarmerCreate />} />
+        <Route path="farmer/edit/:id" element={<FarmerEdit />} />
+        <Route path="farmers" element={<FarmerList />} />
+      </Route>
+      <Route path="/" element={<PublicOutlet />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="/" element={<Navigate to="/dashboard/app" />} />
+      </Route>
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  );
 }

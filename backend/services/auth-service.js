@@ -28,17 +28,33 @@ const login = async (phone, password) => {
   return user;
 };
 
+const loginOrganization = async (phone, password) => {
+  const user = await User.findOne({
+    phone,
+    role: { $in: ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person'] },
+  }).select('+password');
+
+  const isMatch = await user?.correctPassword(password, user.password);
+
+  if (!isMatch) {
+    throw new AppError('Incorrect phone or password.', 401);
+  }
+
+  return user;
+};
+
 const getProfile = async (id) => {
   const user = await userService.getOneUser({ _id: id });
 
   const branch = await branchService.getOneBranch({ _id: user.employee[0]?.branchOffice });
   if (!branch) return user;
 
-  return { ...user._doc, branch: { name: branch.name, address: branch.address, phone: branch.phone } };
+  return { ...user._doc, branch: { _id: branch._id, name: branch.name, address: branch.address, phone: branch.phone } };
 };
 
 module.exports = {
   register,
   login,
+  loginOrganization,
   getProfile,
 };

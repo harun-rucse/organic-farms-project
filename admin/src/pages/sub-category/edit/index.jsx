@@ -7,6 +7,7 @@ import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetAllCategoriesQuery } from '@/store/apiSlices/categoryApiSlice';
 import { useGetSubCategoryQuery, useUpdateSubCategoryMutation } from '@/store/apiSlices/subCategoryApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function CategoryUpdate() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function CategoryUpdate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Update subcategory </title>
       </Helmet>
@@ -59,7 +60,7 @@ function CategoryUpdate() {
           />
         )}
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

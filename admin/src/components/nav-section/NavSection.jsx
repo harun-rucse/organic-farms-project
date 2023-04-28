@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { Box, List, ListItemText } from '@mui/material';
 import { StyledNavItem, StyledNavItemIcon } from './styles';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 NavSection.propTypes = {
   data: PropTypes.array,
 };
 
 export default function NavSection({ data = [], ...other }) {
+  const { data: currentUser } = useGetProfileQuery();
+
   return (
     <Box {...other}>
       <List disablePadding sx={{ p: 1 }}>
-        {data.map((item) => (
-          <NavItem key={item.title} item={item} />
-        ))}
+        {data.map((item) => item.roles.includes(currentUser?.role) && <NavItem key={item.title} item={item} />)}
       </List>
     </Box>
   );

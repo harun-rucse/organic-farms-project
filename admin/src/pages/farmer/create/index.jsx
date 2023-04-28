@@ -9,6 +9,7 @@ import useNotification from '@/hooks/useNotification';
 import { useGetAllBranchesQuery } from '@/store/apiSlices/branchApiSlice';
 import { useCreateFarmerMutation } from '@/store/apiSlices/farmerApiSlice';
 import { useSendOtpMutation } from '@/store/apiSlices/authApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function EmployeeCreate() {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ function EmployeeCreate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Create new farmer </title>
       </Helmet>
@@ -111,7 +112,7 @@ function EmployeeCreate() {
           isSending={loading}
         />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

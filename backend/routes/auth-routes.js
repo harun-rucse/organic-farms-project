@@ -6,6 +6,7 @@ const { uploadImage, saveImageUrl } = require('../middlewares/upload-middleware'
 const router = express.Router();
 
 router.post('/login', authController.login);
+router.post('/login-organization', authController.loginOrganization);
 router.post('/register', [uploadImage, saveImageUrl('users')], authController.register);
 router.post('/send-otp', authController.sendOTP);
 
