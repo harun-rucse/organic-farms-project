@@ -11,8 +11,15 @@ const authApiSlice = createApi({
         body,
       }),
     }),
+    sendOtp: builder.mutation({
+      query: (body) => ({
+        url: '/auth/send-otp',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApiSlice;
+export const { useLoginMutation, useSendOtpMutation } = authApiSlice;
 export default authApiSlice;

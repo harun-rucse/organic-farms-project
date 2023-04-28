@@ -23,6 +23,16 @@ const navConfig = [
     path: '/dashboard/categories',
     icon: icon('ic_lock'),
   },
+  {
+    title: 'subcategory',
+    path: '/dashboard/sub-categories',
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'farmers',
+    path: '/dashboard/farmers',
+    icon: icon('ic_user'),
+  },
 ];
 
 export default navConfig;

@@ -53,7 +53,7 @@ function CategoryUpdate() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <CategoryEditForm handleOnSubmit={handleSubmit} category={category} loading={loading} />
+        {category && <CategoryEditForm handleOnSubmit={handleSubmit} category={category} loading={loading} />}
       </Container>
     </>
   );

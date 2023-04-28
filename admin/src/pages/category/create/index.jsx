@@ -3,11 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Typography, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CategoryCreateForm from './CreateForm';
-import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useCreateCategoryMutation } from '@/store/apiSlices/categoryApiSlice';
 
-function EmployeeCreate() {
+function CategoryCreate() {
   const navigate = useNavigate();
   const notification = useNotification();
   const [createCategory, { isLoading: loading, isSuccess, isError, error }] = useCreateCategoryMutation();
@@ -52,4 +51,4 @@ function EmployeeCreate() {
   );
 }
 
-export default EmployeeCreate;
+export default CategoryCreate;

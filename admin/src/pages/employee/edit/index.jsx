@@ -60,7 +60,9 @@ function EmployeeUpdate() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <EmployeeEditForm handleOnSubmit={handleSubmit} employee={employee} branches={branches} loading={loading} />
+        {employee && (
+          <EmployeeEditForm handleOnSubmit={handleSubmit} employee={employee} branches={branches} loading={loading} />
+        )}
       </Container>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button, Box } from '@mui/material';
+import { Card, Button, Avatar, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
@@ -16,44 +16,28 @@ function Result({ data, handleDeleteClick }) {
       label: 'Name',
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
-      name: 'phone',
-      label: 'Phone',
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
-      name: 'address',
-      label: 'Address',
+      name: 'category',
+      label: 'Category',
       options: {
         filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: 'deliveryFee',
-      label: 'Delivery Fee',
-      options: {
-        filter: false,
         sort: true,
         customBodyRender: (value) => {
-          return <Label color="primary">Tk. {value}/kg</Label>;
+          return <Label color="error">{value}</Label>;
         },
       },
     },
     {
-      name: 'costPercentage',
-      label: 'Cost Percentage',
+      name: 'categoryImage',
+      label: 'Category Image',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
-          return <Label color="error">{value}%</Label>;
+          return <Avatar alt="Image" src={value} variant="rounded" />;
         },
       },
     },
@@ -100,7 +84,7 @@ function Result({ data, handleDeleteClick }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/branch/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/sub-category/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -129,12 +113,10 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const branches = data?.map((item) => ({
+  const subCategories = data?.map((item) => ({
     name: item.name,
-    phone: item.phone,
-    address: item.address,
-    deliveryFee: item.deliveryFee,
-    costPercentage: item.costPercentage,
+    category: item.category.name,
+    categoryImage: item.category.image,
     createdBy: item.createdBy.name,
     lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
     action: item._id,
@@ -144,10 +126,10 @@ function Result({ data, handleDeleteClick }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Branch List"
-          data={branches}
+          title="Subcategory List"
+          data={subCategories}
           columns={columns}
-          searchPlaceholder="Search branch"
+          searchPlaceholder="Search subcategory"
           rowsPerPage={10}
         />
       </PerfectScrollbar>

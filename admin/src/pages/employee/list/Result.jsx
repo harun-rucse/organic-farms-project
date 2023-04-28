@@ -6,6 +6,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
 import Label from '@/components/label';
 import Table from '@/components/Table';
+import { fShortenNumber } from '@/utils/formatNumber';
 
 const getColor = (value) => {
   return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
@@ -75,6 +76,9 @@ function Result({ data, handleDeleteClick }) {
       options: {
         filter: false,
         sort: true,
+        customBodyRender: (value) => {
+          return <Label color="info">{fShortenNumber(value)}</Label>;
+        },
       },
     },
     {
@@ -86,11 +90,19 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
+      name: 'lastUpdatedBy',
+      label: 'LastUpdatedBy',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
       name: 'action',
       label: 'Action',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return (
             <Box
@@ -141,7 +153,7 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data.map((item) => ({
+  const customers = data?.map((item) => ({
     avatar: item.user.image,
     name: item.user.name,
     phone: item.user.phone,
@@ -150,6 +162,7 @@ function Result({ data, handleDeleteClick }) {
     branch: item.branchOffice.name,
     salary: item.salary,
     createdBy: item.createdBy.name,
+    lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
     action: item._id,
   }));
 
