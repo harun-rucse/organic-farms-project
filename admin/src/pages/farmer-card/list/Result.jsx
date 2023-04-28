@@ -4,33 +4,20 @@ import { Card, Button, Avatar, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
-import Label from '@/components/label';
 import Table from '@/components/Table';
 
-const getColor = (value) => {
-  return value === 'bKash'
-    ? 'success'
-    : value === 'Rocket'
-    ? 'error'
-    : value === 'Nagad'
-    ? 'warning'
-    : value === 'Bank'
-    ? 'info'
-    : 'primary';
-};
-
-function Result({ data, handleDeleteClick, handleCreateCard }) {
+function Result({ data, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
     {
-      name: 'avatar',
-      label: 'Avatar',
+      name: 'image',
+      label: 'Image',
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="rounded" />;
+          return <Avatar alt="Image" src={value} variant="rounded" />;
         },
       },
     },
@@ -43,14 +30,6 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
       },
     },
     {
-      name: 'phone',
-      label: 'Phone',
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
       name: 'address',
       label: 'Address',
       options: {
@@ -59,65 +38,32 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
       },
     },
     {
-      name: 'description',
-      label: 'Description',
+      name: 'phone',
+      label: 'Phone',
       options: {
         filter: false,
         sort: false,
       },
     },
     {
-      name: 'identity',
-      label: 'Identity',
-      options: {
-        filter: false,
-        sort: true,
-        customBodyRender: (value) => {
-          return <Label color="error">{value}</Label>;
-        },
-      },
-    },
-    {
-      name: 'branchOffice',
-      label: 'BranchOffice',
+      name: 'branch',
+      label: 'Branch',
       options: {
         filter: true,
-        sort: true,
+        sort: false,
       },
     },
     {
-      name: 'paymentType',
-      label: 'PaymentType',
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value) => {
-          return <Label color={getColor(value)}>{value}</Label>;
-        },
-      },
-    },
-    {
-      name: 'paymentNumber',
-      label: 'PaymentNumber',
+      name: 'cardNumber',
+      label: 'CardNumber',
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (value) => {
-          return <Label color="info">{value}</Label>;
-        },
       },
     },
     {
       name: 'createdBy',
       label: 'CreatedBy',
-      options: {
-        filter: false,
-        sort: true,
-      },
-    },
-    {
-      name: 'lastUpdatedBy',
-      label: 'LastUpdatedBy',
       options: {
         filter: false,
         sort: true,
@@ -142,21 +88,6 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
               <Button
                 variant="contained"
                 size="small"
-                color="primary"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  minWidth: 50,
-                  px: 1,
-                }}
-                onClick={() => handleCreateCard(value)}
-              >
-                <Iconify icon="mdi:id-card-outline" />
-              </Button>
-              <Button
-                variant="contained"
-                size="small"
                 color="secondary"
                 sx={{
                   display: 'flex',
@@ -165,9 +96,9 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/farmer/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/farmer-card/view/${value}`)}
               >
-                <Iconify icon="eva:edit-2-fill" />
+                <Iconify icon="ic:baseline-remove-red-eye" />
               </Button>
 
               <Button
@@ -194,18 +125,14 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
     },
   ];
 
-  const farmers = data?.map((item) => ({
-    avatar: item.image,
-    name: item.name,
-    phone: item.phone,
-    address: item.address,
-    description: item.description,
-    identity: item.identity,
-    branchOffice: item.branchOffice.name,
-    paymentType: item.receivePayment.type,
-    paymentNumber: item.receivePayment.number,
+  const categories = data?.map((item) => ({
+    image: item.farmer.image,
+    name: item.farmer.name,
+    address: item.farmer.address,
+    phone: item.farmer.phone,
+    branch: item.branchOffice?.name,
+    cardNumber: item.cardNumber,
     createdBy: item.createdBy?.name,
-    lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
     action: item._id,
   }));
 
@@ -213,10 +140,10 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Farmer List"
-          data={farmers}
+          title="Farmer-card List"
+          data={categories}
           columns={columns}
-          searchPlaceholder="Search farmer"
+          searchPlaceholder="Search card"
           rowsPerPage={10}
         />
       </PerfectScrollbar>
@@ -227,7 +154,6 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
 Result.propTypes = {
   data: PropTypes.array.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
-  handleCreateCard: PropTypes.func.isRequired,
 };
 
 export default Result;
