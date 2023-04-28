@@ -36,9 +36,9 @@ farmerCardSchema.pre('save', function (next) {
 });
 
 farmerCardSchema.pre(/^find/, function (next) {
-  this.populate('farmer', 'name address phone image -branchOffice -createdBy -lastUpdatedBy');
+  this.populate('farmer', 'name address phone image identity -branchOffice -createdBy -lastUpdatedBy');
   this.populate('branchOffice', 'name address phone -createdBy -lastUpdatedBy');
-  this.populate('createdBy', 'name phone');
+  this.populate('createdBy', 'name phone role');
 
   next();
 });
