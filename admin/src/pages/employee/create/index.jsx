@@ -7,6 +7,7 @@ import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetAllBranchesQuery } from '@/store/apiSlices/branchApiSlice';
 import { useCreateEmployeeMutation } from '@/store/apiSlices/employeeApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function EmployeeCreate() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function EmployeeCreate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Create new employee </title>
       </Helmet>
@@ -60,7 +61,7 @@ function EmployeeCreate() {
         )}
         <EmployeeCreateForm handleOnSubmit={handleSubmit} branches={branches} loading={loading} />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, CardContent, Grid, MenuItem } from '@mui/material';
 import { Form, FormTextField, FormSelectField, FormImagePicker, FormSwitch, FormSubmitButton } from '@/components/form';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
@@ -19,10 +20,14 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().label('Image'),
 });
 
-const roles = ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person'];
-
 function EditForm({ handleOnSubmit, employee, branches, loading }) {
   const navigate = useNavigate();
+  const { data: currentUser } = useGetProfileQuery();
+
+  const roles =
+    currentUser?.role === 'admin'
+      ? ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person']
+      : ['office-employee', 'warehouse-employee', 'delivery-person'];
 
   return (
     <Form
@@ -56,9 +61,11 @@ function EditForm({ handleOnSubmit, employee, branches, loading }) {
                     ))}
                   </FormSelectField>
                 </Grid>
-                <Grid item md={12} xs={12}>
-                  <FormSwitch name="verified" label="Employee Verified" required />
-                </Grid>
+                {currentUser?.role === 'admin' && (
+                  <Grid item md={12} xs={12}>
+                    <FormSwitch name="verified" label="Employee Verified" required />
+                  </Grid>
+                )}
               </Grid>
             </CardContent>
           </Card>
@@ -81,7 +88,13 @@ function EditForm({ handleOnSubmit, employee, branches, loading }) {
                 </Grid>
 
                 <Grid item md={6} xs={12}>
-                  <FormSelectField label="Select branch" name="branchOffice" fullWidth required>
+                  <FormSelectField
+                    label="Select branch"
+                    name="branchOffice"
+                    fullWidth
+                    required
+                    disabled={currentUser?.role !== 'admin'}
+                  >
                     {branches?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}

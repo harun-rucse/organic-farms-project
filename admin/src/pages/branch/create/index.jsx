@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Typography, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import BranchCreateForm from './CreateForm';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 import useNotification from '@/hooks/useNotification';
 import { useCreateBranchMutation } from '@/store/apiSlices/branchApiSlice';
 
@@ -23,7 +24,7 @@ function BranchCreate() {
   };
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Create new branch </title>
       </Helmet>
@@ -41,7 +42,7 @@ function BranchCreate() {
         )}
         <BranchCreateForm handleOnSubmit={handleSubmit} loading={loading} />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

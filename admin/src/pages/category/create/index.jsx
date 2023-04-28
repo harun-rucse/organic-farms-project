@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CategoryCreateForm from './CreateForm';
 import useNotification from '@/hooks/useNotification';
 import { useCreateCategoryMutation } from '@/store/apiSlices/categoryApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function CategoryCreate() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function CategoryCreate() {
   };
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Create new category </title>
       </Helmet>
@@ -47,7 +48,7 @@ function CategoryCreate() {
         )}
         <CategoryCreateForm handleOnSubmit={handleSubmit} loading={loading} />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

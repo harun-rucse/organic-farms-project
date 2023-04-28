@@ -2,19 +2,22 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '@/sections/@dashboard/app';
+import DashboardLayout from '@/layouts/dashboard';
+import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const { data: currentUser } = useGetProfileQuery();
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Dashboard </title>
       </Helmet>
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Hi {currentUser?.name}, Welcome back
         </Typography>
 
         <Grid container spacing={3}>
@@ -93,6 +96,6 @@ export default function DashboardAppPage() {
           </Grid>
         </Grid>
       </Container>
-    </>
+    </DashboardLayout>
   );
 }

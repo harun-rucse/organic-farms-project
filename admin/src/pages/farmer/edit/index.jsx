@@ -8,6 +8,7 @@ import OTPModal from '@/components/OTPModal';
 import useNotification from '@/hooks/useNotification';
 import { useGetFarmerQuery, useUpdateFarmerMutation } from '@/store/apiSlices/farmerApiSlice';
 import { useSendOtpMutation } from '@/store/apiSlices/authApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function FarmerUpdate() {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ function FarmerUpdate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Update farmer </title>
       </Helmet>
@@ -113,7 +114,7 @@ function FarmerUpdate() {
           isSending={loading}
         />
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

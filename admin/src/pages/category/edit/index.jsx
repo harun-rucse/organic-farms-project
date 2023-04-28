@@ -6,6 +6,7 @@ import CategoryEditForm from './EditForm';
 import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetCategoryQuery, useUpdateCategoryMutation } from '@/store/apiSlices/categoryApiSlice';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function CategoryUpdate() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function CategoryUpdate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Update category </title>
       </Helmet>
@@ -55,7 +56,7 @@ function CategoryUpdate() {
         )}
         {category && <CategoryEditForm handleOnSubmit={handleSubmit} category={category} loading={loading} />}
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 

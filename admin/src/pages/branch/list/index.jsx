@@ -5,6 +5,7 @@ import { Container } from '@mui/material';
 import Result from './Result';
 import PageToolbar from '@/components/PageToolbar';
 import useNotification from '@/hooks/useNotification';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 import Loader from '@/components/Loader';
 import ConfirmDeleteModal from '@/components/ConfirmDelete';
 import { useGetAllBranchesQuery, useDeleteBranchMutation } from '@/store/apiSlices/branchApiSlice';
@@ -38,7 +39,7 @@ export default function List() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Branches </title>
       </Helmet>
@@ -59,6 +60,6 @@ export default function List() {
         description="Are you sure you want to delete this branch?"
         isDeleting={isDeleting}
       />
-    </>
+    </DashboardLayout>
   );
 }

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Typography, Alert } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import BranchEditForm from './EditForm';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetBranchQuery, useUpdateBranchMutation } from '@/store/apiSlices/branchApiSlice';
@@ -31,7 +32,7 @@ function BranchUpdate() {
   }
 
   return (
-    <>
+    <DashboardLayout>
       <Helmet>
         <title> Organic-farms | Update branch </title>
       </Helmet>
@@ -49,7 +50,7 @@ function BranchUpdate() {
         )}
         {branch && <BranchEditForm handleOnSubmit={handleSubmit} branch={branch} loading={loading} />}
       </Container>
-    </>
+    </DashboardLayout>
   );
 }
 
