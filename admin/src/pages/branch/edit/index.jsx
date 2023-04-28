@@ -47,7 +47,7 @@ function BranchUpdate() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <BranchEditForm handleOnSubmit={handleSubmit} branch={branch} loading={loading} />
+        {branch && <BranchEditForm handleOnSubmit={handleSubmit} branch={branch} loading={loading} />}
       </Container>
     </>
   );

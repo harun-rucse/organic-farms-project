@@ -3,6 +3,8 @@ import authApiSlice from './apiSlices/authApiSlice';
 import employeeApiSlice from './apiSlices/employeeApiSlice';
 import branchApiSlice from './apiSlices/branchApiSlice';
 import categoryApiSlice from './apiSlices/categoryApiSlice';
+import subCategoryApiSlice from './apiSlices/subCategoryApiSlice';
+import farmerApiSlice from './apiSlices/farmerApiSlice';
 import authReducer from './reducers/authReducer';
 
 const store = configureStore({
@@ -11,6 +13,8 @@ const store = configureStore({
     [employeeApiSlice.reducerPath]: employeeApiSlice.reducer,
     [branchApiSlice.reducerPath]: branchApiSlice.reducer,
     [categoryApiSlice.reducerPath]: categoryApiSlice.reducer,
+    [subCategoryApiSlice.reducerPath]: subCategoryApiSlice.reducer,
+    [farmerApiSlice.reducerPath]: farmerApiSlice.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -19,6 +23,8 @@ const store = configureStore({
       employeeApiSlice.middleware,
       branchApiSlice.middleware,
       categoryApiSlice.middleware,
+      subCategoryApiSlice.middleware,
+      farmerApiSlice.middleware,
     ]),
 });
 

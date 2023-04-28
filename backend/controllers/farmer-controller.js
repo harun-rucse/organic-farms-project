@@ -37,6 +37,7 @@ const getOneFarmer = catchAsync(async (req, res, next) => {
  * @access  Private(admin, branch-manager, office-employee)
  */
 const createNewFarmer = catchAsync(async (req, res, next) => {
+  req.body.receivePayment = JSON.parse(req.body.receivePayment);
   const { error } = validateFarmer(req.body);
   if (error) return next(new AppError(error.details[0].message, 400));
 
@@ -68,6 +69,7 @@ const createNewFarmer = catchAsync(async (req, res, next) => {
  * @access  Private(admin, branch-manager, office-employee)
  */
 const updateOneFarmer = catchAsync(async (req, res, next) => {
+  req.body.receivePayment = JSON.parse(req.body.receivePayment);
   const { error } = validateFarmerUpdate(req.body);
   if (error) return next(new AppError(error.details[0].message, 400));
 

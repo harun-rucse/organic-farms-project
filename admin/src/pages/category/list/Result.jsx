@@ -46,11 +46,19 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
+      name: 'lastUpdatedBy',
+      label: 'LastUpdatedBy',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
       name: 'action',
       label: 'Action',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return (
             <Box
@@ -106,6 +114,7 @@ function Result({ data, handleDeleteClick }) {
     name: item.name,
     description: item.description,
     createdBy: item.createdBy.name,
+    lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
     action: item._id,
   }));
 

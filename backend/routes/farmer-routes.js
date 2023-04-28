@@ -10,12 +10,12 @@ router.use([auth, restrictTo('admin', 'branch-manager', 'office-employee')]);
 router
   .route('/')
   .get(farmerController.getAllFarmers)
-  .post([verifyOTP, uploadImage, saveImageUrl('farmers')], farmerController.createNewFarmer);
+  .post([uploadImage, verifyOTP, saveImageUrl('farmers')], farmerController.createNewFarmer);
 
 router
   .route('/:id')
   .get(farmerController.getOneFarmer)
-  .patch([verifyOTP, uploadImage, saveImageUrl('farmers')], farmerController.updateOneFarmer)
+  .patch([uploadImage, verifyOTP, saveImageUrl('farmers')], farmerController.updateOneFarmer)
   .delete(farmerController.deleteOneFarmer);
 
 module.exports = router;

@@ -13,6 +13,12 @@ import BranchEdit from '@/pages/branch/edit';
 import CategoryList from '@/pages/category/list';
 import CategoryCreate from '@/pages/category/create';
 import CategoryEdit from '@/pages/category/edit';
+import SubCategoryList from '@/pages/sub-category/list';
+import SubCategoryCreate from '@/pages/sub-category/create';
+import SubCategoryEdit from '@/pages/sub-category/edit';
+import FarmerList from '@/pages/farmer/list';
+import FarmerCreate from '@/pages/farmer/create';
+import FarmerEdit from '@/pages/farmer/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 
@@ -40,6 +46,12 @@ export default function Router() {
         { path: 'category/create', element: <CategoryCreate /> },
         { path: 'category/edit/:id', element: <CategoryEdit /> },
         { path: 'categories', element: <CategoryList /> },
+        { path: 'sub-category/create', element: <SubCategoryCreate /> },
+        { path: 'sub-category/edit/:id', element: <SubCategoryEdit /> },
+        { path: 'sub-categories', element: <SubCategoryList /> },
+        { path: 'farmer/create', element: <FarmerCreate /> },
+        { path: 'farmer/edit/:id', element: <FarmerEdit /> },
+        { path: 'farmers', element: <FarmerList /> },
       ],
     },
     {

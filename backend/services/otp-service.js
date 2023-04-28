@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const smsService = require('./sms-service');
 
 const generateOTP = () => {
-  return crypto.randomInt(100000, 999999).toString();
+  return crypto.randomInt(1000, 9999).toString();
 };
 
 const hashOTP = (otp) => {
