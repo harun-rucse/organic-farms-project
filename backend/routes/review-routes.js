@@ -1,10 +1,10 @@
 const express = require('express');
 const reviewController = require('../controllers/review-controller');
-const { auth, restrictTo } = require('../middlewares/auth-middleware');
+const { auth, restrictTo, verified } = require('../middlewares/auth-middleware');
 
 const router = express.Router();
 
-router.use(auth);
+router.use([auth, verified]);
 
 router
   .route('/')

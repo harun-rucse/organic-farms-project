@@ -40,6 +40,10 @@ const loginOrganization = async (phone, password) => {
     throw new AppError('Incorrect phone or password.', 401);
   }
 
+  if (!user.verified) {
+    throw new AppError('Your account is not verified.', 401);
+  }
+
   return user;
 };
 

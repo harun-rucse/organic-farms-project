@@ -1,10 +1,10 @@
 const express = require('express');
 const salaryController = require('../controllers/salary-controller');
-const { auth, restrictTo } = require('../middlewares/auth-middleware');
+const { auth, restrictTo, verified } = require('../middlewares/auth-middleware');
 
 const router = express.Router();
 
-router.use([auth, restrictTo('admin')]);
+router.use([auth, verified, restrictTo('admin')]);
 
 router.route('/').get(salaryController.getAllSalaries).post(salaryController.createNewSalary);
 
