@@ -16,8 +16,9 @@ export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading } = useGetAllFarmersQuery();
-  const [deleteFarmer, { isLoading: isDeleting, isSuccess }] = useDeleteFarmerMutation();
+  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllFarmersQuery();
+  const [deleteFarmer, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
+    useDeleteFarmerMutation();
   const [createFarmerCard, { data: cardData, isSuccess: isCreated, isError, error: cardError }] =
     useCreateFarmerCardMutation();
 
@@ -27,6 +28,12 @@ export default function List() {
       notification('Farmer deleted successfully', 'success');
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (isDeleteError) {
+      setOpen(false);
+    }
+  }, [isDeleteError]);
 
   useEffect(() => {
     if (isCreated) {
@@ -63,9 +70,11 @@ export default function List() {
           buttonLabel="Add new farmer"
           handleOnClick={() => navigate('/dashboard/farmer/create')}
         />
-        {isError && (
+        {(isError || isDeleteError || isFetchError) && (
           <Stack spacing={2} sx={{ mb: 3 }}>
-            <Alert severity="error">{cardError?.data?.message}</Alert>
+            <Alert severity="error">
+              {cardError?.data?.message || deleteError?.data?.message || fetchError?.data?.message}
+            </Alert>
           </Stack>
         )}
         <Result data={data} handleDeleteClick={handleDeleteClick} handleCreateCard={handleCreateCard} />

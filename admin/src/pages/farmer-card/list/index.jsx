@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Container, Stack, Alert } from '@mui/material';
 import Result from './Result';
-import PageToolbar from '@/components/PageToolbar';
 import useNotification from '@/hooks/useNotification';
 import Loader from '@/components/Loader';
 import ConfirmDeleteModal from '@/components/ConfirmDelete';
@@ -11,12 +9,12 @@ import { useGetAllFarmerCardsQuery, useDeleteFarmerCardMutation } from '@/store/
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
-  const navigate = useNavigate();
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading } = useGetAllFarmerCardsQuery();
-  const [deleteFarmerCard, { isLoading: isDeleting, isSuccess }] = useDeleteFarmerCardMutation();
+  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllFarmerCardsQuery();
+  const [deleteFarmerCard, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
+    useDeleteFarmerCardMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -24,6 +22,12 @@ export default function List() {
       notification('Card deleted successfully', 'success');
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (isDeleteError) {
+      setOpen(false);
+    }
+  }, [isDeleteError]);
 
   const handleDeleteClick = (id) => {
     setDeleteId(id);
@@ -45,6 +49,11 @@ export default function List() {
       </Helmet>
 
       <Container>
+        {(isFetchError || isDeleteError) && (
+          <Stack spacing={2} sx={{ mb: 3 }}>
+            <Alert severity="error">{fetchError?.data?.message || deleteError?.data?.message}</Alert>
+          </Stack>
+        )}
         <Result data={data} handleDeleteClick={handleDeleteClick} />
       </Container>
       <ConfirmDeleteModal

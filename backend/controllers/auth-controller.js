@@ -52,7 +52,7 @@ const loginOrganization = catchAsync(async (req, res, next) => {
   }
 
   const user = await authService.loginOrganization(phone, password);
-  const token = tokenService.generateJwtToken({ id: user._id, role: user.role });
+  const token = tokenService.generateJwtToken({ id: user._id, role: user.role, verified: user.verified });
 
   res.status(200).json(token);
 });

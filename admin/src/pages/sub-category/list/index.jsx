@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Container, Stack, Alert } from '@mui/material';
 import Result from './Result';
 import PageToolbar from '@/components/PageToolbar';
 import useNotification from '@/hooks/useNotification';
@@ -15,8 +15,9 @@ export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading } = useGetAllSubCategoriesQuery();
-  const [deleteSubCategory, { isLoading: isDeleting, isSuccess }] = useDeleteSubCategoryMutation();
+  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllSubCategoriesQuery();
+  const [deleteSubCategory, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
+    useDeleteSubCategoryMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -24,6 +25,12 @@ export default function List() {
       notification('Subcategory deleted successfully', 'success');
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (isDeleteError) {
+      setOpen(false);
+    }
+  }, [isDeleteError]);
 
   const handleDeleteClick = (id) => {
     setDeleteId(id);
@@ -50,6 +57,11 @@ export default function List() {
           buttonLabel="Add new subcategory"
           handleOnClick={() => navigate('/dashboard/sub-category/create')}
         />
+        {(isFetchError || isDeleteError) && (
+          <Stack spacing={2} sx={{ mb: 3 }}>
+            <Alert severity="error">{fetchError?.data?.message || deleteError?.data?.message}</Alert>
+          </Stack>
+        )}
         <Result data={data} handleDeleteClick={handleDeleteClick} />
       </Container>
       <ConfirmDeleteModal
