@@ -6,4 +6,5 @@ export const roles = {
   subCategory: ['admin', 'branch-manager', 'office-employee'],
   farmer: ['admin', 'branch-manager', 'office-employee'],
   farmerCard: ['admin', 'branch-manager', 'office-employee'],
+  product: ['admin', 'branch-manager', 'office-employee'],
 };

@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
     .label('Phone'),
   description: Yup.string().label('Description'),
   identity: Yup.string().required().label('Identity'),
-  branchOffice: Yup.string().label('Branch'),
+  branchOffice: Yup.string().required().label('Branch'),
   image: Yup.string().label('Image'),
 });
 
