@@ -10,12 +10,12 @@ router.use([auth, verified, restrictTo('admin', 'branch-manager', 'office-employ
 router
   .route('/')
   .get(productController.getAllProducts)
-  .post([verifyOTP, uploadImages, saveImagesUrl('products')], productController.createNewProduct);
+  .post([uploadImages, verifyOTP, saveImagesUrl('products')], productController.createNewProduct);
 
 router
   .route('/:id')
   .get(productController.getOneProduct)
-  .patch([verifyOTP, uploadImages, saveImagesUrl('products')], productController.updateOneProduct)
+  .patch([uploadImages, verifyOTP, saveImagesUrl('products')], productController.updateOneProduct)
   .delete(productController.deleteOneProduct);
 
 module.exports = router;

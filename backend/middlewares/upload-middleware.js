@@ -63,7 +63,7 @@ const saveImageUrl = (folderName) => {
 
 const saveImagesUrl = (folderName) => {
   return catchAsync(async (req, res, next) => {
-    if (!req.files) return next();
+    if (!req.files.length) return next();
 
     // Resize images and upload to cloud
     const images = await Promise.all(

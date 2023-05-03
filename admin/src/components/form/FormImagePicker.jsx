@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 import { TextField, Box, Avatar } from '@mui/material';
 
-function FormImagePicker({ name, label, ...rest }) {
+function FormImagePicker({ name, label, multiple = false, ...rest }) {
   const { touched, errors, setFieldValue, values, setFieldTouched } = useFormikContext();
   const [imageUrl, setImageUrl] = useState(values[name] ? values[name] : '');
   const fileInputRef = useRef();
@@ -57,7 +57,10 @@ function FormImagePicker({ name, label, ...rest }) {
           handleImageChange(e);
           setFieldValue(name, e.target.files);
         }}
-        // value={values[name]}
+        inputProps={{
+          multiple: multiple,
+          accept: 'image/*',
+        }}
         {...rest}
       />
 

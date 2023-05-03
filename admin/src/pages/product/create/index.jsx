@@ -2,26 +2,30 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Typography, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import FarmerCreateForm from './CreateForm';
+import ProductCreateForm from './CreateForm';
 import Loader from '@/components/Loader';
 import OTPModal from '@/components/OTPModal';
 import useNotification from '@/hooks/useNotification';
+import { useGetAllSubCategoriesQuery } from '@/store/apiSlices/subCategoryApiSlice';
 import { useGetAllBranchesQuery } from '@/store/apiSlices/branchApiSlice';
-import { useCreateFarmerMutation } from '@/store/apiSlices/farmerApiSlice';
+import { useGetAllFarmersQuery } from '@/store/apiSlices/farmerApiSlice';
+import { useCreateProductMutation } from '@/store/apiSlices/productApiSlice';
 import { useSendOtpMutation } from '@/store/apiSlices/authApiSlice';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
-function FarmerCreate() {
+function ProductCreate() {
   const navigate = useNavigate();
   const notification = useNotification();
   const [values, setValues] = useState(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState({});
 
-  const { data: branches, isLoading } = useGetAllBranchesQuery();
+  const { data: subcategories, isLoading } = useGetAllSubCategoriesQuery();
+  const { data: farmers, isLoading: isFarmerLoading } = useGetAllFarmersQuery();
+  const { data: branches, isLoading: isBranchLoading } = useGetAllBranchesQuery();
   const [sendOtp, { isLoading: isOtpLoading, isSuccess: isOtpSuccess, data: otpData, isError, error: otpError }] =
     useSendOtpMutation();
-  const [createFarmer, { isLoading: loading, isSuccess, error: farmerError }] = useCreateFarmerMutation();
+  const [createProduct, { isLoading: loading, isSuccess, error: productError }] = useCreateProductMutation();
 
   useEffect(() => {
     if (isOtpSuccess) {
@@ -35,24 +39,26 @@ function FarmerCreate() {
 
   useEffect(() => {
     if (isSuccess) {
-      notification('Farmer created successfully', 'success');
+      notification('Product created successfully', 'success');
       setOpen(false);
-      navigate('/dashboard/farmers');
+      navigate('/dashboard/products');
     }
   }, [isSuccess, navigate, notification]);
 
   useEffect(() => {
-    if (farmerError) {
+    if (productError) {
       setMessage({
-        text: farmerError?.data?.message,
+        text: productError?.data?.message,
         variant: 'error',
       });
     }
-  }, [farmerError]);
+  }, [productError]);
 
   const handleSubmit = (values) => {
-    setValues(values);
-    sendOtp({ phone: values.phone });
+    const farmer = farmers?.find((farmer) => farmer._id === values.farmer);
+
+    setValues({ ...values, phone: farmer?.phone });
+    sendOtp({ phone: farmer?.phone });
   };
 
   const handleClick = (otp) => {
@@ -60,20 +66,27 @@ function FarmerCreate() {
 
     const formData = new FormData();
     formData.append('name', values.name);
-    formData.append('phone', values.phone);
-    formData.append('address', values.address);
-    formData.append(
-      'receivePayment',
-      JSON.stringify({ type: values.receivePaymentType, number: values.receivePaymentNumber })
-    );
+    formData.append('subcategory', values.subcategory);
+    formData.append('price', values.price);
     if (values.description) formData.append('description', values.description);
-    formData.append('identity', values.identity);
+    formData.append('minimumOrder', values.minimumOrder);
+    formData.append('maximumOrder', values.maximumOrder);
+    formData.append('maxDeliveryDays', values.maxDeliveryDays);
+    formData.append('farmer', values.farmer);
+    formData.append('inStock', values.inStock);
+    formData.append('active', values.active);
     formData.append('branchOffice', values.branchOffice);
-    if (values.image.length) formData.append('image', values.image[0]);
+
+    if (values.images?.length) {
+      [...values.images].forEach((image) => {
+        formData.append('images', image);
+      });
+    }
+
     formData.append('otp', otp);
     formData.append('hash', otpData?.hash);
 
-    createFarmer(formData);
+    createProduct(formData);
   };
 
   const handleCloseModal = () => {
@@ -81,20 +94,20 @@ function FarmerCreate() {
     setOpen(false);
   };
 
-  if (isLoading) {
-    return <Loader isLoading={isLoading} />;
+  if (isLoading || isFarmerLoading || isBranchLoading) {
+    return <Loader isLoading={isLoading || isFarmerLoading || isBranchLoading} />;
   }
 
   return (
     <DashboardLayout>
       <Helmet>
-        <title> Organic-farms | Create new farmer </title>
+        <title> Organic-farms | Create new product </title>
       </Helmet>
 
       <Container>
         <Stack mb={4}>
           <Typography variant="h4" gutterBottom>
-            Create new farmer
+            Create new product
           </Typography>
         </Stack>
         {isError && (
@@ -102,7 +115,13 @@ function FarmerCreate() {
             <Alert severity="error">{otpError?.data?.message}</Alert>
           </Stack>
         )}
-        <FarmerCreateForm handleOnSubmit={handleSubmit} branches={branches} loading={isOtpLoading} />
+        <ProductCreateForm
+          handleOnSubmit={handleSubmit}
+          subcategories={subcategories}
+          farmers={farmers}
+          branches={branches}
+          loading={isOtpLoading}
+        />
         <OTPModal
           open={open}
           handleClose={handleCloseModal}
@@ -116,4 +135,4 @@ function FarmerCreate() {
   );
 }
 
-export default FarmerCreate;
+export default ProductCreate;

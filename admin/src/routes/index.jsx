@@ -19,6 +19,9 @@ import FarmerCreate from '@/pages/farmer/create';
 import FarmerEdit from '@/pages/farmer/edit';
 import FarmerCardList from '@/pages/farmer-card/list';
 import FarmerCardView from '@/pages/farmer-card/view';
+import ProductList from '@/pages/product/list';
+import ProductCreate from '@/pages/product/create';
+import ProductEdit from '@/pages/product/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -61,6 +64,11 @@ export default function Router() {
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.farmerCard} />}>
         <Route path="farmer-card/view/:id" element={<FarmerCardView />} />
         <Route path="farmer-cards" element={<FarmerCardList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.product} />}>
+        <Route path="product/create" element={<ProductCreate />} />
+        <Route path="product/edit/:id" element={<ProductEdit />} />
+        <Route path="products" element={<ProductList />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
