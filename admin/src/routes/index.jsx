@@ -22,6 +22,8 @@ import FarmerCardView from '@/pages/farmer-card/view';
 import ProductList from '@/pages/product/list';
 import ProductCreate from '@/pages/product/create';
 import ProductEdit from '@/pages/product/edit';
+import ReviewList from '@/pages/review/list';
+import ReviewEdit from '@/pages/review/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -69,6 +71,10 @@ export default function Router() {
         <Route path="product/create" element={<ProductCreate />} />
         <Route path="product/edit/:id" element={<ProductEdit />} />
         <Route path="products" element={<ProductList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.review} />}>
+        <Route path="reviews" element={<ReviewList />} />
+        <Route path="review/edit/:id" element={<ReviewEdit />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

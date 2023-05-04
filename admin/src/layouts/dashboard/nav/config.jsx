@@ -52,6 +52,12 @@ const navConfig = [
     icon: icon('ic_lock'),
     roles: roles.farmerCard,
   },
+  {
+    title: 'reviews',
+    path: '/dashboard/reviews',
+    icon: icon('ic_lock'),
+    roles: roles.review,
+  },
 ];
 
 export default navConfig;
