@@ -39,10 +39,10 @@ const getOneEmployee = catchAsync(async (req, res, next) => {
   const filter =
     req.user.role === 'admin' ? { _id: req.params.id } : { _id: req.params.id, branchOffice: req.user.branchOffice };
 
-  const Employee = await employeeService.getOneEmployee(filter);
-  if (!Employee) return next(new AppError('No employee found with this id.', 404));
+  const employee = await employeeService.getOneEmployee(filter);
+  if (!employee) return next(new AppError('No employee found with this id.', 404));
 
-  res.status(200).json(Employee);
+  res.status(200).json(employee);
 });
 
 /**

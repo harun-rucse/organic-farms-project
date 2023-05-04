@@ -13,7 +13,7 @@ export default function NavSection({ data = [], ...other }) {
 
   return (
     <Box {...other}>
-      <List disablePadding sx={{ p: 1 }}>
+      <List disablePadding sx={{ p: 1, height: 500, overflowY: 'auto' }}>
         {data.map((item) => item.roles.includes(currentUser?.role) && <NavItem key={item.title} item={item} />)}
       </List>
     </Box>

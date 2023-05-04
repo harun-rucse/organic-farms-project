@@ -5,21 +5,21 @@ import Result from './Result';
 import useNotification from '@/hooks/useNotification';
 import Loader from '@/components/Loader';
 import ConfirmDeleteModal from '@/components/ConfirmDelete';
-import { useGetAllReviewsQuery, useDeleteReviewMutation } from '@/store/apiSlices/reviewApiSlice';
+import { useGetAllCustomersQuery, useDeleteCustomerMutation } from '@/store/apiSlices/customerApiSlice';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllReviewsQuery();
-  const [deleteReview, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
-    useDeleteReviewMutation();
+  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllCustomersQuery();
+  const [deleteCustomer, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
+    useDeleteCustomerMutation();
 
   useEffect(() => {
     if (isSuccess) {
       setOpen(false);
-      notification('Review deleted successfully', 'success');
+      notification('Customer deleted successfully', 'success');
     }
   }, [isSuccess]);
 
@@ -35,7 +35,7 @@ export default function List() {
   };
 
   const handleDelete = () => {
-    deleteReview(deleteId);
+    deleteCustomer(deleteId);
   };
 
   if (isLoading) {
@@ -45,7 +45,7 @@ export default function List() {
   return (
     <DashboardLayout>
       <Helmet>
-        <title> Organic-farms | Reviews </title>
+        <title> Organic-farms | Customers </title>
       </Helmet>
 
       <Container>
@@ -60,8 +60,8 @@ export default function List() {
         open={open}
         handleClose={() => setOpen(false)}
         handleDelete={handleDelete}
-        title="Delete Review"
-        description="Are you sure you want to delete this review?"
+        title="Delete Customer"
+        description="Are you sure you want to delete this customer?"
         isDeleting={isDeleting}
       />
     </DashboardLayout>

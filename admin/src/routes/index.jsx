@@ -24,6 +24,8 @@ import ProductCreate from '@/pages/product/create';
 import ProductEdit from '@/pages/product/edit';
 import ReviewList from '@/pages/review/list';
 import ReviewEdit from '@/pages/review/edit';
+import CustomerList from '@/pages/customer/list';
+import CustomerEdit from '@/pages/customer/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -75,6 +77,10 @@ export default function Router() {
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.review} />}>
         <Route path="reviews" element={<ReviewList />} />
         <Route path="review/edit/:id" element={<ReviewEdit />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.customer} />}>
+        <Route path="customers" element={<CustomerList />} />
+        <Route path="customer/edit/:id" element={<CustomerEdit />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

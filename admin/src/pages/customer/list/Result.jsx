@@ -4,35 +4,30 @@ import { Card, Button, Avatar, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
-import Label from '@/components/label';
 import Table from '@/components/Table';
-import { fShortenNumber } from '@/utils/formatNumber';
-
-const getColor = (value) => {
-  return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
-};
+import Label from '@/components/label';
 
 function Result({ data, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
     {
-      name: 'avatar',
-      label: 'Avatar',
+      name: 'name',
+      label: 'Customer Name',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'image',
+      label: 'Image',
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="rounded" />;
+          return <Avatar alt="Image" src={value} variant="rounded" />;
         },
-      },
-    },
-    {
-      name: 'name',
-      label: 'Name',
-      options: {
-        filter: false,
-        sort: false,
       },
     },
     {
@@ -40,7 +35,7 @@ function Result({ data, handleDeleteClick }) {
       label: 'Phone',
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -52,49 +47,16 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
-      name: 'role',
-      label: 'Role',
+      name: 'verified',
+      label: 'Verified',
       options: {
         filter: false,
         sort: true,
         customBodyRender: (value) => {
-          return <Label color={getColor(value)}>{value}</Label>;
+          return (
+            <Label color={value === true ? 'success' : 'error'}>{value === true ? 'Verified' : 'Not Verified'}</Label>
+          );
         },
-      },
-    },
-    {
-      name: 'branch',
-      label: 'Branch',
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: 'salary',
-      label: 'Salary',
-      options: {
-        filter: false,
-        sort: true,
-        customBodyRender: (value) => {
-          return <Label color="info">{fShortenNumber(value)}</Label>;
-        },
-      },
-    },
-    {
-      name: 'createdBy',
-      label: 'CreatedBy',
-      options: {
-        filter: false,
-        sort: true,
-      },
-    },
-    {
-      name: 'lastUpdatedBy',
-      label: 'LastUpdatedBy',
-      options: {
-        filter: false,
-        sort: true,
       },
     },
     {
@@ -124,7 +86,7 @@ function Result({ data, handleDeleteClick }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/employee/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/customer/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -154,15 +116,11 @@ function Result({ data, handleDeleteClick }) {
   ];
 
   const customers = data?.map((item) => ({
-    avatar: item.user.image,
-    name: item.user.name,
-    phone: item.user.phone,
-    address: item.user.address,
-    role: item.user.role,
-    branch: item.branchOffice.name,
-    salary: item.salary,
-    createdBy: item.createdBy.name,
-    lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
+    name: item.name,
+    image: item.image,
+    phone: item.phone,
+    address: item.address,
+    verified: item.verified,
     action: item._id,
   }));
 
@@ -170,10 +128,10 @@ function Result({ data, handleDeleteClick }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Employee List"
+          title="Customer List"
           data={customers}
           columns={columns}
-          searchPlaceholder="Search employee"
+          searchPlaceholder="Search customers"
           rowsPerPage={10}
         />
       </PerfectScrollbar>

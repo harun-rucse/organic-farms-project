@@ -12,7 +12,7 @@ const register = async (payload) => {
   }
 
   // Save to the database
-  const user = await userService.createNewUser(_.pick(payload, ['name', 'phone', 'address', 'password', 'image']));
+  const user = await userService.createNewUser(payload);
 
   return user;
 };
@@ -31,7 +31,7 @@ const login = async (phone, password) => {
 const loginOrganization = async (phone, password) => {
   const user = await User.findOne({
     phone,
-    role: { $in: ['admin', 'branch-manager', 'office-employee', 'warehouse-employee', 'delivery-person'] },
+    role: { $in: ['admin', 'branch-manager', 'office-employee', 'warehouse-employee'] },
   }).select('+password');
 
   const isMatch = await user?.correctPassword(password, user.password);
