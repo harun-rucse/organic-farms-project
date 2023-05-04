@@ -1,7 +1,7 @@
 const { User } = require('../models/user-model');
 
-const getAllUsers = () => {
-  return User.find();
+const getAllUsers = (filter = {}) => {
+  return User.find(filter);
 };
 
 const getOneUser = (filter) => {

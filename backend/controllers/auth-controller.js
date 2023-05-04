@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const authService = require('../services/auth-service');
 const tokenService = require('../services/token-service');
 const otpService = require('../services/otp-service');
@@ -14,7 +15,8 @@ const register = catchAsync(async (req, res, next) => {
   const { error } = validateUser(req.body);
   if (error) return next(new AppError(error.details[0].message, 400));
 
-  const user = await authService.register(req.body);
+  const payload = _.pick(req.body, ['name', 'phone', 'address', 'password', 'image']);
+  const user = await authService.register({ ...payload, role: 'customer', verified: true });
   const token = tokenService.generateJwtToken({ id: user._id });
 
   res.status(201).json(token);

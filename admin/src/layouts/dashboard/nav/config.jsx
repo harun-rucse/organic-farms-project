@@ -11,28 +11,22 @@ const navConfig = [
     roles: roles.dashboard,
   },
   {
-    title: 'employee',
-    path: '/dashboard/employees',
-    icon: icon('ic_user'),
-    roles: roles.employee,
-  },
-  {
     title: 'branch',
     path: '/dashboard/branches',
     icon: icon('ic_blog'),
     roles: roles.branch,
   },
   {
-    title: 'category',
-    path: '/dashboard/categories',
-    icon: icon('ic_lock'),
-    roles: roles.category,
+    title: 'employee',
+    path: '/dashboard/employees',
+    icon: icon('ic_user'),
+    roles: roles.employee,
   },
   {
-    title: 'subcategory',
-    path: '/dashboard/sub-categories',
-    icon: icon('ic_lock'),
-    roles: roles.subCategory,
+    title: 'customers',
+    path: '/dashboard/customers',
+    icon: icon('ic_user'),
+    roles: roles.customer,
   },
   {
     title: 'farmers',
@@ -47,10 +41,28 @@ const navConfig = [
     roles: roles.farmerCard,
   },
   {
+    title: 'category',
+    path: '/dashboard/categories',
+    icon: icon('ic_lock'),
+    roles: roles.category,
+  },
+  {
+    title: 'subcategory',
+    path: '/dashboard/sub-categories',
+    icon: icon('ic_lock'),
+    roles: roles.subCategory,
+  },
+  {
     title: 'products',
     path: '/dashboard/products',
     icon: icon('ic_lock'),
     roles: roles.farmerCard,
+  },
+  {
+    title: 'reviews',
+    path: '/dashboard/reviews',
+    icon: icon('ic_lock'),
+    roles: roles.review,
   },
 ];
 

@@ -4,12 +4,20 @@ import { Card, Button, Avatar, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
-import Label from '@/components/label';
 import Table from '@/components/Table';
-import { fShortenNumber } from '@/utils/formatNumber';
+import Label from '@/components/label';
 
-const getColor = (value) => {
-  return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
+const getRatingColor = (rating) => {
+  if (rating >= 4) {
+    return 'success';
+  }
+  if (rating >= 3) {
+    return 'warning';
+  }
+  if (rating >= 2) {
+    return 'error';
+  }
+  return 'error';
 };
 
 function Result({ data, handleDeleteClick }) {
@@ -17,83 +25,86 @@ function Result({ data, handleDeleteClick }) {
 
   const columns = [
     {
-      name: 'avatar',
-      label: 'Avatar',
+      name: 'customerName',
+      label: 'Customer Name',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'customerImage',
+      label: 'Customer Image',
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value) => {
-          return <Avatar alt="Avatar" src={value} variant="rounded" />;
+          return <Avatar alt="Image" src={value} variant="rounded" />;
         },
       },
     },
     {
-      name: 'name',
-      label: 'Name',
+      name: 'productName',
+      label: 'Product Name',
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
-      name: 'phone',
-      label: 'Phone',
+      name: 'productImage',
+      label: 'Product Image',
       options: {
         filter: false,
         sort: false,
+        customBodyRender: (value) => {
+          return <Avatar alt="Image" src={value} variant="rounded" />;
+        },
       },
     },
     {
-      name: 'address',
-      label: 'Address',
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
-      name: 'role',
-      label: 'Role',
+      name: 'category',
+      label: 'Category',
       options: {
         filter: false,
         sort: true,
         customBodyRender: (value) => {
-          return <Label color={getColor(value)}>{value}</Label>;
+          return <Label color="primary">{value}</Label>;
         },
       },
     },
     {
-      name: 'branch',
-      label: 'Branch',
+      name: 'subCategory',
+      label: 'Sub Category',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: 'rating',
+      label: 'Rating',
       options: {
         filter: true,
         sort: true,
-      },
-    },
-    {
-      name: 'salary',
-      label: 'Salary',
-      options: {
-        filter: false,
-        sort: true,
         customBodyRender: (value) => {
-          return <Label color="info">{fShortenNumber(value)}</Label>;
+          return <Label color={getRatingColor(value)}>{value}</Label>;
         },
       },
     },
     {
-      name: 'createdBy',
-      label: 'CreatedBy',
+      name: 'review',
+      label: 'Review',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
-      name: 'lastUpdatedBy',
-      label: 'LastUpdatedBy',
+      name: 'branchOffice',
+      label: 'Branch',
       options: {
-        filter: false,
+        filter: true,
         sort: true,
       },
     },
@@ -124,7 +135,7 @@ function Result({ data, handleDeleteClick }) {
                   minWidth: 50,
                   px: 1,
                 }}
-                onClick={() => navigate(`/dashboard/employee/edit/${value}`)}
+                onClick={() => navigate(`/dashboard/review/edit/${value}`)}
               >
                 <Iconify icon="eva:edit-2-fill" />
               </Button>
@@ -153,16 +164,16 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data?.map((item) => ({
-    avatar: item.user.image,
-    name: item.user.name,
-    phone: item.user.phone,
-    address: item.user.address,
-    role: item.user.role,
-    branch: item.branchOffice.name,
-    salary: item.salary,
-    createdBy: item.createdBy.name,
-    lastUpdatedBy: item.lastUpdatedBy ? item.lastUpdatedBy.name : 'N/A',
+  const reviews = data?.map((item) => ({
+    customerName: item.user.name,
+    customerImage: item.user.image,
+    productName: item.product.name,
+    productImage: item.product.images[0],
+    category: item.product.subcategory.category.name,
+    subCategory: item.product.subcategory.name,
+    rating: item.rating,
+    review: item.review,
+    branchOffice: item.branchOffice.name,
     action: item._id,
   }));
 
@@ -170,10 +181,10 @@ function Result({ data, handleDeleteClick }) {
     <Card>
       <PerfectScrollbar>
         <Table
-          title="Employee List"
-          data={customers}
+          title="Review List"
+          data={reviews}
           columns={columns}
-          searchPlaceholder="Search employee"
+          searchPlaceholder="Search reviews"
           rowsPerPage={10}
         />
       </PerfectScrollbar>

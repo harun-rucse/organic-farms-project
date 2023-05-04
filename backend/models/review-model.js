@@ -64,8 +64,8 @@ reviewSchema.statics.calcAverageRatings = async function (productId) {
 };
 
 reviewSchema.pre(/^find/, function (next) {
-  this.populate('product', 'name price -farmer -branchOffice');
-  this.populate('user', 'name phone');
+  this.populate('product', 'name price images -farmer -branchOffice');
+  this.populate('user', 'name phone image');
   this.populate('branchOffice', 'name address phone -createdBy -lastUpdatedBy');
 
   next();
@@ -85,7 +85,7 @@ reviewSchema.post('save', function () {
 });
 
 reviewSchema.post(/^findOneAnd/, async function (doc) {
-  const productId = doc.product._id;
+  const productId = doc?.product._id;
   if (productId) await doc.constructor.calcAverageRatings(productId);
 });
 

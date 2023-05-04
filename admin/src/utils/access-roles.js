@@ -7,4 +7,6 @@ export const roles = {
   farmer: ['admin', 'branch-manager', 'office-employee'],
   farmerCard: ['admin', 'branch-manager', 'office-employee'],
   product: ['admin', 'branch-manager', 'office-employee'],
+  review: ['admin', 'branch-manager', 'office-employee'],
+  customer: ['admin', 'branch-manager'],
 };

@@ -7,6 +7,8 @@ import subCategoryApiSlice from './apiSlices/subCategoryApiSlice';
 import farmerApiSlice from './apiSlices/farmerApiSlice';
 import farmerCardApiSlice from './apiSlices/farmerCardApiSlice';
 import productApiSlice from './apiSlices/productApiSlice';
+import reviewApiSlice from './apiSlices/reviewApiSlice';
+import customerApiSlice from './apiSlices/customerApiSlice';
 import authReducer from './reducers/authReducer';
 
 const store = configureStore({
@@ -19,6 +21,8 @@ const store = configureStore({
     [farmerApiSlice.reducerPath]: farmerApiSlice.reducer,
     [farmerCardApiSlice.reducerPath]: farmerCardApiSlice.reducer,
     [productApiSlice.reducerPath]: productApiSlice.reducer,
+    [reviewApiSlice.reducerPath]: reviewApiSlice.reducer,
+    [customerApiSlice.reducerPath]: customerApiSlice.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -31,6 +35,8 @@ const store = configureStore({
       farmerApiSlice.middleware,
       farmerCardApiSlice.middleware,
       productApiSlice.middleware,
+      reviewApiSlice.middleware,
+      customerApiSlice.middleware,
     ]),
 });
 

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
-import account from '@/_mock/account';
 import useResponsive from '@/hooks/useResponsive';
 import Logo from '@/components/logo';
 import Scrollbar from '@/components/scrollbar';
@@ -48,7 +47,7 @@ export default function Nav({ openNav, onCloseNav }) {
         <Logo />
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
+      <Box sx={{ mb: 2, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
             <Avatar src={account?.image} alt="photoURL" />
