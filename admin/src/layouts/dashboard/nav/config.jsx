@@ -64,6 +64,12 @@ const navConfig = [
     icon: icon('ic_lock'),
     roles: roles.review,
   },
+  {
+    title: 'expenses',
+    path: '/dashboard/expenses',
+    icon: icon('ic_lock'),
+    roles: roles.review,
+  },
 ];
 
 export default navConfig;

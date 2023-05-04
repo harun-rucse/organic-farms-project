@@ -9,4 +9,5 @@ export const roles = {
   product: ['admin', 'branch-manager', 'office-employee'],
   review: ['admin', 'branch-manager', 'office-employee'],
   customer: ['admin', 'branch-manager'],
+  expense: ['admin', 'branch-manager'],
 };

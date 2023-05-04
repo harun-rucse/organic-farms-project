@@ -26,6 +26,9 @@ import ReviewList from '@/pages/review/list';
 import ReviewEdit from '@/pages/review/edit';
 import CustomerList from '@/pages/customer/list';
 import CustomerEdit from '@/pages/customer/edit';
+import ExpenseList from '@/pages/expenses/list';
+import ExpenseCreate from '@/pages/expenses/create';
+import ExpenseEdit from '@/pages/expenses/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -81,6 +84,11 @@ export default function Router() {
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.customer} />}>
         <Route path="customers" element={<CustomerList />} />
         <Route path="customer/edit/:id" element={<CustomerEdit />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.expense} />}>
+        <Route path="expenses" element={<ExpenseList />} />
+        <Route path="expense/create" element={<ExpenseCreate />} />
+        <Route path="expense/edit/:id" element={<ExpenseEdit />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
