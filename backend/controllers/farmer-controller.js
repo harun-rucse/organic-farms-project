@@ -10,7 +10,11 @@ const AppError = require('../utils/app-error');
  * @access  Private(admin, branch-manager, office-employee)
  */
 const getAllFarmers = catchAsync(async (req, res, next) => {
+  const { branch } = req.query;
+
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
+  if (branch) filter.branchOffice = branch;
+
   const allFarmers = await farmerService.getAllFarmers(filter);
 
   res.status(200).json(allFarmers);

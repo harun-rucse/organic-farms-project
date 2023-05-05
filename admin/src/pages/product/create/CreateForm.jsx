@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
   images: Yup.string().label('Images'),
 });
 
-function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading }) {
+function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading, setQuery }) {
   const navigate = useNavigate();
   const { data: currentUser } = useGetProfileQuery();
 
@@ -78,6 +78,10 @@ function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading 
                     fullWidth
                     required
                     disabled={currentUser?.role !== 'admin'}
+                    setState={(branch) => {
+                      setQuery(`branch=${branch}`);
+                    }}
+                    f
                   >
                     {branches?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>

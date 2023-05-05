@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept',
 
 function CreateForm({ handleOnSubmit, branches, employees, loading, setQuery }) {
   const navigate = useNavigate();
-  const [amount, setAmount] = React.useState(0);
+  const [amount, setAmount] = useState(0);
 
   const showEmployeeSalary = (value) => {
     const employee = employees?.find((employee) => employee._id === value);

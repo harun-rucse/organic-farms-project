@@ -78,9 +78,9 @@ function EditForm({ handleOnSubmit, product, subcategories, farmers, loading }) 
                 </Grid>
 
                 <Grid item md={6} xs={12}>
-                  <FormSelectField label="Select farmer" name="farmer" fullWidth required>
+                  <FormSelectField label="Select farmer" name="farmer" fullWidth required disabled>
                     {farmers?.map((farmer) => (
-                      <MenuItem key={farmer._id} value={farmer._id} disabled>
+                      <MenuItem key={farmer._id} value={farmer._id}>
                         <Box
                           sx={{
                             display: 'flex',
