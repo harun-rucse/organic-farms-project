@@ -15,7 +15,7 @@ const employeeApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllEmployees: builder.query({
-      query: () => '/employees',
+      query: (query) => (query ? `/employees?${query}` : '/employees'),
       providesTags: ['employees'],
     }),
     getEmployee: builder.query({

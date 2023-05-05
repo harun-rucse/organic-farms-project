@@ -10,4 +10,5 @@ export const roles = {
   review: ['admin', 'branch-manager', 'office-employee'],
   customer: ['admin', 'branch-manager'],
   expense: ['admin', 'branch-manager'],
+  salary: ['admin'],
 };

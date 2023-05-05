@@ -29,6 +29,9 @@ import CustomerEdit from '@/pages/customer/edit';
 import ExpenseList from '@/pages/expenses/list';
 import ExpenseCreate from '@/pages/expenses/create';
 import ExpenseEdit from '@/pages/expenses/edit';
+import SalaryList from '@/pages/salary/list';
+import SalaryCreate from '@/pages/salary/create';
+import SalaryEdit from '@/pages/salary/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -89,6 +92,11 @@ export default function Router() {
         <Route path="expenses" element={<ExpenseList />} />
         <Route path="expense/create" element={<ExpenseCreate />} />
         <Route path="expense/edit/:id" element={<ExpenseEdit />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.salary} />}>
+        <Route path="salaries" element={<SalaryList />} />
+        <Route path="salary/create" element={<SalaryCreate />} />
+        <Route path="salary/edit/:id" element={<SalaryEdit />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>
