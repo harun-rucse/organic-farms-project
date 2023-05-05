@@ -68,7 +68,10 @@ const validateSalary = (salary) => {
       .required()
       .valid('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
       .label('Month'),
-    year: Joi.string().required().label('Year'),
+    year: Joi.string()
+      .required()
+      .pattern(/202[3-9]{1}|20[3-9]{1}[0-9]{1}|21[0-9]{2}$/)
+      .messages({ 'string.pattern.base': `Year must be between 2023 to 2199.` }),
     employee: Joi.string().required().label('Employee'),
     paymentMethod: Joi.string().required().valid('Cash', 'Bank').label('Payment Method'),
     status: Joi.string().required().valid('Paid', 'Unpaid').label('Status'),
@@ -82,7 +85,10 @@ const validateSalaryUpdate = (salary) => {
     month: Joi.string()
       .valid('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
       .label('Month'),
-    year: Joi.string().label('Year'),
+    year: Joi.string()
+      .required()
+      .pattern(/202[3-9]{1}|20[3-9]{1}[0-9]{1}|21[0-9]{2}$/)
+      .messages({ 'string.pattern.base': `Year must be between 2023 to 2199.` }),
     paymentMethod: Joi.string().valid('Cash', 'Bank').label('Payment Method'),
     status: Joi.string().valid('Paid', 'Unpaid').label('Status'),
   });

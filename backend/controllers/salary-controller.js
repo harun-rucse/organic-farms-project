@@ -22,7 +22,7 @@ const getAllSalaries = catchAsync(async (req, res, next) => {
  * @access  Private(admin)
  */
 const getOneSalary = catchAsync(async (req, res, next) => {
-  const salary = await salaryService.getOneSalary();
+  const salary = await salaryService.getOneSalary({ _id: req.params.id });
   if (!salary) return next(new AppError('No salary found with this id.', 404));
 
   res.status(200).json(salary);

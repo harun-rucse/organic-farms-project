@@ -1897,6 +1897,29 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
+"@mui/utils@^5.12.0":
+  version "5.12.3"
+  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.12.3.tgz#3fa3570dac7ec66bb9cc84ab7c16ab6e1b7200f2"
+  integrity sha512-D/Z4Ub3MRl7HiUccid7sQYclTr24TqUAQFFlxHQF8FR177BrCTQ0JJZom7EqYjZCdXhwnSkOj2ph685MSKNtIA==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@types/prop-types" "^15.7.5"
+    "@types/react-is" "^16.7.1 || ^17.0.0"
+    prop-types "^15.8.1"
+    react-is "^18.2.0"
+
+"@mui/x-date-pickers@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-6.3.0.tgz#398cfe5bb2cd21ab3900cb3b3708bb2e4af6295c"
+  integrity sha512-Qux/nRGb0HueZU4L0h1QEqmORCrpgLukWWhG1Im6cFCmLtZbBey/0JuAFRa+OgvIXgGktDt8SY/FYsRkfGt2TQ==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@mui/utils" "^5.12.0"
+    "@types/react-transition-group" "^4.4.5"
+    clsx "^1.2.1"
+    prop-types "^15.8.1"
+    react-transition-group "^4.4.5"
+
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz#dbf733a965ca47b1973177dc0bb6c889edcfb129"
@@ -4118,6 +4141,11 @@ date-fns@^2.29.3:
   version "2.29.3"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
   integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
+
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"

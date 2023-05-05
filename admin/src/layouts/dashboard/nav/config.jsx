@@ -56,13 +56,25 @@ const navConfig = [
     title: 'products',
     path: '/dashboard/products',
     icon: icon('ic_lock'),
-    roles: roles.farmerCard,
+    roles: roles.product,
   },
   {
     title: 'reviews',
     path: '/dashboard/reviews',
     icon: icon('ic_lock'),
     roles: roles.review,
+  },
+  {
+    title: 'expenses',
+    path: '/dashboard/expenses',
+    icon: icon('ic_lock'),
+    roles: roles.expense,
+  },
+  {
+    title: 'salaries',
+    path: '/dashboard/salaries',
+    icon: icon('ic_lock'),
+    roles: roles.salary,
   },
 ];
 

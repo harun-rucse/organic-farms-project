@@ -18,7 +18,7 @@ const expenseSchema = new Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     branchOffice: {
@@ -56,7 +56,7 @@ const validateExpense = (expense) => {
       .label('Category'),
     amount: Joi.number().required().min(1).label('Amount'),
     description: Joi.string().required().min(3).max(255).label('Description'),
-    date: Joi.string().required().label('Date'),
+    date: Joi.date().required().label('Date'),
     branchOffice: Joi.string().label('Branch Office'),
   });
 
@@ -68,7 +68,7 @@ const validateExpenseUpdate = (expense) => {
     category: Joi.string().valid('Operations', 'Marketing', 'Rent', 'Transport', 'Utility', 'Other').label('Category'),
     amount: Joi.number().min(1).label('Amount'),
     description: Joi.string().min(3).max(255).label('Description'),
-    date: Joi.string().label('Date'),
+    date: Joi.date().label('Date'),
   });
 
   return schema.validate(expense);

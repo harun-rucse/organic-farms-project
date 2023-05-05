@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 
-function FormSelectField({ name, label, children, ...rest }) {
+function FormSelectField({ name, label, children, setState, ...rest }) {
   const { touched, errors, setFieldValue, values, setFieldTouched } = useFormikContext();
 
   return (
@@ -13,7 +13,10 @@ function FormSelectField({ name, label, children, ...rest }) {
       label={label}
       margin="normal"
       onBlur={() => setFieldTouched(name)}
-      onChange={(e) => setFieldValue(name, e.target.value)}
+      onChange={(e) => {
+        setFieldValue(name, e.target.value);
+        setState(e.target.value);
+      }}
       value={values[name]}
       variant="outlined"
       error={Boolean(touched[name] && errors[name])}
@@ -29,6 +32,11 @@ FormSelectField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  setState: PropTypes.func,
+};
+
+FormSelectField.defaultProps = {
+  setState: () => {},
 };
 
 export default FormSelectField;
