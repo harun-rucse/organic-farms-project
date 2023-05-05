@@ -15,7 +15,7 @@ const farmerApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllFarmers: builder.query({
-      query: () => '/farmers',
+      query: (query) => (query ? `/farmers?${query}` : '/farmers'),
       providesTags: ['farmers'],
     }),
     getFarmer: builder.query({

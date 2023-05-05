@@ -19,9 +19,10 @@ function ProductCreate() {
   const [values, setValues] = useState(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState({});
+  const [query, setQuery] = useState('');
 
   const { data: subcategories, isLoading } = useGetAllSubCategoriesQuery();
-  const { data: farmers, isLoading: isFarmerLoading } = useGetAllFarmersQuery();
+  const { data: farmers, isLoading: isFarmerLoading } = useGetAllFarmersQuery(query ? query : undefined);
   const { data: branches, isLoading: isBranchLoading } = useGetAllBranchesQuery();
   const [sendOtp, { isLoading: isOtpLoading, isSuccess: isOtpSuccess, data: otpData, isError, error: otpError }] =
     useSendOtpMutation();
@@ -121,6 +122,7 @@ function ProductCreate() {
           farmers={farmers}
           branches={branches}
           loading={isOtpLoading}
+          setQuery={setQuery}
         />
         <OTPModal
           open={open}
