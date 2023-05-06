@@ -24,10 +24,11 @@ const getAllDeliveryPersons = catchAsync(async (req, res, next) => {
  * @access  Private(admin, branch-manager)
  */
 const getAllEmployees = catchAsync(async (req, res, next) => {
-  const { branch } = req.query;
+  const { branch, role } = req.query;
 
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
   if (branch) filter.branchOffice = branch;
+  if (role) filter.role = role;
 
   const allEmployees = await employeeService.getAllEmployees(filter);
 

@@ -65,6 +65,12 @@ const navConfig = [
     roles: roles.review,
   },
   {
+    title: 'orders',
+    path: '/dashboard/orders',
+    icon: icon('ic_lock'),
+    roles: roles.order,
+  },
+  {
     title: 'expenses',
     path: '/dashboard/expenses',
     icon: icon('ic_lock'),

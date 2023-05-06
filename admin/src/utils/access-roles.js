@@ -11,4 +11,5 @@ export const roles = {
   customer: ['admin', 'branch-manager'],
   expense: ['admin', 'branch-manager'],
   salary: ['admin'],
+  order: ['admin', 'branch-manager', 'warehouse-employee'],
 };

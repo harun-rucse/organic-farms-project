@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const productApiSlice = createApi({
   reducerPath: 'productApi',
-  tagTypes: 'farmers',
+  tagTypes: 'products',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api`,
     prepareHeaders: (headers, { getState }) => {
