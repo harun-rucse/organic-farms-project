@@ -34,6 +34,8 @@ import SalaryCreate from '@/pages/salary/create';
 import SalaryEdit from '@/pages/salary/edit';
 import OrderList from '@/pages/order/list';
 import OrderEdit from '@/pages/order/edit';
+import OrderView from '@/pages/order/view';
+import OrderDetailsPDFView from '@/pages/order/view/OrderDetailsPDF';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -103,6 +105,8 @@ export default function Router() {
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.order} />}>
         <Route path="orders" element={<OrderList />} />
         <Route path="order/edit/:id" element={<OrderEdit />} />
+        <Route path="order/:id/view" element={<OrderView />} />
+        <Route path="order/:id/pdf" element={<OrderDetailsPDFView />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

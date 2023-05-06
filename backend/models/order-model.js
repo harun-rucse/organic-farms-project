@@ -79,7 +79,10 @@ const orderSchema = new Schema(
 
 orderSchema.pre(/^find/, function (next) {
   this.populate('customer', 'name phone address image');
-  this.populate('products.product', 'name price images -farmer -subcategory -branchOffice -createdBy -lastUpdatedBy');
+  this.populate(
+    'products.product',
+    'name price images description -farmer -subcategory -branchOffice -createdBy -lastUpdatedBy'
+  );
   this.populate('products.farmer', 'name phone address image -branchOffice -createdBy -lastUpdatedBy');
   this.populate('branchOffice', 'name phone address -createdBy -lastUpdatedBy');
   this.populate('orderDeliveredBy', '-role -salary -branchOffice -createdBy -lastUpdatedBy -createdAt -updatedAt');

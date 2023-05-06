@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from '@mui/material';
+import { Box, Card, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
@@ -172,21 +172,45 @@ function Result({ data }) {
         sort: false,
         customBodyRender: (value) => {
           return (
-            <Button
-              variant="contained"
-              size="small"
-              color="secondary"
+            <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                minWidth: 50,
-                px: 1,
+                justifyContent: 'flex-end',
+                gap: 1,
               }}
-              onClick={() => navigate(`/dashboard/order/edit/${value}`)}
             >
-              <Iconify icon="eva:edit-2-fill" />
-            </Button>
+              <Button
+                variant="contained"
+                size="small"
+                color="success"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minWidth: 50,
+                  px: 1,
+                }}
+                onClick={() => navigate(`/dashboard/order/${value}/view`)}
+              >
+                <Iconify icon="ic:baseline-remove-red-eye" />
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minWidth: 50,
+                  px: 1,
+                }}
+                onClick={() => navigate(`/dashboard/order/edit/${value}`)}
+              >
+                <Iconify icon="eva:edit-2-fill" />
+              </Button>
+            </Box>
           );
         },
       },
