@@ -236,14 +236,16 @@ function DetailsForm({ order }) {
               disabled
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Deleverd By
-            </Typography>
-            <Typography variant="body2">{order.orderDeliveredBy.user.name}</Typography>
-            <Typography variant="body2">{order.orderDeliveredBy.user.address}</Typography>
-            <Typography variant="body2">Phone: {order.orderDeliveredBy.user.phone}</Typography>
-          </Grid>
+          {order?.orderDeliveredBy && (
+            <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
+              <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+                Deleverd By
+              </Typography>
+              <Typography variant="body2">{order.orderDeliveredBy.user.name}</Typography>
+              <Typography variant="body2">{order.orderDeliveredBy.user.address}</Typography>
+              <Typography variant="body2">Phone: {order.orderDeliveredBy.user.phone}</Typography>
+            </Grid>
+          )}
         </Grid>
       </Card>
     </Container>

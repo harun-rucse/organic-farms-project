@@ -20,7 +20,7 @@ const farmerSchema = new Schema(
     receivePayment: {
       type: {
         type: String,
-        enum: ['bKash', 'Rocket', 'Nagad', 'Bank'],
+        enum: ['Bkash', 'Rocket', 'Nagad', 'Bank'],
       },
       number: {
         type: String,
@@ -73,7 +73,7 @@ const validateFarmer = (farmer) => {
       .messages({ 'string.pattern.base': `Phone number is not valid.` })
       .required(),
     receivePayment: Joi.object({
-      type: Joi.string().required().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
+      type: Joi.string().required().valid('Bkash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
       number: Joi.string()
         .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
         .messages({ 'string.pattern.base': `Phone number is not valid.` })
@@ -99,7 +99,7 @@ const validateFarmerUpdate = (farmer) => {
       .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
       .messages({ 'string.pattern.base': `Phone number is not valid.` }),
     receivePayment: Joi.object({
-      type: Joi.string().valid('bKash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
+      type: Joi.string().valid('Bkash', 'Rocket', 'Nagad', 'Bank').label('Payment Type'),
       number: Joi.string()
         .pattern(/^\+8801[3-9]{1}[0-9]{8}$/)
         .messages({ 'string.pattern.base': `Phone number is not valid.` }),

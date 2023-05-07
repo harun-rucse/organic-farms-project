@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().label('Image'),
 });
 
-const types = ['bKash', 'Rocket', 'Nagad', 'Bank'];
+const types = ['Bkash', 'Rocket', 'Nagad', 'Bank'];
 
 function CreateForm({ handleOnSubmit, branches, loading }) {
   const navigate = useNavigate();

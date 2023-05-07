@@ -109,8 +109,8 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
   req.body.lastUpdatedBy = req.user._id;
   const filter =
     req.user.role === 'admin'
-      ? { _id: req.params.id, orderStatus: { $ne: 'Cancelled' } }
-      : { _id: req.params.id, branchOffice: req.user.branchOffice, orderStatus: { $ne: 'Cancelled' } };
+      ? { _id: req.params.id, orderStatus: { $nin: ['Cancelled', 'Delivered'] } }
+      : { _id: req.params.id, branchOffice: req.user.branchOffice, orderStatus: { $nin: ['Cancelled', 'Delivered'] } };
 
   const payload = _.pick(req.body, ['orderStatus', 'orderDeliveredBy', 'lastUpdatedBy']);
   const updateOrder = await orderService.updateOneOrder(filter, payload);

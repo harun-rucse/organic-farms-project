@@ -1,6 +1,5 @@
 import React from 'react';
 import { PDFViewer, Page, Text, Font, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
-import { fDate } from '@/utils/formatTime';
 
 Font.register({
   family: 'Roboto',

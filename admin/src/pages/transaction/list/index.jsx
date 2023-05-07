@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Alert } from '@mui/material';
 import Result from './Result';
 import Loader from '@/components/Loader';
-import { useGetAllOrdersQuery } from '@/store/apiSlices/orderApiSlice';
+import { useGetAllTransactionsQuery } from '@/store/apiSlices/transactionApiSlice';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
-  const { data = [], isLoading, isError, error } = useGetAllOrdersQuery();
+  const { data = [], isLoading, isError, error } = useGetAllTransactionsQuery();
 
   if (isLoading) {
     return <Loader isLoading={isLoading} />;
@@ -15,7 +15,7 @@ export default function List() {
   return (
     <DashboardLayout>
       <Helmet>
-        <title> Organic-farms | Orders </title>
+        <title> Organic-farms | Transactions </title>
       </Helmet>
 
       <Container>

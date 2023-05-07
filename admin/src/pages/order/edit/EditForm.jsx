@@ -19,7 +19,7 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
     <Form
       initialValues={{
         orderStatus: order?.orderStatus,
-        orderDeliveredBy: order?.orderDeliveredBy._id,
+        orderDeliveredBy: order?.orderDeliveredBy?._id,
       }}
       onSubmit={handleOnSubmit}
       validationSchema={validationSchema}

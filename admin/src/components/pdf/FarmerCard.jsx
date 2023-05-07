@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   viewer: {
     width: '100%',
     height: '100%',
+    border: 'none',
   },
   page: {
     display: 'flex',
