@@ -11,6 +11,9 @@ import reviewApiSlice from './apiSlices/reviewApiSlice';
 import customerApiSlice from './apiSlices/customerApiSlice';
 import expenseApiSlice from './apiSlices/expenseApiSlice';
 import salaryApiSlice from './apiSlices/salaryApiSlice';
+import orderApiSlice from './apiSlices/orderApiSlice';
+import revenueApiSlice from './apiSlices/revenueApiSlice';
+import transactionApiSlice from './apiSlices/transactionApiSlice';
 import authReducer from './reducers/authReducer';
 
 const store = configureStore({
@@ -27,6 +30,9 @@ const store = configureStore({
     [customerApiSlice.reducerPath]: customerApiSlice.reducer,
     [expenseApiSlice.reducerPath]: expenseApiSlice.reducer,
     [salaryApiSlice.reducerPath]: salaryApiSlice.reducer,
+    [orderApiSlice.reducerPath]: orderApiSlice.reducer,
+    [revenueApiSlice.reducerPath]: revenueApiSlice.reducer,
+    [transactionApiSlice.reducerPath]: transactionApiSlice.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -43,6 +49,9 @@ const store = configureStore({
       customerApiSlice.middleware,
       expenseApiSlice.middleware,
       salaryApiSlice.middleware,
+      orderApiSlice.middleware,
+      revenueApiSlice.middleware,
+      transactionApiSlice.middleware,
     ]),
 });
 

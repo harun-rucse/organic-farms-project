@@ -45,7 +45,7 @@ const updateOneTransaction = catchAsync(async (req, res, next) => {
   const filter =
     req.user.role === 'admin' ? { _id: req.params.id } : { _id: req.params.id, branchOffice: req.user.branchOffice };
 
-  const payload = _.pick(req.body, ['paymentMethod', 'paymentStatus', 'lastUpdatedBy']);
+  const payload = _.pick(req.body, ['trxId', 'paymentStatus', 'lastUpdatedBy']);
   const updateTransaction = await transactionService.updateOneTransaction(filter, payload);
   if (!updateTransaction) return next(new AppError('No transaction found with this id.', 404));
 

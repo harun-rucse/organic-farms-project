@@ -32,6 +32,13 @@ import ExpenseEdit from '@/pages/expenses/edit';
 import SalaryList from '@/pages/salary/list';
 import SalaryCreate from '@/pages/salary/create';
 import SalaryEdit from '@/pages/salary/edit';
+import OrderList from '@/pages/order/list';
+import OrderEdit from '@/pages/order/edit';
+import OrderView from '@/pages/order/view';
+import RevenueList from '@/pages/revenue/list';
+import OrderDetailsPDFView from '@/pages/order/view/OrderDetailsPDF';
+import TransactionList from '@/pages/transaction/list';
+import TransactionEdit from '@/pages/transaction/edit';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -97,6 +104,19 @@ export default function Router() {
         <Route path="salaries" element={<SalaryList />} />
         <Route path="salary/create" element={<SalaryCreate />} />
         <Route path="salary/edit/:id" element={<SalaryEdit />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.order} />}>
+        <Route path="orders" element={<OrderList />} />
+        <Route path="order/edit/:id" element={<OrderEdit />} />
+        <Route path="order/:id/view" element={<OrderView />} />
+        <Route path="order/:id/pdf" element={<OrderDetailsPDFView />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.revenue} />}>
+        <Route path="revenues" element={<RevenueList />} />
+      </Route>
+      <Route path="/dashboard" element={<PrivateOutlet roles={roles.transaction} />}>
+        <Route path="transactions" element={<TransactionList />} />
+        <Route path="transaction/edit/:id" element={<TransactionEdit />} />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

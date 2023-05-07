@@ -47,6 +47,10 @@ const transactionSchema = new Schema(
       enum: ['Paid', 'Unpaid'],
       default: 'Unpaid',
     },
+    trxId: {
+      type: String,
+      default: null,
+    },
     paymentDate: Date,
     status: {
       type: String,
@@ -100,7 +104,7 @@ transactionSchema.post('insertMany', async function (doc) {
 
 const validateTransactionUpdate = (transaction) => {
   const schema = Joi.object({
-    paymentMethod: Joi.string().valid('Bkash', 'Rocket', 'Nagad', 'Bank'),
+    trxId: Joi.string().required(),
     paymentStatus: Joi.string().valid('Paid', 'Unpaid'),
   });
 

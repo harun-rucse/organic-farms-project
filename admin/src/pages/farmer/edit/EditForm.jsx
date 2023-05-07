@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().label('Image'),
 });
 
-const types = ['bKash', 'Rocket', 'Nagad', 'Bank'];
+const types = ['Bkash', 'Rocket', 'Nagad', 'Bank'];
 
 function EditForm({ handleOnSubmit, farmer, loading }) {
   const navigate = useNavigate();

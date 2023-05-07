@@ -8,7 +8,7 @@ import Label from '@/components/label';
 import Table from '@/components/Table';
 
 const getColor = (value) => {
-  return value === 'bKash'
+  return value === 'Bkash'
     ? 'success'
     : value === 'Rocket'
     ? 'error'
