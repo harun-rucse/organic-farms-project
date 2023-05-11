@@ -126,10 +126,10 @@ function Result({ data, handleDeleteClick }) {
   ];
 
   const categories = data?.map((item) => ({
-    image: item.farmer.image,
-    name: item.farmer.name,
-    address: item.farmer.address,
-    phone: item.farmer.phone,
+    image: item.farmer?.image,
+    name: item.farmer?.name,
+    address: item.farmer?.address,
+    phone: item.farmer?.phone,
     branch: item.branchOffice?.name,
     cardNumber: item.cardNumber,
     createdBy: item.createdBy?.name,

@@ -1,8 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { PDFViewer, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { PDFViewer, Page, Text, Font, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { useGetFarmerCardQuery } from '@/store/apiSlices/farmerCardApiSlice';
 import { fDate } from '@/utils/formatTime';
+
+Font.register({
+  family: 'SolaimanLipi',
+  fonts: [{ src: '/fonts/SolaimanLipi.ttf' }],
+});
 
 const styles = StyleSheet.create({
   viewer: {
@@ -14,6 +19,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    fontFamily: 'SolaimanLipi',
     backgroundColor: '#fff',
     padding: 30,
   },
@@ -120,9 +126,9 @@ function FarmerCard() {
             <View style={styles.container}>
               <Image style={styles.image} src={farmer.image} />
               <View style={styles.infoWrapper}>
-                <Text style={styles.text}>Name: {farmer.name}</Text>
+                <Text style={styles.text}>Name: {farmer.name + ' '}</Text>
                 <Text style={styles.text}>Phone: {farmer.phone}</Text>
-                <Text style={styles.text}>Address: {farmer.address}</Text>
+                <Text style={styles.text}>Address: {farmer.address + ' '}</Text>
                 <Text style={styles.text}>Card Number: {cardNumber}</Text>
                 <Text style={styles.text}>ID NO: {farmer.identity}</Text>
               </View>
@@ -130,7 +136,7 @@ function FarmerCard() {
             <View style={styles.footer}>
               <View>
                 <Text style={styles.heading}>Issued By</Text>
-                <Text style={styles.footerText}>Name: {createdBy.name}</Text>
+                <Text style={styles.footerText}>Name: {createdBy.name + ' '}</Text>
                 <Text style={styles.footerText}>Designation: {createdBy.role}</Text>
                 <Text style={styles.footerText}>Phone: {createdBy.phone}</Text>
                 <Text style={styles.footerText}>Date: {fDate(createdAt)}</Text>

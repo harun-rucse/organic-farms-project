@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ const orderStatuses = ['Placed', 'Processing', 'Shipped', 'Delivered', 'Cancelle
 
 function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
   const navigate = useNavigate();
+  const [status, setStatus] = useState('');
 
   return (
     <Form
@@ -30,7 +31,13 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
             <CardContent>
               <Grid container columnSpacing={4}>
                 <Grid item md={6} xs={12}>
-                  <FormSelectField label="Select order status" name="orderStatus" fullWidth required>
+                  <FormSelectField
+                    label="Select order status"
+                    name="orderStatus"
+                    fullWidth
+                    required
+                    setState={setStatus}
+                  >
                     {orderStatuses?.map((orderStatus, indx) => (
                       <MenuItem key={indx} value={orderStatus}>
                         {orderStatus}
@@ -59,7 +66,12 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
                   >
                     Back
                   </Button>
-                  <FormSubmitButton label="Update now" color="primary" loading={loading} />
+                  {/* <FormSubmitButton label="Update now" color="primary" loading={loading} /> */}
+                  <FormSubmitButton
+                    label={status === 'Delivered' ? 'Send OTP' : 'Update now'}
+                    color="primary"
+                    loading={loading}
+                  />
                 </Grid>
               </Grid>
             </CardContent>

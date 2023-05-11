@@ -3,6 +3,7 @@ const tokenService = require('../services/token-service');
 const otpService = require('../services/otp-service');
 const farmerService = require('../services/farmer-service');
 const productService = require('../services/product-service');
+const orderService = require('../services/order-service');
 const AppError = require('../utils/app-error');
 const catchAsync = require('../utils/catch-async');
 
@@ -89,6 +90,15 @@ const verifyOTP = catchAsync(async (req, res, next) => {
 
       phone = farmer.phone;
     }
+  } else if (module === 'orders') {
+    if (req.body.orderStatus !== 'Delivered') return next();
+
+    const order = await orderService.getOneOrder({ _id: req.params.id });
+    if (!order) return next(new AppError('Order not found.', 404));
+
+    if (order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled') return next();
+
+    phone = order.customer.phone;
   } else {
     return next(new AppError('Invalid module.', 400));
   }

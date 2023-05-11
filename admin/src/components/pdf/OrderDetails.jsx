@@ -2,8 +2,16 @@ import React from 'react';
 import { PDFViewer, Page, Text, Font, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 Font.register({
+  family: 'SolaimanLipi',
+  fonts: [{ src: '/fonts/SolaimanLipi.ttf' }],
+});
+
+Font.register({
   family: 'Roboto',
-  fonts: [{ src: '/fonts/Roboto-Regular.ttf' }, { src: '/fonts/Roboto-Bold.ttf' }],
+  fonts: [
+    { src: '/fonts/Roboto-Regular.ttf', fontWeight: 'normal' },
+    { src: '/fonts/Roboto-Bold.ttf', fontWeight: 'bold' },
+  ],
 });
 
 const styles = StyleSheet.create({
@@ -25,15 +33,16 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   h3: { fontSize: 16, fontWeight: 700 },
-  h4: { fontSize: 13, fontWeight: 700 },
+  h4: { fontFamily: 'Roboto', fontSize: 13, fontWeight: 700 },
   body1: { fontSize: 10 },
-  subtitle2: { fontSize: 9, fontWeight: 700 },
+  subtitle2: { fontFamily: 'Roboto', fontSize: 9, fontWeight: 700 },
+  subtitle3: { fontSize: 9, fontWeight: 700 },
   alignRight: { textAlign: 'right' },
   page: {
     padding: '40px 24px 0 24px',
     fontSize: 9,
     lineHeight: 1.6,
-    fontFamily: 'Roboto',
+    fontFamily: 'SolaimanLipi',
     backgroundColor: '#fff',
     textTransform: 'capitalize',
   },
@@ -87,8 +96,8 @@ function OrderDetailsPdf({ order }) {
             </View>
             <View style={styles.col6}>
               <Text style={[styles.overline, styles.mb8]}>Invoice to</Text>
-              <Text style={styles.body1}>{order.customer.name}</Text>
-              <Text style={styles.body1}>{order.customer.address}</Text>
+              <Text style={styles.body1}>{order.customer.name + ' '}</Text>
+              <Text style={styles.body1}>{order.customer.address + ' '}</Text>
               <Text style={styles.body1}>{order.customer.phone}</Text>
             </View>
           </View>
@@ -123,7 +132,7 @@ function OrderDetailsPdf({ order }) {
                     <Text>{index + 1}</Text>
                   </View>
                   <View style={styles.tableCell_2}>
-                    <Text style={styles.subtitle2}>{item.product.name}</Text>
+                    <Text style={styles.subtitle3}>{item.product.name}</Text>
                     <Text>{item.product.description.substring(0, 50)}...</Text>
                   </View>
                   <View style={styles.tableCell_3}>
