@@ -1,8 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { PDFViewer, Page, Text, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { PDFViewer, Page, Text, Font, Image, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { useGetFarmerCardQuery } from '@/store/apiSlices/farmerCardApiSlice';
 import { fDate } from '@/utils/formatTime';
+
+Font.register({
+  family: 'SutonnyMJ',
+  fonts: [{ src: '/fonts/SolaimanLipi.ttf' }],
+});
 
 const styles = StyleSheet.create({
   viewer: {
@@ -14,6 +19,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    fontFamily: 'SutonnyMJ',
     backgroundColor: '#fff',
     padding: 30,
   },
