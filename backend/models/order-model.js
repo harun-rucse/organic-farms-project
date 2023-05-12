@@ -153,7 +153,30 @@ orderSchema.post('save', async function (doc) {
     })
   );
 
+  // decrease the stock of the products
+  await Promise.all(
+    order.products.map(async (item) => {
+      const productDetails = await productService.getOneProduct({ _id: item.product });
+      productDetails.inStock -= item.quantity;
+      await productDetails.save();
+    })
+  );
+
   await Transaction.insertMany(transactions);
+});
+
+orderSchema.post(/^findOneAnd/, async function (doc) {
+  const order = doc;
+  if (!order || order.orderStatus !== 'Cancelled') return;
+
+  // increase the stock of the products if order is cancelled
+  await Promise.all(
+    order.products.map(async (item) => {
+      const productDetails = await productService.getOneProduct({ _id: item.product });
+      productDetails.inStock += item.quantity;
+      await productDetails.save();
+    })
+  );
 });
 
 const validateOrder = (order) => {
