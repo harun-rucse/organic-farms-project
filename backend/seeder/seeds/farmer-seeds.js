@@ -9,8 +9,8 @@ module.exports = async (type) => {
       phone: '+8801234567890',
       identity: '1234567890',
       receivePayment: {
-        type: 'bKash',
-        number: '+8801234567890',
+        type: 'Bkash',
+        number: '+8801734567890',
       },
       description: 'Farmer 1 description',
       branchOffice: '5f9f1b9b8b8c1c2b8c8b8b90',
@@ -21,10 +21,10 @@ module.exports = async (type) => {
       _id: '5f9f1b9b8b9c1c2b8c8b8b91',
       name: 'Farmer 2',
       address: 'Dhaka, Bangladesh',
-      phone: '+8801234567891',
+      phone: '+8801934567891',
       identity: '1234567891',
       receivePayment: {
-        type: 'bKash',
+        type: 'Bkash',
         number: '+8801234567891',
       },
       description: 'Farmer 2 description',

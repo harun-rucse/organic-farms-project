@@ -129,7 +129,7 @@ function Result({ data, handleDeleteClick }) {
         filter: false,
         sort: true,
         customBodyRender: (value) => {
-          return <Label color={stockColor(value)}>{value}</Label>;
+          return <Label color={stockColor(value)}>{`${value} Kg`}</Label>;
         },
       },
     },

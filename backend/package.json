@@ -7,7 +7,8 @@
     "dev": "NODE_ENV=development nodemon -L server.js",
     "prod": "NODE_ENV=production nodemon server.js",
     "test": "jest --watchAll --verbose",
-    "seed": "NODE_ENV=development node seeder/index.js"
+    "seed": "NODE_ENV=development node seeder/index.js",
+    "seed:prod": "NODE_ENV=production node seeder/index.js"
   },
   "jest": {
     "testEnvironment": "node",
@@ -47,6 +48,7 @@
     "sharp": "^0.31.3",
     "streamifier": "^0.1.1",
     "twilio": "^4.8.0",
+    "winston": "^3.8.2",
     "xss-clean": "^0.1.1"
   }
 }
