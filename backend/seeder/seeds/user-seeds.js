@@ -9,6 +9,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'admin',
+      verified: true,
     });
 
     await User.create({
@@ -18,6 +19,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'branch-manager',
+      verified: true,
     });
 
     await User.create({
@@ -27,6 +29,7 @@ module.exports = async (type) => {
       address: 'Dhaka, Bangladesh',
       password: 'password',
       role: 'branch-manager',
+      verified: true,
     });
 
     await User.create({
@@ -36,6 +39,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'office-employee',
+      verified: true,
     });
 
     await User.create({
@@ -45,6 +49,7 @@ module.exports = async (type) => {
       address: 'Dhaka, Bangladesh',
       password: 'password',
       role: 'office-employee',
+      verified: true,
     });
 
     await User.create({
@@ -54,6 +59,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'warehouse-employee',
+      verified: true,
     });
 
     await User.create({
@@ -63,6 +69,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'delivery-person',
+      verified: true,
     });
 
     await User.create({
@@ -72,6 +79,7 @@ module.exports = async (type) => {
       address: 'Dhaka, Bangladesh',
       password: 'password',
       role: 'delivery-person',
+      verified: true,
     });
 
     await User.create({
@@ -81,6 +89,7 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       role: 'customer',
+      verified: true,
     });
   } else if (type === 'drop') {
     await User.deleteMany({});

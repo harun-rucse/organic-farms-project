@@ -1,4 +1,5 @@
 const AppError = require('../utils/app-error');
+const logger = require('../logger');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -30,7 +31,8 @@ const handleSMSError = () => {
 };
 
 const sendErrorDev = (err, req, res) => {
-  // console.error('ERROR LOG:', err);
+  logger.error(err);
+
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
@@ -40,7 +42,6 @@ const sendErrorDev = (err, req, res) => {
 };
 
 const sendErrorTest = (err, req, res) => {
-  // console.error('ERROR LOG:', err);
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
@@ -56,6 +57,9 @@ const sendErrorProd = (err, req, res) => {
       message: err.message,
     });
   } else {
+    // Log unknown errors
+    logger.error(err);
+
     res.status(500).json({
       status: 'error',
       message: 'Something went wrong!',

@@ -5,6 +5,7 @@ const otpService = require('../services/otp-service');
 const { validateUser } = require('../models/user-model');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
+const logger = require('../logger');
 
 /**
  * @desc    Register new user
@@ -56,6 +57,15 @@ const loginOrganization = catchAsync(async (req, res, next) => {
   const user = await authService.loginOrganization(phone, password);
   const token = tokenService.generateJwtToken({ id: user._id, role: user.role, verified: user.verified });
 
+  // logg user login information id, name, role, branch and timestamp
+  const name = user.name;
+  const id = user._id;
+  const role = user.role;
+  const branch = user?.employee[0]?.branchOffice?.name || 'N/A';
+
+  logger.info(
+    `User [${name}] with id [${id}] and role [${role}] logged in at ${new Date().toLocaleString()} from branch [${branch}]`
+  );
   res.status(200).json(token);
 });
 
