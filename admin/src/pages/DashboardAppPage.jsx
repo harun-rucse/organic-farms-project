@@ -67,7 +67,7 @@ export default function DashboardAppPage() {
               display: 'flex',
               alignItems: 'center',
               gap: 2,
-              width: '40%',
+              minWidth: '30%',
               [theme.breakpoints.down('sm')]: {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
@@ -105,22 +105,24 @@ export default function DashboardAppPage() {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              select
-              label="Select Branch"
-              margin="normal"
-              onChange={handleBranchChange}
-              value={branch}
-              variant="outlined"
-              fullWidth
-            >
-              <MenuItem value={'all'}>All Branches</MenuItem>
-              {branches?.map((branch) => (
-                <MenuItem key={branch._id} value={branch._id}>
-                  {branch.name}
-                </MenuItem>
-              ))}
-            </TextField>
+            {currentUser?.role === 'admin' && (
+              <TextField
+                select
+                label="Select Branch"
+                margin="normal"
+                onChange={handleBranchChange}
+                value={branch}
+                variant="outlined"
+                fullWidth
+              >
+                <MenuItem value={'all'}>All Branches</MenuItem>
+                {branches?.map((branch) => (
+                  <MenuItem key={branch._id} value={branch._id}>
+                    {branch.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
           </Box>
         </Box>
 
