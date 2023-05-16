@@ -1,13 +1,45 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Box, TextField, MenuItem } from '@mui/material';
 import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '@/sections/@dashboard/app';
 import DashboardLayout from '@/layouts/dashboard';
+import Loader from '@/components/Loader';
 import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
+import { useGetAllStatsCountQuery, useGetAllStatsAmountQuery } from '@/store/apiSlices/statsApiSlice';
+import { useGetAllBranchesQuery } from '@/store/apiSlices/branchApiSlice';
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const [branch, setBranch] = useState('all');
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [query, setQuery] = useState('branch=all');
+  const [amountQuery, setAmountQuery] = useState(`branch=all&month=${new Date().getMonth() + 1}`);
+
   const { data: currentUser } = useGetProfileQuery();
+  const { data: branches, isLoading: isBranchLoading } = useGetAllBranchesQuery();
+  const { data: statsCount, isLoading } = useGetAllStatsCountQuery(query ? query : undefined);
+  const { data: statsAmount, isLoading: isStatsAmountLoading } = useGetAllStatsAmountQuery(
+    amountQuery ? amountQuery : undefined
+  );
+
+  const handleBranchChange = (e) => {
+    const { value } = e.target;
+    setBranch(value);
+    setQuery(`branch=${value}&month=${month}`);
+    setAmountQuery(`branch=${value}&month=${month}`);
+  };
+
+  const handleMonthChange = (e) => {
+    const { value } = e.target;
+    setMonth(value);
+    setQuery(`branch=${branch}&month=${value}`);
+    setAmountQuery(`branch=${branch}&month=${value}`);
+  };
+
+  if (isLoading || isBranchLoading || isStatsAmountLoading) {
+    return <Loader isLoading={isLoading || isBranchLoading || isStatsAmountLoading} />;
+  }
 
   return (
     <DashboardLayout>
@@ -16,102 +48,215 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi {currentUser?.name}, Welcome back
-        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 5,
+            [theme.breakpoints.down('sm')]: {
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: 2,
+            },
+          }}
+        >
+          <Typography variant="h4">Hi {currentUser?.name}, Welcome back</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              width: '40%',
+              [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                width: '100%',
+                gap: 1,
+              },
+            }}
+          >
+            <TextField
+              select
+              label="Select Month"
+              margin="normal"
+              onChange={handleMonthChange}
+              value={month}
+              variant="outlined"
+              fullWidth
+            >
+              <MenuItem value={'all'}>All Month</MenuItem>
+              {[
+                'জানুয়ারী',
+                'ফেব্রুয়ারী',
+                'মার্চ',
+                'এপ্রিল',
+                'মে',
+                'জুন',
+                'জুলাই',
+                'আগস্ট',
+                'সেপ্টেম্বর',
+                'অক্টোবর',
+                'নভেম্বর',
+                'ডিসেম্বর',
+              ].map((month, index) => (
+                <MenuItem key={index} value={index + 1}>
+                  {month}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select
+              label="Select Branch"
+              margin="normal"
+              onChange={handleBranchChange}
+              value={branch}
+              variant="outlined"
+              fullWidth
+            >
+              <MenuItem value={'all'}>All Branches</MenuItem>
+              {branches?.map((branch) => (
+                <MenuItem key={branch._id} value={branch._id}>
+                  {branch.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+        </Box>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="মোট আয়"
-              total={100000}
+              total={statsAmount?.totalRevenue}
               color="success"
               icon={'fluent-mdl2:nonprofit-logo-32'}
-              format
+              format={statsAmount?.totalRevenue !== 0}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট খরচ" total={52020} color="error" icon={'carbon:cost-total'} format />
+            <AppWidgetSummary
+              title="মোট খরচ"
+              total={statsAmount?.totalExpense}
+              color="error"
+              icon={'carbon:cost-total'}
+              format={statsAmount?.totalExpense !== 0}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="বেতন দেওয়া হয়েছে"
-              total={4000}
+              total={statsAmount?.totalSalary}
               color="success"
               icon={'mdi:success-circle'}
-              format
+              format={statsAmount?.totalSalary !== 0}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="কৃষকদের দিতে হবে"
-              total={4000}
+              total={statsAmount?.totalPayable}
               color="warning"
               icon={'fluent:payment-28-filled'}
-              format
+              format={statsAmount?.totalPayable !== 0}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
-              title="মোট কৃষকদের দেওয়া হয়েছে"
-              total={4000}
+              title="কৃষকদের দেওয়া হয়েছে"
+              total={statsAmount?.totalPaid}
               color="info"
               icon={'mdi:success-circle'}
-              format
+              format={statsAmount?.totalPaid !== 0}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট শাখা" total={10} color="success" icon={'mdi:source-branch'} />
+            <AppWidgetSummary title="মোট শাখা" total={statsCount?.nBranch} color="success" icon={'mdi:source-branch'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট গ্রাহক" total={20} color="info" icon={'mdi:people-group'} />
+            <AppWidgetSummary title="মোট গ্রাহক" total={statsCount?.nCustomer} color="info" icon={'mdi:people-group'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট কর্মচারী" total={5} color="success" icon={'clarity:employee-group-solid'} />
+            <AppWidgetSummary
+              title="মোট কর্মচারী"
+              total={statsCount?.nEmployee}
+              color="success"
+              icon={'clarity:employee-group-solid'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary
               title="মোট কৃষক"
-              total={234}
+              total={statsCount?.nFarmer}
               color="error"
               icon={'noto:man-farmer-medium-dark-skin-tone'}
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট ক্যাটেগরি" total={234} color="info" icon={'bxs:category'} />
+            <AppWidgetSummary title="মোট ক্যাটেগরি" total={statsCount?.nCategory} color="info" icon={'bxs:category'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট সাব-ক্যাটেগরি" total={234} color="warning" icon={'bxs:category'} />
+            <AppWidgetSummary
+              title="মোট সাব-ক্যাটেগরি"
+              total={statsCount?.nSubCategory}
+              color="warning"
+              icon={'bxs:category'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="মোট পণ্য" total={234} color="success" icon={'ri:product-hunt-fill'} />
+            <AppWidgetSummary
+              title="মোট পণ্য"
+              total={statsCount?.nProduct}
+              color="success"
+              icon={'ri:product-hunt-fill'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="স্টকআউট পণ্য" total={234} color="error" icon={'healthicons:stock-out-negative'} />
+            <AppWidgetSummary
+              title="স্টকআউট পণ্য"
+              total={statsCount?.nStockOutProduct}
+              color="error"
+              icon={'healthicons:stock-out-negative'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="পেন্ডিং অর্ডার" total={234} color="warning" icon={'ic:twotone-pending-actions'} />
+            <AppWidgetSummary
+              title="নতুন অর্ডার"
+              total={statsCount?.nPlacedOrder}
+              color="warning"
+              icon={'ic:twotone-pending-actions'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="কমপ্লিটেড অর্ডার" total={234} color="success" icon={'mdi:success-circle'} />
+            <AppWidgetSummary
+              title="কমপ্লিটেড অর্ডার"
+              total={statsCount?.nCompletedOrder}
+              color="success"
+              icon={'mdi:success-circle'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="ক্যান্সেল অর্ডার" total={234} color="error" icon={'material-symbols:cancel'} />
+            <AppWidgetSummary
+              title="ক্যান্সেল অর্ডার"
+              total={statsCount?.nCancelledOrder}
+              color="error"
+              icon={'material-symbols:cancel'}
+            />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

@@ -14,6 +14,7 @@ import salaryApiSlice from './apiSlices/salaryApiSlice';
 import orderApiSlice from './apiSlices/orderApiSlice';
 import revenueApiSlice from './apiSlices/revenueApiSlice';
 import transactionApiSlice from './apiSlices/transactionApiSlice';
+import statsApiSlice from './apiSlices/statsApiSlice';
 import authReducer from './reducers/authReducer';
 
 const store = configureStore({
@@ -33,6 +34,7 @@ const store = configureStore({
     [orderApiSlice.reducerPath]: orderApiSlice.reducer,
     [revenueApiSlice.reducerPath]: revenueApiSlice.reducer,
     [transactionApiSlice.reducerPath]: transactionApiSlice.reducer,
+    [statsApiSlice.reducerPath]: statsApiSlice.reducer,
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -52,6 +54,7 @@ const store = configureStore({
       orderApiSlice.middleware,
       revenueApiSlice.middleware,
       transactionApiSlice.middleware,
+      statsApiSlice.middleware,
     ]),
 });
 
