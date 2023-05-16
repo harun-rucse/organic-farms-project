@@ -80,7 +80,7 @@ function OrderDetailsPdf({ order }) {
       <Document title={`order_${order._id}`}>
         <Page size="A4" style={styles.page}>
           <View style={[styles.gridContainer, styles.mb40]}>
-            <Image source="/assets/logo_full.jpg" style={{ height: 32 }} />
+            <Image source="/assets/logo-full.png" style={{ height: 36 }} />
             <View style={{ alignItems: 'right', flexDirection: 'column' }}>
               <Text style={styles.h4}>{order.paymentStatus}</Text>
               <Text>ID-{order._id}</Text>

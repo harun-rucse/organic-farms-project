@@ -22,19 +22,96 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary
+              title="মোট আয়"
+              total={100000}
+              color="success"
+              icon={'fluent-mdl2:nonprofit-logo-32'}
+              format
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="মোট খরচ" total={52020} color="error" icon={'carbon:cost-total'} format />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary
+              title="বেতন দেওয়া হয়েছে"
+              total={4000}
+              color="success"
+              icon={'mdi:success-circle'}
+              format
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary
+              title="কৃষকদের দিতে হবে"
+              total={4000}
+              color="warning"
+              icon={'fluent:payment-28-filled'}
+              format
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary
+              title="মোট কৃষকদের দেওয়া হয়েছে"
+              total={4000}
+              color="info"
+              icon={'mdi:success-circle'}
+              format
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট শাখা" total={10} color="success" icon={'mdi:source-branch'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট গ্রাহক" total={20} color="info" icon={'mdi:people-group'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট কর্মচারী" total={5} color="success" icon={'clarity:employee-group-solid'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary
+              title="মোট কৃষক"
+              total={234}
+              color="error"
+              icon={'noto:man-farmer-medium-dark-skin-tone'}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট ক্যাটেগরি" total={234} color="info" icon={'bxs:category'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট সাব-ক্যাটেগরি" total={234} color="warning" icon={'bxs:category'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="মোট পণ্য" total={234} color="success" icon={'ri:product-hunt-fill'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="স্টকআউট পণ্য" total={234} color="error" icon={'healthicons:stock-out-negative'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="পেন্ডিং অর্ডার" total={234} color="warning" icon={'ic:twotone-pending-actions'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="কমপ্লিটেড অর্ডার" total={234} color="success" icon={'mdi:success-circle'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="ক্যান্সেল অর্ডার" total={234} color="error" icon={'material-symbols:cancel'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
