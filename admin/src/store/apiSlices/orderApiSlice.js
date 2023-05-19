@@ -18,6 +18,10 @@ const orderApiSlice = createApi({
       query: () => '/orders',
       providesTags: ['orders'],
     }),
+    getLatestOrders: builder.query({
+      query: () => '/orders/latest-orders',
+      providesTags: ['orders'],
+    }),
     getOrder: builder.query({
       query: (id) => `/orders/${id}`,
       providesTags: ['orders'],
@@ -33,5 +37,6 @@ const orderApiSlice = createApi({
   }),
 });
 
-export const { useGetAllOrdersQuery, useGetOrderQuery, useUpdateOrderMutation } = orderApiSlice;
+export const { useGetAllOrdersQuery, useGetLatestOrdersQuery, useGetOrderQuery, useUpdateOrderMutation } =
+  orderApiSlice;
 export default orderApiSlice;

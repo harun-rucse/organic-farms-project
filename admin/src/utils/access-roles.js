@@ -1,5 +1,5 @@
 export const roles = {
-  dashboard: ['admin', 'branch-manager', 'office-employee'],
+  dashboard: ['admin', 'branch-manager', 'office-employee', 'warehouse-employee'],
   employee: ['admin', 'branch-manager'],
   branch: ['admin'],
   category: ['admin', 'branch-manager', 'office-employee'],
@@ -13,5 +13,7 @@ export const roles = {
   salary: ['admin'],
   order: ['admin', 'branch-manager', 'warehouse-employee'],
   revenue: ['admin', 'branch-manager'],
-  transaction: ['admin', 'branch-manager', 'warehouse-employee'],
+  transaction: ['admin', 'branch-manager'],
+  statisticsCount: ['admin', 'branch-manager', 'office-employee', 'warehouse-employee'],
+  statisticsAmount: ['admin', 'branch-manager'],
 };
