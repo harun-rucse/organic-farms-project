@@ -6,6 +6,12 @@ const router = express.Router();
 
 router.use([auth, verified]);
 
+router.get(
+  '/latest-orders',
+  restrictTo('admin', 'branch-manager', 'office-employee', 'warehouse-employee'),
+  orderController.getLatestOrder
+);
+
 router
   .route('/')
   .get(restrictTo('admin', 'branch-manager', 'warehouse-employee'), orderController.getAllOrders)

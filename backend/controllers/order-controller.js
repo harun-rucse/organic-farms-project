@@ -8,6 +8,23 @@ const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 
 /**
+ * @desc    Get latest 5 order
+ * @route   GET /api/orders/latest-order
+ * @access  Private(admin, branch-manager, office-employee, warehouse-employee)
+ */
+const getLatestOrder = catchAsync(async (req, res, next) => {
+  const filter = { orderStatus: 'Placed' };
+
+  if (req.user.role !== 'admin') {
+    filter.branchOffice = req.user.branchOffice;
+  }
+
+  const latestOrders = await orderService.getAllOrders(filter).sort({ orderPlacedDate: -1 }).limit(5);
+
+  res.status(200).json(latestOrders);
+});
+
+/**
  * @desc    Get all orders
  * @route   GET /api/orders
  * @access  Private(admin, branch-manager, warehouse-employee)
@@ -130,6 +147,7 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
 });
 
 module.exports = {
+  getLatestOrder,
   getAllOrders,
   getOneOrder,
   createNewOrder,
