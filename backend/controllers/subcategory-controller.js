@@ -10,9 +10,14 @@ const AppError = require('../utils/app-error');
  * @access  Public
  */
 const getAllSubCategories = catchAsync(async (req, res, next) => {
-  const allSubCategories = await subCategoryService.getAllSubCategories();
+  const allSubCategories = await subCategoryService.getAllSubCategories({}, req.query);
+  const totalCount = await subCategoryService.getTotalCount();
 
-  res.status(200).json(allSubCategories);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allSubCategories,
+  });
 });
 
 /**

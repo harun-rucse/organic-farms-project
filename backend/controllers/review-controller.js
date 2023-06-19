@@ -11,9 +11,14 @@ const AppError = require('../utils/app-error');
  */
 const getAllReviews = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
-  const allReviews = await reviewService.getAllReviews(filter);
+  const allReviews = await reviewService.getAllReviews(filter, req.query);
+  const totalCount = await reviewService.getTotalCount();
 
-  res.status(200).json(allReviews);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allReviews,
+  });
 });
 
 /**

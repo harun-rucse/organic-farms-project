@@ -33,7 +33,7 @@ function CreateForm({ handleOnSubmit, categories, loading }) {
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select category" name="category" fullWidth required>
-                    {categories?.map((category) => (
+                    {categories?.result?.map((category) => (
                       <MenuItem key={category._id} value={category._id}>
                         {category.name}
                       </MenuItem>
@@ -66,7 +66,7 @@ function CreateForm({ handleOnSubmit, categories, loading }) {
 CreateForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.object.isRequired,
 };
 
 export default CreateForm;

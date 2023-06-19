@@ -1,7 +1,12 @@
 const { User } = require('../models/user-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllUsers = (filter = {}) => {
-  return User.find(filter);
+const getTotalCount = (filter) => {
+  return User.countDocuments(filter);
+};
+
+const getAllUsers = (filter = {}, query) => {
+  return new APIFeatures(User.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneUser = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneUser = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllUsers,
   getOneUser,
   createNewUser,

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Container, Stack, Alert } from '@mui/material';
@@ -9,7 +10,9 @@ import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
   const navigate = useNavigate();
-  const { data = [], isLoading, isError, error } = useGetAllExpensesQuery();
+  const [query, setQuery] = useState('page=1&limit=5');
+
+  const { data = [], isLoading, isError, error } = useGetAllExpensesQuery(query ? query : undefined);
 
   if (isLoading) {
     return <Loader isLoading={isLoading} />;
@@ -32,7 +35,7 @@ export default function List() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <Result data={data} />
+        <Result data={data} setQuery={setQuery} />
       </Container>
     </DashboardLayout>
   );

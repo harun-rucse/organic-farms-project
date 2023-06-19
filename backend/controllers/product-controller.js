@@ -11,9 +11,14 @@ const AppError = require('../utils/app-error');
  */
 const getAllProducts = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
-  const allProducts = await productService.getAllProducts(filter);
+  const allProducts = await productService.getAllProducts(filter, req.query);
+  const totalCount = await productService.getTotalCount(filter);
 
-  res.status(200).json(allProducts);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allProducts,
+  });
 });
 
 /**

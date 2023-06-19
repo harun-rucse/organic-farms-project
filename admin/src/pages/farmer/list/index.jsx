@@ -16,7 +16,14 @@ export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllFarmersQuery();
+  const [query, setQuery] = useState('page=1&limit=5');
+
+  const {
+    data = [],
+    isLoading,
+    isError: isFetchError,
+    error: fetchError,
+  } = useGetAllFarmersQuery(query ? query : undefined);
   const [deleteFarmer, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
     useDeleteFarmerMutation();
   const [createFarmerCard, { data: cardData, isSuccess: isCreated, isError, error: cardError }] =
@@ -77,7 +84,12 @@ export default function List() {
             </Alert>
           </Stack>
         )}
-        <Result data={data} handleDeleteClick={handleDeleteClick} handleCreateCard={handleCreateCard} />
+        <Result
+          data={data}
+          setQuery={setQuery}
+          handleDeleteClick={handleDeleteClick}
+          handleCreateCard={handleCreateCard}
+        />
       </Container>
       <ConfirmDeleteModal
         open={open}

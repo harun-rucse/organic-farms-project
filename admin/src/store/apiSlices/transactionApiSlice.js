@@ -15,7 +15,7 @@ const transactionApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllTransactions: builder.query({
-      query: () => '/transactions',
+      query: (query) => (query ? `/transactions?${query}` : '/transactions'),
       providesTags: ['transactions'],
     }),
     getTransaction: builder.query({

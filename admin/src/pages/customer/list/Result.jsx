@@ -7,7 +7,7 @@ import Iconify from '@/components/iconify';
 import Table from '@/components/Table';
 import Label from '@/components/label';
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -115,7 +115,7 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data?.map((item) => ({
+  const customers = data?.result?.map((item) => ({
     name: item.name,
     image: item.image,
     phone: item.phone,
@@ -132,7 +132,8 @@ function Result({ data, handleDeleteClick }) {
           data={customers}
           columns={columns}
           searchPlaceholder="Search customers"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -141,6 +142,7 @@ function Result({ data, handleDeleteClick }) {
 
 Result.propTypes = {
   data: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

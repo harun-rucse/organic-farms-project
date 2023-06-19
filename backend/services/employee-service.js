@@ -1,9 +1,14 @@
 const _ = require('lodash');
 const { User } = require('../models/user-model');
 const { Employee } = require('../models/employee-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllEmployees = (filter = {}) => {
-  return Employee.find(filter);
+const getTotalCount = (filter) => {
+  return Employee.countDocuments(filter);
+};
+
+const getAllEmployees = (filter = {}, query) => {
+  return new APIFeatures(Employee.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneEmployee = (filter) => {
@@ -74,6 +79,7 @@ const deleteOneEmployee = async (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllEmployees,
   getOneEmployee,
   createNewEmployee,

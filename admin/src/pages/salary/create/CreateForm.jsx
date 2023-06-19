@@ -25,7 +25,7 @@ function CreateForm({ handleOnSubmit, branches, employees, loading, setQuery }) 
   const [amount, setAmount] = useState(0);
 
   const showEmployeeSalary = (value) => {
-    const employee = employees?.find((employee) => employee._id === value);
+    const employee = employees?.result?.find((employee) => employee._id === value);
     if (employee) {
       setAmount(employee?.salary);
     }
@@ -72,7 +72,7 @@ function CreateForm({ handleOnSubmit, branches, employees, loading, setQuery }) 
                       setQuery(`branch=${branch}`);
                     }}
                   >
-                    {branches?.map((branch) => (
+                    {branches?.result?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
                       </MenuItem>
@@ -88,7 +88,7 @@ function CreateForm({ handleOnSubmit, branches, employees, loading, setQuery }) 
                     required
                     setState={showEmployeeSalary}
                   >
-                    {employees?.map((employee) => (
+                    {employees?.result?.map((employee) => (
                       <MenuItem key={employee._id} value={employee._id}>
                         <Box
                           sx={{
@@ -159,8 +159,8 @@ function CreateForm({ handleOnSubmit, branches, employees, loading, setQuery }) 
 CreateForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  branches: PropTypes.array.isRequired,
-  employees: PropTypes.array.isRequired,
+  branches: PropTypes.object.isRequired,
+  employees: PropTypes.object.isRequired,
   setQuery: PropTypes.func.isRequired,
 };
 

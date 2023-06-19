@@ -15,7 +15,7 @@ const reviewApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllReviews: builder.query({
-      query: () => '/reviews',
+      query: (query) => (query ? `/reviews?${query}` : '/reviews'),
       providesTags: ['reviews'],
     }),
     getReview: builder.query({

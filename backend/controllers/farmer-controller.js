@@ -15,9 +15,14 @@ const getAllFarmers = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
   if (branch) filter.branchOffice = branch;
 
-  const allFarmers = await farmerService.getAllFarmers(filter);
+  const allFarmers = await farmerService.getAllFarmers(filter, req.query);
+  const totalCount = await farmerService.getTotalCount(filter);
 
-  res.status(200).json(allFarmers);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allFarmers,
+  });
 });
 
 /**

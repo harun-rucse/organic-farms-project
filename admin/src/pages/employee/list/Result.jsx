@@ -12,7 +12,7 @@ const getColor = (value) => {
   return value === 'branch-manager' ? 'success' : value === 'office-employee' ? 'error' : 'warning';
 };
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -153,7 +153,7 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const customers = data?.map((item) => ({
+  const customers = data?.result?.map((item) => ({
     avatar: item.user.image,
     name: item.user.name,
     phone: item.user.phone,
@@ -174,7 +174,8 @@ function Result({ data, handleDeleteClick }) {
           data={customers}
           columns={columns}
           searchPlaceholder="Search employee"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -183,6 +184,7 @@ function Result({ data, handleDeleteClick }) {
 
 Result.propTypes = {
   data: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

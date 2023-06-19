@@ -19,7 +19,7 @@ const getColor = (value) => {
     : 'primary';
 };
 
-function Result({ data, handleDeleteClick, handleCreateCard }) {
+function Result({ data, handleDeleteClick, setQuery, handleCreateCard }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -194,7 +194,7 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
     },
   ];
 
-  const farmers = data?.map((item) => ({
+  const farmers = data?.result?.map((item) => ({
     avatar: item.image,
     name: item.name,
     phone: item.phone,
@@ -217,7 +217,8 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
           data={farmers}
           columns={columns}
           searchPlaceholder="Search farmer"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -226,6 +227,7 @@ function Result({ data, handleDeleteClick, handleCreateCard }) {
 
 Result.propTypes = {
   data: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
   handleCreateCard: PropTypes.func.isRequired,
 };

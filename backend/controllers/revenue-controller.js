@@ -9,9 +9,14 @@ const AppError = require('../utils/app-error');
  */
 const getAllRevenues = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
-  const allRevenues = await revenueService.getAllRevenues(filter);
+  const allRevenues = await revenueService.getAllRevenues(filter, req.query);
+  const totalCount = await revenueService.getTotalCount();
 
-  res.status(200).json(allRevenues);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allRevenues,
+  });
 });
 
 /**

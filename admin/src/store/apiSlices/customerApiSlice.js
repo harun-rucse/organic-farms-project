@@ -15,7 +15,7 @@ const customerApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllCustomers: builder.query({
-      query: () => '/customers',
+      query: (query) => (query ? `/customers?${query}` : '/customers'),
       providesTags: ['customers'],
     }),
     getCustomer: builder.query({

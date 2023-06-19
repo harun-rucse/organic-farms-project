@@ -1,7 +1,12 @@
 const { FarmerCard } = require('../models/farmer-card-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllFarmerCards = (filter = {}) => {
-  return FarmerCard.find(filter);
+const getTotalCount = (filter) => {
+  return FarmerCard.countDocuments(filter);
+};
+
+const getAllFarmerCards = (filter = {}, query) => {
+  return new APIFeatures(FarmerCard.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneFarmerCard = (filter) => {
@@ -19,6 +24,7 @@ const deleteOneFarmerCard = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllFarmerCards,
   getOneFarmerCard,
   createNewFarmerCard,

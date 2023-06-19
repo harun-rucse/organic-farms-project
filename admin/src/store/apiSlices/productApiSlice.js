@@ -15,7 +15,7 @@ const productApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: () => '/products',
+      query: (query) => (query ? `/products?${query}` : '/products'),
       providesTags: ['products'],
     }),
     getProduct: builder.query({

@@ -11,9 +11,14 @@ const AppError = require('../utils/app-error');
  */
 const getAllCustomers = catchAsync(async (req, res, next) => {
   const filter = { role: 'customer' };
-  const allCustomers = await userService.getAllUsers(filter);
+  const allCustomers = await userService.getAllUsers(filter, req.query);
+  const totalCount = await userService.getTotalCount(filter);
 
-  res.status(200).json(allCustomers);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allCustomers,
+  });
 });
 
 /**

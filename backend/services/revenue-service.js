@@ -1,7 +1,12 @@
 const { Revenue } = require('../models/revenue-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllRevenues = (filter = {}) => {
-  return Revenue.find(filter);
+const getTotalCount = (filter) => {
+  return Revenue.countDocuments(filter);
+};
+
+const getAllRevenues = (filter = {}, query) => {
+  return new APIFeatures(Revenue.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneRevenue = (filter) => {
@@ -50,6 +55,7 @@ const getRevenueStatistics = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllRevenues,
   getOneRevenue,
   updateOneRevenue,

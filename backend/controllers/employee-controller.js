@@ -30,9 +30,14 @@ const getAllEmployees = catchAsync(async (req, res, next) => {
   if (branch) filter.branchOffice = branch;
   if (role) filter.role = role;
 
-  const allEmployees = await employeeService.getAllEmployees(filter);
+  const allEmployees = await employeeService.getAllEmployees(filter, req.query);
+  const totalCount = await employeeService.getTotalCount(filter);
 
-  res.status(200).json(allEmployees);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allEmployees,
+  });
 });
 
 /**

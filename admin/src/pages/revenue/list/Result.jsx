@@ -7,7 +7,7 @@ import Table from '@/components/Table';
 import Label from '@/components/label';
 import { fDate } from '@/utils/formatTime';
 
-function Result({ data }) {
+function Result({ data, setQuery }) {
   const columns = [
     {
       name: 'order',
@@ -112,7 +112,7 @@ function Result({ data }) {
     },
   ];
 
-  const revenues = data?.map((item) => ({
+  const revenues = data?.result?.map((item) => ({
     order: item?.order,
     transaction: item?.transaction,
     revenueAmount: item?.revenueAmount,
@@ -132,7 +132,8 @@ function Result({ data }) {
           data={revenues}
           columns={columns}
           searchPlaceholder="Search revenue"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -140,7 +141,8 @@ function Result({ data }) {
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
 };
 
 export default Result;

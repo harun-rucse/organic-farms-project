@@ -15,7 +15,14 @@ export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllProductsQuery();
+  const [query, setQuery] = useState('page=1&limit=5');
+
+  const {
+    data = [],
+    isLoading,
+    isError: isFetchError,
+    error: fetchError,
+  } = useGetAllProductsQuery(query ? query : undefined);
   const [deleteProduct, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
     useDeleteProductMutation();
 
@@ -62,7 +69,7 @@ export default function List() {
             <Alert severity="error">{deleteError?.data?.message || fetchError?.data?.message}</Alert>
           </Stack>
         )}
-        <Result data={data} handleDeleteClick={handleDeleteClick} />
+        <Result data={data} setQuery={setQuery} handleDeleteClick={handleDeleteClick} />
       </Container>
       <ConfirmDeleteModal
         open={open}

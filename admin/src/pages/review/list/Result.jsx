@@ -20,7 +20,7 @@ const getRatingColor = (rating) => {
   return 'error';
 };
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -164,17 +164,17 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const reviews = data?.map((item) => ({
-    customerName: item.user.name,
-    customerImage: item.user.image,
-    productName: item.product.name,
-    productImage: item.product.images[0],
-    category: item.product.subcategory.category.name,
-    subCategory: item.product.subcategory.name,
-    rating: item.rating,
-    review: item.review,
-    branchOffice: item.branchOffice.name,
-    action: item._id,
+  const reviews = data?.result?.map((item) => ({
+    customerName: item?.user?.name,
+    customerImage: item?.user?.image,
+    productName: item?.product?.name,
+    productImage: item?.product?.images[0],
+    category: item?.product?.subcategory?.category?.name,
+    subCategory: item?.product?.subcategory?.name,
+    rating: item?.rating,
+    review: item?.review,
+    branchOffice: item?.branchOffice?.name,
+    action: item?._id,
   }));
 
   return (
@@ -185,7 +185,8 @@ function Result({ data, handleDeleteClick }) {
           data={reviews}
           columns={columns}
           searchPlaceholder="Search reviews"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -193,7 +194,8 @@ function Result({ data, handleDeleteClick }) {
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

@@ -10,9 +10,14 @@ const AppError = require('../utils/app-error');
  * @access  Public
  */
 const getAllBranches = catchAsync(async (req, res, next) => {
-  const allBranches = await branchService.getAllBranches();
+  const allBranches = await branchService.getAllBranches({}, req.query);
+  const totalCount = await branchService.getTotalCount();
 
-  res.status(200).json(allBranches);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allBranches,
+  });
 });
 
 /**

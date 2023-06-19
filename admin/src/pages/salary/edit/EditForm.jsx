@@ -57,7 +57,7 @@ function EditForm({ handleOnSubmit, salary, branches, employees, loading }) {
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select branch" name="branchOffice" fullWidth disabled>
-                    {branches?.map((branch) => (
+                    {branches?.result?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
                       </MenuItem>
@@ -67,7 +67,7 @@ function EditForm({ handleOnSubmit, salary, branches, employees, loading }) {
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select employee" name="employee" fullWidth required disabled>
-                    {employees?.map((employee) => (
+                    {employees?.result?.map((employee) => (
                       <MenuItem key={employee._id} value={employee._id}>
                         <Box
                           sx={{
@@ -138,8 +138,8 @@ function EditForm({ handleOnSubmit, salary, branches, employees, loading }) {
 EditForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  branches: PropTypes.array.isRequired,
-  employees: PropTypes.array.isRequired,
+  branches: PropTypes.object.isRequired,
+  employees: PropTypes.object.isRequired,
   salary: PropTypes.object.isRequired,
 };
 

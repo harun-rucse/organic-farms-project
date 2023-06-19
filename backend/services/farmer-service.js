@@ -1,7 +1,12 @@
 const { Farmer } = require('../models/farmer-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllFarmers = (filter = {}) => {
-  return Farmer.find(filter);
+const getTotalCount = (filter) => {
+  return Farmer.countDocuments(filter);
+};
+
+const getAllFarmers = (filter = {}, query) => {
+  return new APIFeatures(Farmer.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneFarmer = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneFarmer = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllFarmers,
   getOneFarmer,
   createNewFarmer,

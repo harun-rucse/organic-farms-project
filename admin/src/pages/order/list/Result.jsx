@@ -42,7 +42,7 @@ const getOrderStatusColor = (status) => {
   }
 };
 
-function Result({ data }) {
+function Result({ data, setQuery }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -217,7 +217,7 @@ function Result({ data }) {
     },
   ];
 
-  const expenses = data?.map((item) => ({
+  const expenses = data?.result?.map((item) => ({
     id: item._id,
     customerName: item?.customer?.name,
     totalProduct: item.products.length,
@@ -235,14 +235,22 @@ function Result({ data }) {
   return (
     <Card>
       <PerfectScrollbar>
-        <Table title="Order List" data={expenses} columns={columns} searchPlaceholder="Search order" rowsPerPage={10} />
+        <Table
+          title="Order List"
+          data={expenses}
+          columns={columns}
+          searchPlaceholder="Search order"
+          total={data?.total}
+          setQuery={setQuery}
+        />
       </PerfectScrollbar>
     </Card>
   );
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
 };
 
 export default Result;

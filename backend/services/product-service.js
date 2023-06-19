@@ -1,7 +1,12 @@
 const { Product } = require('../models/product-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllProducts = (filter = {}) => {
-  return Product.find(filter);
+const getTotalCount = (filter) => {
+  return Product.countDocuments(filter);
+};
+
+const getAllProducts = (filter = {}, query) => {
+  return new APIFeatures(Product.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneProduct = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneProduct = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllProducts,
   getOneProduct,
   createNewProduct,

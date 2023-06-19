@@ -47,7 +47,7 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select delevered By" name="orderDeliveredBy" fullWidth required>
-                    {deleverdPersons?.map((deleverdPerson) => (
+                    {deleverdPersons?.result?.map((deleverdPerson) => (
                       <MenuItem key={deleverdPerson._id} value={deleverdPerson._id}>
                         {deleverdPerson?.user?.name}
                       </MenuItem>
@@ -66,7 +66,6 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
                   >
                     Back
                   </Button>
-                  {/* <FormSubmitButton label="Update now" color="primary" loading={loading} /> */}
                   <FormSubmitButton
                     label={status === 'Delivered' ? 'Send OTP' : 'Update now'}
                     color="primary"
@@ -86,7 +85,7 @@ EditForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   order: PropTypes.object.isRequired,
-  deleverdPersons: PropTypes.array.isRequired,
+  deleverdPersons: PropTypes.object.isRequired,
 };
 
 export default EditForm;
