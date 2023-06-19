@@ -1,7 +1,12 @@
 const { Branch } = require('../models/branch-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllBranches = () => {
-  return Branch.find();
+const getTotalCount = (filter) => {
+  return Branch.countDocuments(filter);
+};
+
+const getAllBranches = (filter = {}, query) => {
+  return new APIFeatures(Branch.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneBranch = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneBranch = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllBranches,
   getOneBranch,
   createNewBranch,

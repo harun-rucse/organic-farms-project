@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Card, CardHeader, Button, Box } from '@mui/material';
 import Table from '@mui/material/Table';
@@ -70,7 +70,7 @@ export default function AppLatestOrders({ title, subheader, orders, ...other }) 
                   </TableCell>
                 </TableRow>
               ))}
-              {orders.length === 0 && (
+              {orders?.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={8} align="center">
                     No orders found

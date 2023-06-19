@@ -7,7 +7,7 @@ import Iconify from '@/components/iconify';
 import Table from '@/components/Table';
 import Label from '@/components/label/Label';
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -113,7 +113,7 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const subCategories = data?.map((item) => ({
+  const subCategories = data?.result?.map((item) => ({
     name: item.name,
     category: item.category.name,
     categoryImage: item.category.image,
@@ -130,7 +130,8 @@ function Result({ data, handleDeleteClick }) {
           data={subCategories}
           columns={columns}
           searchPlaceholder="Search subcategory"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -138,7 +139,8 @@ function Result({ data, handleDeleteClick }) {
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

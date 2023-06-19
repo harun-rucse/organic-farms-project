@@ -11,9 +11,14 @@ const AppError = require('../utils/app-error');
  * @access  Private(admin)
  */
 const getAllSalaries = catchAsync(async (req, res, next) => {
-  const allSalarys = await salaryService.getAllSalaries();
+  const allSalarys = await salaryService.getAllSalaries({}, req.query);
+  const totalCount = await salaryService.getTotalCount();
 
-  res.status(200).json(allSalarys);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allSalarys,
+  });
 });
 
 /**

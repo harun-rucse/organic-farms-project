@@ -95,7 +95,7 @@ function EditForm({ handleOnSubmit, employee, branches, loading }) {
                     required
                     disabled={currentUser?.role !== 'admin'}
                   >
-                    {branches?.map((branch) => (
+                    {branches?.result?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
                       </MenuItem>

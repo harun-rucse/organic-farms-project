@@ -1,7 +1,12 @@
 const { Category } = require('../models/category-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllCategories = (filter = {}) => {
-  return Category.find(filter);
+const getTotalCount = (filter = {}) => {
+  return Category.countDocuments(filter);
+};
+
+const getAllCategories = (filter = {}, query) => {
+  return new APIFeatures(Category.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneCategory = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneCategory = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllCategories,
   getOneCategory,
   createNewCategory,

@@ -69,7 +69,7 @@ function EditForm({ handleOnSubmit, product, subcategories, farmers, loading }) 
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select subcategory" name="subcategory" fullWidth required>
-                    {subcategories?.map((subcategory) => (
+                    {subcategories?.result?.map((subcategory) => (
                       <MenuItem key={subcategory._id} value={subcategory._id}>
                         {subcategory.name}
                       </MenuItem>
@@ -79,7 +79,7 @@ function EditForm({ handleOnSubmit, product, subcategories, farmers, loading }) 
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select farmer" name="farmer" fullWidth required disabled>
-                    {farmers?.map((farmer) => (
+                    {farmers?.result?.map((farmer) => (
                       <MenuItem key={farmer._id} value={farmer._id}>
                         <Box
                           sx={{
@@ -150,8 +150,8 @@ EditForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   product: PropTypes.object.isRequired,
-  subcategories: PropTypes.array.isRequired,
-  farmers: PropTypes.array.isRequired,
+  subcategories: PropTypes.object.isRequired,
+  farmers: PropTypes.object.isRequired,
 };
 
 export default EditForm;

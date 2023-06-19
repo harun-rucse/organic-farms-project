@@ -12,9 +12,14 @@ const AppError = require('../utils/app-error');
  */
 const getAllFarmerCards = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
-  const allFarmerCards = await farmerCardService.getAllFarmerCards(filter);
+  const allFarmerCards = await farmerCardService.getAllFarmerCards(filter, req.query);
+  const totalCount = await farmerCardService.getTotalCount(filter);
 
-  res.status(200).json(allFarmerCards);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allFarmerCards,
+  });
 });
 
 /**

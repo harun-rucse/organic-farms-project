@@ -15,7 +15,7 @@ const salaryApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllSalaries: builder.query({
-      query: () => '/salaries',
+      query: (query) => (query ? `/salaries?${query}` : '/salaries'),
       providesTags: ['salaries'],
     }),
     getSalary: builder.query({

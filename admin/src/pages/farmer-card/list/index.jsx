@@ -12,7 +12,14 @@ export default function List() {
   const notification = useNotification();
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const { data = [], isLoading, isError: isFetchError, error: fetchError } = useGetAllFarmerCardsQuery();
+  const [query, setQuery] = useState('page=1&limit=5');
+
+  const {
+    data = [],
+    isLoading,
+    isError: isFetchError,
+    error: fetchError,
+  } = useGetAllFarmerCardsQuery(query ? query : undefined);
   const [deleteFarmerCard, { isLoading: isDeleting, isSuccess, isError: isDeleteError, error: deleteError }] =
     useDeleteFarmerCardMutation();
 
@@ -54,7 +61,7 @@ export default function List() {
             <Alert severity="error">{fetchError?.data?.message || deleteError?.data?.message}</Alert>
           </Stack>
         )}
-        <Result data={data} handleDeleteClick={handleDeleteClick} />
+        <Result data={data} setQuery={setQuery} handleDeleteClick={handleDeleteClick} />
       </Container>
       <ConfirmDeleteModal
         open={open}

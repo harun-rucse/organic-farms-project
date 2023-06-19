@@ -7,7 +7,7 @@ import Iconify from '@/components/iconify';
 import Label from '@/components/label';
 import Table from '@/components/Table';
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const stockColor = (value) => {
@@ -52,7 +52,7 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
-      name: 'subCategory',
+      name: 'subcategory',
       label: 'SubCategory',
       options: {
         filter: false,
@@ -115,7 +115,7 @@ function Result({ data, handleDeleteClick }) {
       },
     },
     {
-      name: 'rating',
+      name: 'ratingAvg',
       label: 'Rating',
       options: {
         filter: false,
@@ -224,18 +224,18 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const products = data?.map((item) => ({
+  const products = data?.result?.map((item) => ({
     image: item.images[0],
     name: item.name,
     category: item.subcategory.category.name,
-    subCategory: item.subcategory.name,
+    subcategory: item.subcategory.name,
     price: item.price,
     description: item.description,
     minimumOrder: item.minimumOrder,
     maximumOrder: item.maximumOrder,
     maxDeliveryDays: item.maxDeliveryDays,
     farmer: item.farmer.name,
-    rating: item.ratingAvg,
+    ratingAvg: item.ratingAvg,
     inStock: item.inStock,
     active: item.active,
     branchOffice: item.branchOffice.name,
@@ -252,7 +252,8 @@ function Result({ data, handleDeleteClick }) {
           data={products}
           columns={columns}
           searchPlaceholder="Search product"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -260,7 +261,8 @@ function Result({ data, handleDeleteClick }) {
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

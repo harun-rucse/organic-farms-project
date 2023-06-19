@@ -15,7 +15,7 @@ const farmerCardApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllFarmerCards: builder.query({
-      query: () => '/farmer-cards',
+      query: (query) => (query ? `/farmer-cards?${query}` : '/farmer-cards'),
       providesTags: ['farmer-cards'],
     }),
     getFarmerCard: builder.query({

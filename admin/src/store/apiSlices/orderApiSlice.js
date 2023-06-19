@@ -15,7 +15,7 @@ const orderApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllOrders: builder.query({
-      query: () => '/orders',
+      query: (query) => (query ? `/orders?${query}` : '/orders'),
       providesTags: ['orders'],
     }),
     getLatestOrders: builder.query({

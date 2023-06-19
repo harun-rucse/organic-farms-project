@@ -83,7 +83,7 @@ function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading,
                     }}
                     f
                   >
-                    {branches?.map((branch) => (
+                    {branches?.result?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
                       </MenuItem>
@@ -93,7 +93,7 @@ function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading,
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select subcategory" name="subcategory" fullWidth required>
-                    {subcategories?.map((subcategory) => (
+                    {subcategories?.result?.map((subcategory) => (
                       <MenuItem key={subcategory._id} value={subcategory._id}>
                         {subcategory.name}
                       </MenuItem>
@@ -103,7 +103,7 @@ function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading,
 
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select farmer" name="farmer" fullWidth required>
-                    {farmers?.map((farmer) => (
+                    {farmers?.result?.map((farmer) => (
                       <MenuItem key={farmer._id} value={farmer._id}>
                         <Box
                           sx={{
@@ -173,9 +173,9 @@ function CreateForm({ handleOnSubmit, subcategories, farmers, branches, loading,
 CreateForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  subcategories: PropTypes.array.isRequired,
-  farmers: PropTypes.array.isRequired,
-  branches: PropTypes.array.isRequired,
+  subcategories: PropTypes.object.isRequired,
+  farmers: PropTypes.object.isRequired,
+  branches: PropTypes.object.isRequired,
 };
 
 export default CreateForm;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Stack, Alert } from '@mui/material';
 import Result from './Result';
@@ -6,7 +7,9 @@ import { useGetAllRevenuesQuery } from '@/store/apiSlices/revenueApiSlice';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 export default function List() {
-  const { data = [], isLoading, isError, error } = useGetAllRevenuesQuery();
+  const [query, setQuery] = useState('page=1&limit=5');
+
+  const { data = [], isLoading, isError, error } = useGetAllRevenuesQuery(query ? query : undefined);
 
   if (isLoading) {
     return <Loader isLoading={isLoading} />;
@@ -24,7 +27,7 @@ export default function List() {
             <Alert severity="error">{error?.data?.message}</Alert>
           </Stack>
         )}
-        <Result data={data} />
+        <Result data={data} setQuery={setQuery} />
       </Container>
     </DashboardLayout>
   );

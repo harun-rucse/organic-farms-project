@@ -15,7 +15,7 @@ const subCategoryApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllSubCategories: builder.query({
-      query: () => '/sub-categories',
+      query: (query) => (query ? `/sub-categories?${query}` : '/sub-categories'),
       providesTags: ['sub-categories'],
     }),
     getSubCategory: builder.query({

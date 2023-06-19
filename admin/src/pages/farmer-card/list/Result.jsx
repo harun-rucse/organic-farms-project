@@ -6,7 +6,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import Iconify from '@/components/iconify';
 import Table from '@/components/Table';
 
-function Result({ data, handleDeleteClick }) {
+function Result({ data, setQuery, handleDeleteClick }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -125,7 +125,7 @@ function Result({ data, handleDeleteClick }) {
     },
   ];
 
-  const categories = data?.map((item) => ({
+  const categories = data?.result?.map((item) => ({
     image: item.farmer?.image,
     name: item.farmer?.name,
     address: item.farmer?.address,
@@ -144,7 +144,8 @@ function Result({ data, handleDeleteClick }) {
           data={categories}
           columns={columns}
           searchPlaceholder="Search card"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -153,6 +154,7 @@ function Result({ data, handleDeleteClick }) {
 
 Result.propTypes = {
   data: PropTypes.array.isRequired,
+  setQuery: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 };
 

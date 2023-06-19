@@ -1,7 +1,12 @@
 const { SubCategory } = require('../models/subcategory-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllSubCategories = (filter = {}) => {
-  return SubCategory.find(filter);
+const getTotalCount = (filter = {}) => {
+  return SubCategory.countDocuments(filter);
+};
+
+const getAllSubCategories = (filter = {}, query) => {
+  return new APIFeatures(SubCategory.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneSubCategory = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneSubCategory = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllSubCategories,
   getOneSubCategory,
   createNewSubCategory,

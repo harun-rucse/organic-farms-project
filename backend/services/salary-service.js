@@ -1,7 +1,12 @@
 const { Salary } = require('../models/salary-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllSalaries = (filter = {}) => {
-  return Salary.find(filter);
+const getTotalCount = (filter) => {
+  return Salary.countDocuments(filter);
+};
+
+const getAllSalaries = (filter = {}, query) => {
+  return new APIFeatures(Salary.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneSalary = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneSalary = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllSalaries,
   getOneSalary,
   createNewSalary,

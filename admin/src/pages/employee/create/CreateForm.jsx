@@ -99,7 +99,7 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
                     required
                     disabled={currentUser?.role !== 'admin'}
                   >
-                    {branches?.map((branch) => (
+                    {branches?.result?.map((branch) => (
                       <MenuItem key={branch._id} value={branch._id}>
                         {branch.name}
                       </MenuItem>
@@ -153,7 +153,7 @@ function CreateForm({ handleOnSubmit, branches, loading }) {
 
 CreateForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
-  branches: PropTypes.array.isRequired,
+  branches: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 

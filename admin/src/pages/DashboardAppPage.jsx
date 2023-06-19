@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, Box, TextField, MenuItem } from '@mui/material';
-import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '@/sections/@dashboard/app';
+import { AppWidgetSummary } from '@/sections/@dashboard/app';
 import DashboardLayout from '@/layouts/dashboard';
 import Loader from '@/components/Loader';
 import { useGetProfileQuery } from '@/store/apiSlices/authApiSlice';
@@ -20,7 +20,7 @@ export default function DashboardAppPage() {
   const [amountQuery, setAmountQuery] = useState(`branch=all&month=${new Date().getMonth() + 1}`);
 
   const { data: currentUser } = useGetProfileQuery();
-  const { data: latestOrders, isLoading: isOrderLoading } = useGetLatestOrdersQuery();
+  const { data: latestOrders = [], isLoading: isOrderLoading } = useGetLatestOrdersQuery();
   const { data: branches, isLoading: isBranchLoading } = useGetAllBranchesQuery();
   const { data: statsCount, isLoading } = useGetAllStatsCountQuery(query ? query : undefined);
   const { data: statsAmount, isLoading: isStatsAmountLoading } = useGetAllStatsAmountQuery(
@@ -120,7 +120,7 @@ export default function DashboardAppPage() {
                 fullWidth
               >
                 <MenuItem value={'all'}>All Branches</MenuItem>
-                {branches?.map((branch) => (
+                {branches?.result?.map((branch) => (
                   <MenuItem key={branch._id} value={branch._id}>
                     {branch.name}
                   </MenuItem>

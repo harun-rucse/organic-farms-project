@@ -15,7 +15,7 @@ const branchApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllBranches: builder.query({
-      query: () => '/branches',
+      query: (query) => (query ? `/branches?${query}` : '/branches'),
       providesTags: ['branches'],
     }),
     getBranch: builder.query({

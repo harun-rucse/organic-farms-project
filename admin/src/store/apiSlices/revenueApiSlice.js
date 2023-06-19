@@ -15,7 +15,7 @@ const revenueApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllRevenues: builder.query({
-      query: () => '/revenues',
+      query: (query) => (query ? `/revenues?${query}` : '/revenues'),
       providesTags: ['revenues'],
     }),
   }),

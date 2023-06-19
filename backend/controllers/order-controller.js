@@ -19,7 +19,7 @@ const getLatestOrder = catchAsync(async (req, res, next) => {
     filter.branchOffice = req.user.branchOffice;
   }
 
-  const latestOrders = await orderService.getAllOrders(filter).sort({ orderPlacedDate: -1 }).limit(5);
+  const latestOrders = await orderService.getLatestOrder(filter);
 
   res.status(200).json(latestOrders);
 });
@@ -31,9 +31,14 @@ const getLatestOrder = catchAsync(async (req, res, next) => {
  */
 const getAllOrders = catchAsync(async (req, res, next) => {
   const filter = req.user.role === 'admin' ? {} : { branchOffice: req.user.branchOffice };
-  const allOrders = await orderService.getAllOrders(filter);
+  const allOrders = await orderService.getAllOrders(filter, req.query);
+  const totalCount = await orderService.getTotalCount();
 
-  res.status(200).json(allOrders);
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allOrders,
+  });
 });
 
 /**

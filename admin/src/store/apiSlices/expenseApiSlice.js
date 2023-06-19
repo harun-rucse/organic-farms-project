@@ -15,7 +15,7 @@ const expenseApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllExpenses: builder.query({
-      query: () => '/expenses',
+      query: (query) => (query ? `/expenses?${query}` : '/expenses'),
       providesTags: ['expenses'],
     }),
     getExpense: builder.query({

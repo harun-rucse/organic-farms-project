@@ -1,7 +1,12 @@
 const { Expense } = require('../models/expense-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllExpenses = (filter = {}) => {
-  return Expense.find(filter);
+const getTotalCount = (filter) => {
+  return Expense.countDocuments(filter);
+};
+
+const getAllExpenses = (filter = {}, query) => {
+  return new APIFeatures(Expense.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneExpense = (filter) => {
@@ -19,6 +24,7 @@ const updateOneExpense = (filter, payload) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllExpenses,
   getOneExpense,
   createNewExpense,

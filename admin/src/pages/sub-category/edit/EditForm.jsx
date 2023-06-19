@@ -42,7 +42,7 @@ function EditForm({ handleOnSubmit, subCategory, categories, loading }) {
                     }}
                     disabled
                   >
-                    {categories?.map((category) => (
+                    {categories?.result?.map((category) => (
                       <MenuItem key={category._id} value={category._id}>
                         {category.name}
                       </MenuItem>
@@ -76,7 +76,7 @@ EditForm.propTypes = {
   handleOnSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   subCategory: PropTypes.object.isRequired,
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.object.isRequired,
 };
 
 export default EditForm;

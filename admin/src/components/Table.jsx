@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MUIDataTable, { TableFilterList } from 'mui-datatables';
 import PropTypes from 'prop-types';
 import { Chip } from '@mui/material';
@@ -11,13 +11,55 @@ const CustomFilterList = (props) => {
   return <TableFilterList {...props} ItemComponent={CustomChip} />;
 };
 
-function Table({ title, searchPlaceholder, columns, data, rowsPerPage }) {
+function Table({ title, searchPlaceholder, columns, data, total, setQuery }) {
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const options = {
+    serverSide: true,
     searchPlaceholder,
     selectableRows: 'none',
     responsive: 'simple',
     rowsPerPage,
-    rowsPerPageOptions: [5, 10, 20, 50, 100],
+    count: total,
+    rowsPerPageOptions: [5, 10, 20, 50, 100, 200],
+    onTableChange: (action, tableState) => {
+      switch (action) {
+        case 'changePage':
+          setQuery(`page=${tableState.page + 1}&limit=${tableState.rowsPerPage}`);
+          break;
+        case 'changeRowsPerPage':
+          setQuery(`page=${tableState.page + 1}&limit=${tableState.rowsPerPage}`);
+          setRowsPerPage(tableState.rowsPerPage);
+          break;
+        case 'sort':
+          setQuery(
+            `page=${tableState.page + 1}&limit=${tableState.rowsPerPage}&sortBy=${tableState.sortOrder.name}&order=${
+              tableState.sortOrder.direction
+            }`
+          );
+          break;
+        case 'search':
+          if (tableState.searchText) {
+            setQuery(`name=${tableState.searchText}`);
+          } else {
+            setQuery(`page=${tableState.page + 1}&limit=${tableState.rowsPerPage}`);
+          }
+          break;
+        case 'filterChange':
+          tableState.filterList.forEach((filter, index) => {
+            if (filter.length) {
+              console.log(filter);
+              setQuery(`${filter[index]}=${filter[0]}`);
+            } else {
+              setQuery(`page=${tableState.page + 1}&limit=${tableState.rowsPerPage}`);
+            }
+          });
+          break;
+
+        default:
+          break;
+      }
+    },
   };
 
   return (
@@ -38,11 +80,8 @@ Table.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   searchPlaceholder: PropTypes.string.isRequired,
-  rowsPerPage: PropTypes.number,
-};
-
-Table.defaultProps = {
-  rowsPerPage: 5,
+  total: PropTypes.number,
+  setQuery: PropTypes.func,
 };
 
 CustomChip.propTypes = {

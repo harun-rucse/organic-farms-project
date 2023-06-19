@@ -8,7 +8,7 @@ import Table from '@/components/Table';
 import Label from '@/components/label';
 import { fDate } from '@/utils/formatTime';
 
-function Result({ data }) {
+function Result({ data, setQuery }) {
   const navigate = useNavigate();
 
   const columns = [
@@ -106,7 +106,7 @@ function Result({ data }) {
     },
   ];
 
-  const expenses = data?.map((item) => ({
+  const expenses = data?.result?.map((item) => ({
     category: item.category,
     amount: item.amount,
     description: item.description,
@@ -125,7 +125,8 @@ function Result({ data }) {
           data={expenses}
           columns={columns}
           searchPlaceholder="Search expense"
-          rowsPerPage={10}
+          total={data?.total}
+          setQuery={setQuery}
         />
       </PerfectScrollbar>
     </Card>
@@ -133,7 +134,8 @@ function Result({ data }) {
 }
 
 Result.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
+  setQuery: PropTypes.func.isRequired,
 };
 
 export default Result;

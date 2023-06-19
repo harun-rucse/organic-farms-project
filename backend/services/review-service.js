@@ -1,7 +1,12 @@
 const { Review } = require('../models/review-model');
+const APIFeatures = require('../utils/api-features');
 
-const getAllReviews = (filter = {}) => {
-  return Review.find(filter);
+const getTotalCount = (filter) => {
+  return Review.countDocuments(filter);
+};
+
+const getAllReviews = (filter = {}, query) => {
+  return new APIFeatures(Review.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
 const getOneReview = (filter) => {
@@ -23,6 +28,7 @@ const deleteOneReview = (filter) => {
 };
 
 module.exports = {
+  getTotalCount,
   getAllReviews,
   getOneReview,
   createNewReview,
