@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.use([auth, verified]);
 
+router.get('/my-orders', restrictTo('customer'), orderController.getMyOrders);
+router.get('/my-orders/:id', restrictTo('customer'), orderController.getMySingleOrder);
 router.get(
   '/latest-orders',
   restrictTo('admin', 'branch-manager', 'office-employee', 'warehouse-employee'),

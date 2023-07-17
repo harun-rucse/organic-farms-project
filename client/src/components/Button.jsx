@@ -6,10 +6,10 @@ function Button({ children, variant = "contained", className, ...rest }) {
       className={`
         ${
           variant === "outlined"
-            ? "bg-transparent border border-red-300 hover:border-red-400 text-rose-600"
-            : "bg-rose-500 hover:bg-rose-600 text-white"
+            ? "bg-transparent border border-green-300 hover:border-green-400 text-white-600"
+            : "bg-green-500 hover:bg-green-600 text-white"
         }       
-       text-rose-600 text-base font-semibold w-full p-4 rounded-md ${className}`}
+       text-gray-600 text-base font-semibold w-full p-4 rounded-md ${className}`}
       {...rest}
     >
       {children}

@@ -1,12 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout";
 import Sidebar from "@/components/Sidebar";
 import HeroCarousel from "@/components/caousel/HeroCarousel";
 import ProductCard from "@/components/ProductCard";
-import { items } from "@/mock/products";
-import { Link } from "react-router-dom";
+import { useGetAllProductsQuery } from "@/store/apiSlices/productApiSlice";
+import Loader from "@/components/Loader";
 
 function Home() {
+  const { data: products, isLoading } =
+    useGetAllProductsQuery("page=1&limit=6");
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <Loader />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="flex items-start gap-6">
@@ -65,12 +77,12 @@ function Home() {
               Latest Products
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-              {items.slice(0, 6).map((item) => (
+              {products?.result?.slice(0, 6).map((item) => (
                 <ProductCard key={item._id} item={item} view="grid" />
               ))}
             </div>
             <Link to="/shop" className="self-center">
-              <button className="px-4 py-2 mt-6 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition duration-200">
+              <button className="px-4 py-2 mt-6 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
                 View All
               </button>
             </Link>

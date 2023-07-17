@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(auth, branchController.getAllBranches)
+  .get(branchController.getAllBranches)
   .post([auth, verified, restrictTo('admin')], branchController.createNewBranch);
 
 router.use([auth, verified, restrictTo('admin')]);

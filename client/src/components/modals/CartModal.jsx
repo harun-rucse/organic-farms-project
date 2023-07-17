@@ -1,17 +1,32 @@
 import { BiShoppingBag } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Modal from "./index";
-import { items } from "@/mock/carts";
-import Button from "../Button";
+import Button from "@/components/Button";
+import {
+  addToCart,
+  removeCartItem,
+  deleteCartItem
+} from "@/store/reducers/cartReducer";
+import useNotification from "@/hooks/useNotification";
 
-const Item = ({ item }) => {
-  const { name, price, image, quantity } = item;
+const Item = ({
+  item,
+  handleAddToCart,
+  handleRemoveCartItem,
+  handleDeleteCartItem
+}) => {
+  const { name, price, images, quantity, minimumOrder, maximumOrder } = item;
 
   return (
     <div className="flex justify-between items-center gap-2 border-b border-gray-100 px-8 py-4">
       <div className="flex flex-col items-center gap-2">
-        <button className="flex items-center justify-center border border-red-400 w-8 md:w-8 h-8 md:h-8 md:text-2xl font-bold text-red-600 rounded-full">
+        <button
+          className="flex items-center justify-center border border-green-600 w-8 md:w-8 h-8 md:h-8 md:text-2xl font-bold text-green-600 rounded-full"
+          onClick={() => handleAddToCart(item)}
+          disabled={quantity >= maximumOrder}
+        >
           +
         </button>
         <span className="text-gray-800 font-bold">{quantity}</span>
@@ -19,33 +34,58 @@ const Item = ({ item }) => {
           className={`flex items-center justify-center border ${
             quantity === 1
               ? "border-gray-400 text-gray-600 cursor-not-allowed"
-              : "border-red-400 text-red-600"
+              : "border-green-600 text-green-600"
           } w-8 md:w-8 h-8 md:h-8 md:text-2xl font-bold rounded-full`}
-          disabled={quantity === 1}
+          disabled={quantity <= minimumOrder}
+          onClick={() => handleRemoveCartItem(item)}
         >
           -
         </button>
       </div>
       <div className="flex items-center gap-2">
-        <img src={image} alt={name} className="w-24 h-24 object-cover" />
+        <img
+          src={images && images[0]}
+          alt={name}
+          className="w-24 h-24 object-cover"
+        />
         <div className="flex flex-col gap-2">
           <h4 className="text-gray-600 font-semibold text-sm">
             {name.substring(0, 20) + "..."}
           </h4>
-          <p className="text-sm text-gray-500 font-semibold">{`$${price} x ${quantity}`}</p>
-          <b className="text-red-500 text-lg">{price * quantity}</b>
+          <p className="text-sm text-gray-500 font-semibold">{`${price} Tk x ${quantity} kg`}</p>
+          <b className="text-green-500 text-lg">Tk. {price * quantity}</b>
         </div>
       </div>
-      <MdClose className="text-xl cursor-pointer hover:text-red-700" />
+      <MdClose
+        className="text-xl cursor-pointer hover:text-red-700"
+        onClick={() => handleDeleteCartItem(item)}
+      />
     </div>
   );
 };
 
 function CartModal({ isOpen, onClose }) {
-  const totalPrice = items.reduce(
+  const dispatch = useDispatch();
+  const notification = useNotification();
+  const { cartItems } = useSelector((state) => state.cart);
+
+  const totalPrice = cartItems?.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart({ product, quantity: 1 }));
+  };
+
+  const handleRemoveCartItem = (product) => {
+    dispatch(removeCartItem(product));
+  };
+
+  const handleDeleteCartItem = (product) => {
+    dispatch(deleteCartItem(product));
+    notification("Product removed from cart", "warning");
+  };
 
   return (
     <Modal isOpen={isOpen} className="shadow-2xl">
@@ -55,7 +95,7 @@ function CartModal({ isOpen, onClose }) {
           <div className="flex items-center gap-4 ">
             <BiShoppingBag className="text-2xl text-gray-700" />
             <span className="text-lg font-semibold text-gray-700">
-              ({items.length}) items
+              ({cartItems?.length}) items
             </span>
           </div>
           <MdClose
@@ -65,19 +105,30 @@ function CartModal({ isOpen, onClose }) {
         </div>
 
         {/* Modal content */}
-        <div className="h-[24rem] overflow-y-auto no-scrollbar">
-          {items.map((item) => (
-            <Item key={item._id} item={item} />
+        <div className="h-[62%] overflow-y-auto no-scrollbar">
+          {cartItems?.map((item) => (
+            <Item
+              key={item._id}
+              item={item}
+              handleAddToCart={handleAddToCart}
+              handleRemoveCartItem={handleRemoveCartItem}
+              handleDeleteCartItem={handleDeleteCartItem}
+            />
           ))}
         </div>
 
         {/* Modal footer */}
         <div className="flex flex-col gap-4 p-6 mt-4">
-          <Button variant="contained" className="bg-pink-600 hover:bg-pink-500">
-            Checkout Now (${totalPrice})
-          </Button>
+          <Link to="/checkout">
+            <Button
+              variant="contained"
+              className="bg-green-600 hover:bg-green-500 py-2"
+            >
+              Checkout Now (${totalPrice})
+            </Button>
+          </Link>
           <Link to="/cart">
-            <Button variant="outlined" className="text-rose-600">
+            <Button variant="outlined" className="text-green-600 py-2">
               View Cart
             </Button>
           </Link>

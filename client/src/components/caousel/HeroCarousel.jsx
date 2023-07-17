@@ -10,7 +10,7 @@ function HeroCarousel() {
       showThumbs={false}
       infiniteLoop={true}
     >
-      <div className="w-full flex flex-col gap-12 bg-rose-700 rounded-lg md:p-12">
+      <div className="w-full flex flex-col gap-12 bg-green-600 rounded-lg md:p-12">
         <img
           className="h-36 md:h-44 object-contain rounded-md"
           src="https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fgarlic.png&w=640&q=75"
@@ -23,7 +23,7 @@ function HeroCarousel() {
         </p>
       </div>
 
-      <div className="w-full flex flex-col gap-12 bg-rose-700 rounded-lg md:p-12">
+      <div className="w-full flex flex-col gap-12 bg-yellow-600 rounded-lg md:p-12">
         <img
           className="h-36 md:h-44 object-contain rounded-md"
           src="https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fgarlic.png&w=640&q=75"
