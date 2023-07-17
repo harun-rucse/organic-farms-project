@@ -16,7 +16,10 @@ export const items = [
     ratingQty: 12,
     ratingAvg: 4.5,
     inStock: 10,
-    branchOffice: "Random Branch Office"
+    branchOffice: {
+      name: "Rajshahi Branch Office",
+      address: "Rajshahi, Bangladesh"
+    }
   },
   {
     _id: 2,
@@ -35,7 +38,10 @@ export const items = [
     ratingQty: 12,
     ratingAvg: 4.5,
     inStock: 10,
-    branchOffice: "Random Branch Office"
+    branchOffice: {
+      name: "Rajshahi Branch Office",
+      address: "Rajshahi, Bangladesh"
+    }
   },
   {
     _id: 3,
@@ -53,8 +59,11 @@ export const items = [
     },
     ratingQty: 12,
     ratingAvg: 4.5,
-    inStock: 10,
-    branchOffice: "Random Branch Office"
+    inStock: 0,
+    branchOffice: {
+      name: "Rajshahi Branch Office",
+      address: "Rajshahi, Bangladesh"
+    }
   },
   {
     _id: 4,
@@ -73,6 +82,9 @@ export const items = [
     ratingQty: 12,
     ratingAvg: 4.5,
     inStock: 10,
-    branchOffice: "Random Branch Office"
+    branchOffice: {
+      name: "Rajshahi Branch Office",
+      address: "Rajshahi, Bangladesh"
+    }
   }
 ];

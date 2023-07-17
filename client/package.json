@@ -10,12 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@tailwindcss/forms": "^0.5.3",
+    "date-fns": "^2.30.0",
+    "formik": "^2.4.2",
+    "notistack": "^3.0.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
+    "react-rating-stars-component": "^2.2.0",
+    "react-redux": "^8.1.1",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "^6.13.0",
+    "react-tabs": "^6.0.1",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

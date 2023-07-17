@@ -22,6 +22,34 @@ const getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @desc    Get all products for frontend
+ * @route   GET /api/products/frontend
+ * @access  Public
+ */
+const getAllProductsFrontend = catchAsync(async (req, res, next) => {
+  const allProducts = await productService.getAllProducts({}, req.query);
+  const totalCount = await productService.getTotalCount(req.query);
+
+  res.status(200).json({
+    status: 'success',
+    total: totalCount,
+    result: allProducts,
+  });
+});
+
+/**
+ * @desc    Get single product for frontend
+ * @route   GET /api/products/frontend/id
+ * @access  Public
+ */
+const getOneProductFrontend = catchAsync(async (req, res, next) => {
+  const product = await productService.getOneProduct({ _id: req.params.id });
+  if (!product) return next(new AppError('No product found with this id.', 404));
+
+  res.status(200).json(product);
+});
+
+/**
  * @desc    Get single product
  * @route   GET /api/products/id
  * @access  Private(admin, branch-manager, office-employee)
@@ -122,10 +150,27 @@ const deleteOneProduct = catchAsync(async (req, res, next) => {
   res.status(204).send();
 });
 
+/**
+ * @desc    Search products
+ * @route   DELETE /api/products/search?name=abc
+ * @access  Public
+ */
+const searchProducts = catchAsync(async (req, res, next) => {
+  const allProducts = await productService.searchProducts(req.query);
+
+  res.status(200).json({
+    status: 'success',
+    result: allProducts,
+  });
+});
+
 module.exports = {
   getAllProducts,
   getOneProduct,
   createNewProduct,
   updateOneProduct,
   deleteOneProduct,
+  getAllProductsFrontend,
+  getOneProductFrontend,
+  searchProducts,
 };

@@ -86,7 +86,7 @@ productSchema.virtual('reviews', {
 productSchema.pre(/^find/, function (next) {
   this.populate('subcategory', 'name category -createdBy -lastUpdatedBy');
   this.populate('farmer', 'name phone address -createdBy -branchOffice -lastUpdatedBy');
-  this.populate('branchOffice', 'name phone address -createdBy -lastUpdatedBy');
+  this.populate('branchOffice', 'name phone address deliveryFee -createdBy -lastUpdatedBy');
   this.populate('createdBy', 'name phone');
   this.populate('lastUpdatedBy', 'name phone');
 
@@ -94,7 +94,7 @@ productSchema.pre(/^find/, function (next) {
 });
 
 productSchema.pre(/^findOne/, function (next) {
-  this.populate('reviews', 'review rating -product -branchOffice');
+  this.populate('reviews', 'review rating createdAt -product -branchOffice');
 
   next();
 });

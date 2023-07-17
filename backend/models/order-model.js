@@ -191,7 +191,7 @@ const validateOrder = (order) => {
         .min(1)
     ),
     paymentMethod: Joi.string().valid('COD', 'Bkash', 'Rocket', 'Nagad', 'Bank').required(),
-    paymentStatus: Joi.string().valid('Paid', 'Unpaid').required(),
+    paymentStatus: Joi.string().valid('Paid', 'Unpaid'),
   });
 
   return schema.validate(order);

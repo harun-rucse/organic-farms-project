@@ -1,7 +1,7 @@
 const { Product } = require('../models/product-model');
 const APIFeatures = require('../utils/api-features');
 
-const getTotalCount = (filter) => {
+const getTotalCount = (filter = {}) => {
   return Product.countDocuments(filter);
 };
 
@@ -27,6 +27,11 @@ const deleteOneProduct = (filter) => {
   return Product.findOneAndDelete(filter);
 };
 
+const searchProducts = (query) => {
+  const name = query.name;
+  return Product.find({ name: { $regex: name, $options: 'i' } });
+};
+
 module.exports = {
   getTotalCount,
   getAllProducts,
@@ -34,4 +39,5 @@ module.exports = {
   createNewProduct,
   updateOneProduct,
   deleteOneProduct,
+  searchProducts,
 };

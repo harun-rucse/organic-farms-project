@@ -18,7 +18,7 @@ const register = async (payload) => {
 };
 
 const login = async (phone, password) => {
-  const user = await User.findOne({ phone }).select('+password');
+  const user = await User.findOne({ phone, role: 'customer' }).select('+password');
   const isMatch = await user?.correctPassword(password, user.password);
 
   if (!isMatch) {
@@ -56,9 +56,16 @@ const getProfile = async (id) => {
   return { ...user._doc, branch: { _id: branch._id, name: branch.name, address: branch.address, phone: branch.phone } };
 };
 
+const updateProfile = async (id, payload) => {
+  const user = await userService.updateOneUser({ _id: id }, payload);
+
+  return user;
+};
+
 module.exports = {
   register,
   login,
   loginOrganization,
   getProfile,
+  updateProfile,
 };

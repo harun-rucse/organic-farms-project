@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const { validateReview, validateReviewUpdate } = require('../models/review-model');
 const reviewService = require('../services/review-service');
+const orderService = require('../services/order-service');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -44,6 +45,19 @@ const getOneReview = catchAsync(async (req, res, next) => {
 const createNewReview = catchAsync(async (req, res, next) => {
   const { error } = validateReview(req.body);
   if (error) return next(new AppError(error.details[0].message, 400));
+
+  // make sure the user has not already reviewed this product
+  const review = await reviewService.getOneReview({ product: req.body.product, user: req.user._id });
+  if (review) return next(new AppError('You have already reviewed this product.', 400));
+
+  // check if the user has ordered this product and the order is delivered
+  const order = await orderService.getOneOrder({
+    customer: req.user._id,
+    orderStatus: 'Delivered',
+    products: { $elemMatch: { product: req.body.product } },
+  });
+
+  if (!order) return next(new AppError('You can not review this product.', 400));
 
   req.body.user = req.user._id;
 

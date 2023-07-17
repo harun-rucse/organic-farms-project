@@ -2,7 +2,7 @@ const _ = require('lodash');
 const authService = require('../services/auth-service');
 const tokenService = require('../services/token-service');
 const otpService = require('../services/otp-service');
-const { validateUser } = require('../models/user-model');
+const { validateUser, validateUserUpdate } = require('../models/user-model');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 const logger = require('../logger');
@@ -112,10 +112,26 @@ const sendOTP = catchAsync(async (req, res, next) => {
   });
 });
 
+/**
+ * @desc    Update user profile
+ * @route   PATCH /api/auth/profile
+ * @access  Private
+ */
+const updateProfile = catchAsync(async (req, res, next) => {
+  const { error } = validateUserUpdate(req.body);
+  if (error) return next(new AppError(error.details[0].message, 400));
+
+  const payload = _.pick(req.body, ['name', 'phone', 'address', 'image']);
+  const user = await authService.updateProfile(req.user._id, payload);
+
+  res.status(200).json(user);
+});
+
 module.exports = {
   register,
   login,
   loginOrganization,
   getProfile,
   sendOTP,
+  updateProfile,
 };

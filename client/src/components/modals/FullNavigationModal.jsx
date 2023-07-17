@@ -5,7 +5,7 @@ import Modal from "./index";
 
 function FullNavigationModal({ isOpen, onClose }) {
   return (
-    <Modal isOpen={isOpen} className="bg-white bg-opacity-100">
+    <Modal isOpen={isOpen} className="bg-white bg-opacity-95">
       <div className="max-w-2xl mx-auto flex flex-col justify-center gap-6 px-16 py-12 mt-6">
         <div className="self-end cursor-pointer mb-4">
           <MdClose

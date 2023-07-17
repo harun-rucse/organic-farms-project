@@ -66,6 +66,7 @@ const createNewOrder = catchAsync(async (req, res, next) => {
   if (error) return next(new AppError(error.details[0].message, 400));
 
   req.body.customer = req.user._id;
+  req.body.paymentStatus = 'Unpaid';
 
   const payload = _.pick(req.body, ['customer', 'deliveryAddress', 'products', 'paymentMethod', 'paymentStatus']);
 
@@ -151,10 +152,38 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
   res.status(200).json(updateOrder);
 });
 
+/**
+ * @desc    Get my orders
+ * @route   GET /api/orders/my-orders
+ * @access  Private(customer)
+ */
+const getMyOrders = catchAsync(async (req, res, next) => {
+  const filter = { customer: req.user._id };
+  const myOrders = await orderService.getAllOrders(filter, req.query);
+
+  res.status(200).json(myOrders);
+});
+
+/**
+ * @desc    Get my single order
+ * @route   GET /api/orders/my-orders/id
+ * @access  Private(customer)
+ */
+const getMySingleOrder = catchAsync(async (req, res, next) => {
+  const filter = { _id: req.params.id, customer: req.user._id };
+
+  const myOrder = await orderService.getOneOrder(filter);
+  if (!myOrder) return next(new AppError('No order found with this id.', 404));
+
+  res.status(200).json(myOrder);
+});
+
 module.exports = {
   getLatestOrder,
   getAllOrders,
   getOneOrder,
   createNewOrder,
   updateOneOrder,
+  getMyOrders,
+  getMySingleOrder,
 };

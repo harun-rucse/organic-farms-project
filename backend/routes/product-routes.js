@@ -5,6 +5,10 @@ const { uploadImages, saveImagesUrl } = require('../middlewares/upload-middlewar
 
 const router = express.Router();
 
+router.get('/frontend', productController.getAllProductsFrontend);
+router.get('/frontend/:id', productController.getOneProductFrontend);
+router.get('/search', productController.searchProducts);
+
 router.use([auth, verified, restrictTo('admin', 'branch-manager', 'office-employee')]);
 
 router
