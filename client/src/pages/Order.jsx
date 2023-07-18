@@ -42,7 +42,7 @@ const OrderItem = ({ item }) => {
         {orderStatus}
       </td>
       <td className="text-xs md:font-base">{fDate(orderPlacedDate)}</td>
-      <td className="text-xs md:font-base">{grandTotalAmount}</td>
+      <td className="text-xs md:font-base font-bold">{grandTotalAmount}</td>
       <td className="text-xs md:font-base">
         <Link to={`/profile/orders/${_id}`}>
           <BsArrowRight className="cursor-pointer text-sm md:text-lg" />

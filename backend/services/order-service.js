@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Order.countDocuments(filter);
 };
 
-const getAllOrders = (filter = {}, query) => {
+const getAllOrders = (filter = {}, query = {}) => {
   return new APIFeatures(Order.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
@@ -27,6 +27,10 @@ const getLatestOrder = (filter) => {
   return Order.find(filter).sort({ orderPlacedDate: -1 }).limit(5);
 };
 
+const deleteOneOrder = (filter) => {
+  return Order.findOneAndDelete(filter);
+};
+
 module.exports = {
   getTotalCount,
   getAllOrders,
@@ -34,4 +38,5 @@ module.exports = {
   createNewOrder,
   updateOneOrder,
   getLatestOrder,
+  deleteOneOrder,
 };

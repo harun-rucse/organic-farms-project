@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const orderApiSlice = createApi({
-  reducerPath: "orderApi",
+const paymentApiSlice = createApi({
+  reducerPath: "paymentApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api`,
     prepareHeaders: (headers, { getState }) => {
@@ -13,17 +13,19 @@ const orderApiSlice = createApi({
     }
   }),
   endpoints: (builder) => ({
-    getMyOrders: builder.query({
-      query: () => "/orders/my-orders",
-      providesTags: ["orders"]
-    }),
-
-    getMySingleOrder: builder.query({
-      query: (id) => `/orders/my-orders/${id}`,
-      providesTags: ["orders"]
+    createOrder: builder.mutation({
+      query: (body) => ({
+        url: "/payment/checkout",
+        method: "POST",
+        body
+      })
     })
   })
 });
 
-export const { useGetMyOrdersQuery, useGetMySingleOrderQuery } = orderApiSlice;
-export default orderApiSlice;
+export const {
+  useCreateOrderMutation,
+  useGetMyOrdersQuery,
+  useGetMySingleOrderQuery
+} = paymentApiSlice;
+export default paymentApiSlice;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout";
 import Button from "@/components/Button";
 
-function OrderConfirmation() {
+function PaymentSuccess() {
   return (
     <Layout>
       <div className="flex justify-center items-start py-10">
@@ -15,7 +15,7 @@ function OrderConfirmation() {
           />
           <div className="flex flex-col items-center gap-2">
             <h4 className="text-2xl md:text-3xl font-bold text-gray-800">
-              Your order is completed!
+              Your payment is completed!
             </h4>
             <p className="text-sm md:text-base text-gray-600 text-center">
               Go to order list to view order details.
@@ -30,4 +30,4 @@ function OrderConfirmation() {
   );
 }
 
-export default OrderConfirmation;
+export default PaymentSuccess;

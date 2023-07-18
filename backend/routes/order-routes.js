@@ -14,10 +14,7 @@ router.get(
   orderController.getLatestOrder
 );
 
-router
-  .route('/')
-  .get(restrictTo('admin', 'branch-manager', 'warehouse-employee'), orderController.getAllOrders)
-  .post(restrictTo('customer'), orderController.createNewOrder);
+router.route('/').get(restrictTo('admin', 'branch-manager', 'warehouse-employee'), orderController.getAllOrders);
 
 router
   .route('/:id')

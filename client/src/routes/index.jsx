@@ -1,10 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Branch from "@/pages/Branch";
 import Shop from "@/pages/Shop";
-import OrderConfirmation from "@/pages/OrderConfirmation";
 import ProductDetails from "@/pages/ProductDetails";
 import Profile from "@/pages/Profile";
 import ProfileEdit from "@/pages/ProfileEdit";
@@ -14,6 +13,9 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import PrivateOutlet from "./PrivateOutlet";
 import PublicOutlet from "./PublicOutlet";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import PaymentFail from "@/pages/PaymentFail";
+import NotFound from "@/pages/NotFound";
 
 export default function Router() {
   return (
@@ -26,7 +28,6 @@ export default function Router() {
       <Route element={<PrivateOutlet />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/edit" element={<ProfileEdit />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/profile/orders" element={<Order />} />
         <Route path="/profile/orders/:id" element={<OrderDetails />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -34,6 +35,9 @@ export default function Router() {
 
       <Route path="login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+      <Route path="/payment-failed" element={<PaymentFail />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
