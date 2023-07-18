@@ -199,6 +199,7 @@ function Checkout() {
               <FormSubmit
                 className="mt-6 bg-green-600 hover:bg-green-500 py-3"
                 label="Proceed To Payment"
+                disabled={cartItems?.length === 0}
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BiShoppingBag } from "react-icons/bi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Layout from "@/components/layout";
 import ProfileSidebar from "@/components/ProfileSidebar";
 import ProfileTopbar from "@/components/ProfileTopbar";
@@ -24,7 +24,7 @@ const OrderItem = ({ item, setOpen, setProductId, orderStatus }) => {
         />
       </td>
       <td className="px-6 font-semibold text-xs md:text-base">
-        {product?.name}
+        <Link to={`/products/${product?._id}`}>{product?.name}</Link>
       </td>
       <td className="px-6 font-semibold text-xs md:text-base">
         Tk. {product?.price} x {quantity}
@@ -77,7 +77,8 @@ function OrderDetails() {
     createReview({
       review,
       rating,
-      product: productId
+      product: productId,
+      order: order?._id
     });
   };
 
@@ -105,6 +106,10 @@ function OrderDetails() {
               <div className="flex items-center gap-3">
                 <b>Order ID:</b>
                 <span>{order?._id}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <b>Order Status:</b>
+                <span>{order?.orderStatus}</span>
               </div>
               <div className="flex items-center gap-3">
                 <b>Placed on:</b>

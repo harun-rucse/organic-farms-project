@@ -57,7 +57,7 @@ function Navigation() {
       <Item
         icon={BiShoppingBag}
         text="Cart"
-        count={cartItems?.length}
+        count={cartItems?.length || false}
         handleOnClick={() => setIsCartOpen(true)}
       />
       <Item

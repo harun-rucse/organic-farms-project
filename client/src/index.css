@@ -11,6 +11,12 @@
     height: 100vh;
     @apply bg-[#f6f9fc];
   }
+
+  button[disabled] {
+    @apply cursor-not-allowed;
+    @apply bg-gray-400/80;
+    @apply hover:bg-gray-400/80;
+  }
 }
 
 @layer utilities {

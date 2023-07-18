@@ -26,6 +26,11 @@ const reviewSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    order: {
+      type: Schema.Types.ObjectId,
+      ref: 'Order',
+      required: true,
+    },
     branchOffice: {
       type: Schema.Types.ObjectId,
       ref: 'Branch',
@@ -94,6 +99,7 @@ const validateReview = (review) => {
     review: Joi.string().required().label('Review'),
     rating: Joi.number().min(1).max(5).required().label('Rating'),
     product: Joi.string().required().label('Product'),
+    order: Joi.string().required().label('Order'),
   });
 
   return schema.validate(review);
