@@ -1,9 +1,9 @@
 const _ = require('lodash');
-const { validateOrder, validateOrderUpdate } = require('../models/order-model');
+const { validateOrderUpdate } = require('../models/order-model');
 const orderService = require('../services/order-service');
-const productService = require('../services/product-service');
 const transactionService = require('../services/transaction-service');
 const revenueService = require('../services/revenue-service');
+const productService = require('../services/product-service');
 const catchAsync = require('../utils/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -13,7 +13,7 @@ const AppError = require('../utils/app-error');
  * @access  Private(admin, branch-manager, office-employee, warehouse-employee)
  */
 const getLatestOrder = catchAsync(async (req, res, next) => {
-  const filter = { orderStatus: 'Placed' };
+  const filter = { orderStatus: 'Processing' };
 
   if (req.user.role !== 'admin') {
     filter.branchOffice = req.user.branchOffice;
@@ -57,70 +57,6 @@ const getOneOrder = catchAsync(async (req, res, next) => {
 });
 
 /**
- * @desc    Create new order
- * @route   POST /api/orders
- * @access  Private(customer)
- */
-const createNewOrder = catchAsync(async (req, res, next) => {
-  const { error } = validateOrder(req.body);
-  if (error) return next(new AppError(error.details[0].message, 400));
-
-  req.body.customer = req.user._id;
-  req.body.paymentStatus = 'Unpaid';
-
-  const payload = _.pick(req.body, ['customer', 'deliveryAddress', 'products', 'paymentMethod', 'paymentStatus']);
-
-  // seperate the orders by branch office
-  const products = [];
-
-  await Promise.all(
-    payload.products.map(async (item) => {
-      const productDetails = await productService.getOneProduct({ _id: item.product });
-      if (!productDetails) return next(new AppError('Product not found.', 404));
-
-      if (productDetails.minimumOrder > item.quantity)
-        return Promise.reject(new AppError(`You can order minimum ${productDetails.minimumOrder} KG`, 400));
-
-      if (productDetails.maximumOrder < item.quantity)
-        return Promise.reject(new AppError(`You can order maximum ${productDetails.maximumOrder} KG`, 400));
-
-      products.push({
-        product: item.product,
-        quantity: item.quantity,
-        branchOffice: productDetails.branchOffice._id,
-        farmer: productDetails.farmer._id,
-      });
-    })
-  );
-
-  // group the products by branch office
-  const productGroup = _.groupBy(products, 'branchOffice');
-  const branchOffices = Object.keys(productGroup);
-  const orders = [];
-
-  for (let i = 0; i < branchOffices.length; i++) {
-    const order = {
-      customer: payload.customer,
-      deliveryAddress: payload.deliveryAddress,
-      products: productGroup[branchOffices[i]],
-      paymentMethod: payload.paymentMethod,
-      paymentStatus: payload.paymentStatus,
-      branchOffice: branchOffices[i],
-    };
-    orders.push(order);
-  }
-
-  // create orders for each branch office
-  await Promise.all(
-    orders.map(async (order) => {
-      await orderService.createNewOrder(order);
-    })
-  );
-
-  res.status(201).json({ message: 'Order Placed successfully.' });
-});
-
-/**
  * @desc    Update single order
  * @route   PATCH /api/orders/id
  * @access  Private(admin, branch-manager, warehouse-employee)
@@ -143,6 +79,15 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
   if (payload.orderStatus === 'Cancelled') {
     await transactionService.updateManyTransactions({ order: req.params.id }, { status: 'Cancelled' });
     await revenueService.deleteManyRevenues({ order: req.params.id });
+
+    // increase the stock of the products if order is cancelled
+    await Promise.all(
+      updateOrder.products.map(async (item) => {
+        const productDetails = await productService.getOneProduct({ _id: item.product });
+        productDetails.inStock += item.quantity;
+        await productDetails.save();
+      })
+    );
   }
 
   if (payload.orderStatus === 'Delivered') {
@@ -158,7 +103,7 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
  * @access  Private(customer)
  */
 const getMyOrders = catchAsync(async (req, res, next) => {
-  const filter = { customer: req.user._id };
+  const filter = { customer: req.user._id, orderStatus: { $nin: ['Placed'] } };
   const myOrders = await orderService.getAllOrders(filter, req.query);
 
   res.status(200).json(myOrders);
@@ -170,7 +115,7 @@ const getMyOrders = catchAsync(async (req, res, next) => {
  * @access  Private(customer)
  */
 const getMySingleOrder = catchAsync(async (req, res, next) => {
-  const filter = { _id: req.params.id, customer: req.user._id };
+  const filter = { _id: req.params.id, customer: req.user._id, orderStatus: { $nin: ['Placed'] } };
 
   const myOrder = await orderService.getOneOrder(filter);
   if (!myOrder) return next(new AppError('No order found with this id.', 404));
@@ -182,7 +127,6 @@ module.exports = {
   getLatestOrder,
   getAllOrders,
   getOneOrder,
-  createNewOrder,
   updateOneOrder,
   getMyOrders,
   getMySingleOrder,

@@ -1,41 +1,42 @@
 import React, { useEffect } from "react";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "@/components/layout";
 import Button from "@/components/Button";
 import { Form, FormInput, FormTextarea, FormSubmit } from "@/components/forms";
 import { useGetProfileQuery } from "@/store/apiSlices/authApiSlice";
-import { useCreateOrderMutation } from "@/store/apiSlices/orderApiSlice";
+import { useCreateOrderMutation } from "@/store/apiSlices/paymentApiSlice";
 import { clearCart } from "@/store/reducers/cartReducer";
 import Loader from "@/components/Loader";
 import useNotification from "@/hooks/useNotification";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().label("Full Name"),
+  email: Yup.string().email().required().label("Email"),
   phone: Yup.string()
     .matches(/^\+8801[3-9]{1}[0-9]{8}$/, "Phone number is not valid")
     .label("Phone number"),
   deliveryAddress: Yup.string().required().label("Delivery Address"),
-  paymentMethod: Yup.string().required().label("Payment Method"),
-  paymentStatus: Yup.string().required().label("Payment Status")
+  city: Yup.string().required().label("City"),
+  postcode: Yup.string().required().label("Postcode")
 });
 
 function Checkout() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const notification = useNotification();
 
   const { data: profile, isLoading } = useGetProfileQuery();
   const { cartItems } = useSelector((state) => state.cart);
-  const [createOrder, { isLoading: isCreatingOrder, isSuccess }] =
+  const [createOrder, { isLoading: isCreatingOrder, isSuccess, data }] =
     useCreateOrderMutation();
 
   useEffect(() => {
-    if (isSuccess) {
-      notification("Order created successfully", "success");
+    if (isSuccess && data?.result) {
+      notification("Processing for payment", "success");
       dispatch(clearCart());
-      navigate("/order-confirmation");
+
+      window.location.replace(data?.result);
     }
   }, [isSuccess]);
 
@@ -50,7 +51,7 @@ function Checkout() {
   );
 
   const handleSubmit = (value) => {
-    const { deliveryAddress, paymentMethod } = value;
+    const { email, city, postcode, deliveryAddress } = value;
 
     const orderItems = cartItems?.map((item) => ({
       product: item._id,
@@ -58,8 +59,10 @@ function Checkout() {
     }));
 
     createOrder({
+      email,
+      city,
+      postcode,
       deliveryAddress,
-      paymentMethod,
       products: orderItems
     });
   };
@@ -83,8 +86,9 @@ function Checkout() {
             phone: profile?.phone,
             address: profile?.address,
             deliveryAddress: "",
-            paymentMethod: "Bkash",
-            paymentStatus: "Unpaid"
+            email: "",
+            city: "",
+            postcode: ""
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -115,6 +119,24 @@ function Checkout() {
                     disabled
                   />
                 </div>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-8 w-full">
+                  <FormInput
+                    name="email"
+                    label="Email Address"
+                    type="text"
+                    variant="outlined"
+                    placeholder="Email Address"
+                    required
+                  />
+                  <FormInput
+                    name="city"
+                    label="City"
+                    type="text"
+                    variant="outlined"
+                    placeholder="City"
+                    required
+                  />
+                </div>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-8">
                   <FormInput
                     name="address"
@@ -124,6 +146,14 @@ function Checkout() {
                     placeholder="Customer Address"
                     required
                     disabled
+                  />
+                  <FormInput
+                    name="postcode"
+                    label="Postcode"
+                    type="text"
+                    variant="outlined"
+                    placeholder="Postcode"
+                    required
                   />
                 </div>
                 <div className="flex flex-col gap-2 w-full">

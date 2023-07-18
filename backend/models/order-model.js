@@ -17,6 +17,14 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
+    city: {
+      type: String,
+      required: true,
+    },
+    postcode: {
+      type: String,
+      required: true,
+    },
     products: [
       {
         product: {
@@ -53,6 +61,7 @@ const orderSchema = new Schema(
       enum: ['Placed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
       default: 'Placed',
     },
+    transactionId: String,
     orderPlacedDate: {
       type: Date,
       default: Date.now,
@@ -119,9 +128,18 @@ orderSchema.pre('save', async function (next) {
   next();
 });
 
-orderSchema.post('save', async function (doc) {
+orderSchema.post(/^findOneAndUpdate/, async function (doc) {
   const order = doc;
-  if (!order) return;
+  if (order?.paymentStatus === 'Unpaid' || order?.orderStatus !== 'Processing') return;
+
+  // decrease the stock of the products if order paymentStatus id paid
+  await Promise.all(
+    order.products.map(async (item) => {
+      const productDetails = await productService.getOneProduct({ _id: item.product });
+      productDetails.inStock -= item.quantity;
+      await productDetails.save();
+    })
+  );
 
   const transactions = [];
 
@@ -138,8 +156,10 @@ orderSchema.post('save', async function (doc) {
       const chargeAmount = (branchDetails.costPercentage / 100) * totalAmount;
       const payableAmount = totalAmount - chargeAmount;
 
+      const farmerId = products[0]?.farmer?._id;
+
       const transaction = new Transaction({
-        farmer: farmer,
+        farmer: farmerId,
         customer: order.customer,
         products: products,
         order: order._id,
@@ -153,35 +173,15 @@ orderSchema.post('save', async function (doc) {
     })
   );
 
-  // decrease the stock of the products
-  await Promise.all(
-    order.products.map(async (item) => {
-      const productDetails = await productService.getOneProduct({ _id: item.product });
-      productDetails.inStock -= item.quantity;
-      await productDetails.save();
-    })
-  );
-
   await Transaction.insertMany(transactions);
-});
-
-orderSchema.post(/^findOneAnd/, async function (doc) {
-  const order = doc;
-  if (!order || order.orderStatus !== 'Cancelled') return;
-
-  // increase the stock of the products if order is cancelled
-  await Promise.all(
-    order.products.map(async (item) => {
-      const productDetails = await productService.getOneProduct({ _id: item.product });
-      productDetails.inStock += item.quantity;
-      await productDetails.save();
-    })
-  );
 });
 
 const validateOrder = (order) => {
   const schema = Joi.object({
     deliveryAddress: Joi.string().required().label('Delivery Address'),
+    city: Joi.string().required(),
+    postcode: Joi.string().required(),
+    email: Joi.string().email().allow('').label('Email'),
     products: Joi.array().items(
       Joi.object({
         product: Joi.string().required(),
@@ -190,8 +190,6 @@ const validateOrder = (order) => {
         .required()
         .min(1)
     ),
-    paymentMethod: Joi.string().valid('COD', 'Bkash', 'Rocket', 'Nagad', 'Bank').required(),
-    paymentStatus: Joi.string().valid('Paid', 'Unpaid'),
   });
 
   return schema.validate(order);

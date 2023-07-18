@@ -5,6 +5,7 @@ import productApiSlice from "./apiSlices/productApiSlice";
 import branchApiSlice from "./apiSlices/branchApiSlice";
 import orderApiSlice from "./apiSlices/orderApiSlice";
 import reviewApiSlice from "./apiSlices/reviewApiSlice";
+import paymentApiSlice from "./apiSlices/paymentApiSlice";
 import authReducer from "./reducers/authReducer";
 import cartReducer from "./reducers/cartReducer";
 
@@ -16,6 +17,7 @@ const store = configureStore({
     [branchApiSlice.reducerPath]: branchApiSlice.reducer,
     [orderApiSlice.reducerPath]: orderApiSlice.reducer,
     [reviewApiSlice.reducerPath]: reviewApiSlice.reducer,
+    [paymentApiSlice.reducerPath]: paymentApiSlice.reducer,
     auth: authReducer,
     cart: cartReducer
   },
@@ -26,7 +28,8 @@ const store = configureStore({
       productApiSlice.middleware,
       branchApiSlice.middleware,
       orderApiSlice.middleware,
-      reviewApiSlice.middleware
+      reviewApiSlice.middleware,
+      paymentApiSlice.middleware
     ])
 });
 
