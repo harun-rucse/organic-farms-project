@@ -31,8 +31,8 @@ function Profile() {
           <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between md:items-center bg-white px-8 py-4 rounded-xl">
             <div>
               <img
-                src="https://res.cloudinary.com/harun-rucse/image/upload/v1679509330/users/default.png"
-                alt=""
+                src={profile?.image}
+                alt={profile?.name}
                 className="w-12 h-12 rounded-full"
               />
             </div>

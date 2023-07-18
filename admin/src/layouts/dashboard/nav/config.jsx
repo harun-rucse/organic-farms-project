@@ -94,6 +94,12 @@ const navConfig = [
     icon: icon('ic_transaction'),
     roles: roles.transaction,
   },
+  {
+    title: 'settings',
+    path: '/dashboard/settings',
+    icon: icon('ic_settings'),
+    roles: roles.dashboard,
+  },
 ];
 
 export default navConfig;

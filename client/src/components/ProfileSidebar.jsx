@@ -3,7 +3,12 @@ import ListItems from "@/components/ListItems";
 
 const items = [
   { name: "Personal Info", href: "/profile", icon: "/images/person.svg" },
-  { name: "Orders", href: "/profile/orders", icon: "/images/shopping-cart.svg" }
+  {
+    name: "Orders",
+    href: "/profile/orders",
+    icon: "/images/shopping-cart.svg"
+  },
+  { name: "Settings", href: "/profile/settings", icon: "/images/settings.svg" }
 ];
 
 function ProfileSidebar() {

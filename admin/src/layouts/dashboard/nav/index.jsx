@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
+import { Box, Drawer, Typography, Avatar } from '@mui/material';
 import useResponsive from '@/hooks/useResponsive';
 import Logo from '@/components/logo';
 import Scrollbar from '@/components/scrollbar';
@@ -48,7 +48,7 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box>
 
       <Box sx={{ mb: 2, mx: 2.5 }}>
-        <Link underline="none">
+        <Link to="/dashboard/profile" style={{ textDecoration: 'none' }}>
           <StyledAccount>
             <Avatar src={account?.image} alt="photoURL" />
 

@@ -39,6 +39,8 @@ import RevenueList from '@/pages/revenue/list';
 import OrderDetailsPDFView from '@/pages/order/view/OrderDetailsPDF';
 import TransactionList from '@/pages/transaction/list';
 import TransactionEdit from '@/pages/transaction/edit';
+import Profile from '@/pages/profile';
+import Settings from '@/pages/settings';
 import LoginPage from '@/pages/LoginPage';
 import Page404 from '@/pages/Page404';
 import { roles } from '@/utils/access-roles';
@@ -48,6 +50,8 @@ export default function Router() {
     <Routes>
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.dashboard} />}>
         <Route path="app" element={<DashboardAppPage />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
       <Route path="/dashboard" element={<PrivateOutlet roles={roles.employee} />}>
         <Route path="employee/create" element={<EmployeeCreate />} />

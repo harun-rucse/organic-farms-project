@@ -29,9 +29,31 @@ const authApiSlice = createApi({
     }),
     getProfile: builder.query({
       query: () => '/auth/profile',
+      providesTags: ['auth'],
+    }),
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: '/auth/profile',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['auth'],
+    }),
+    updatePassword: builder.mutation({
+      query: (body) => ({
+        url: '/auth/update-password',
+        method: 'PATCH',
+        body,
+      }),
     }),
   }),
 });
 
-export const { useLoginMutation, useSendOtpMutation, useGetProfileQuery } = authApiSlice;
+export const {
+  useLoginMutation,
+  useSendOtpMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useUpdatePasswordMutation,
+} = authApiSlice;
 export default authApiSlice;

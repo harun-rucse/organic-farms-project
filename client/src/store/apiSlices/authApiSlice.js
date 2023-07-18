@@ -41,6 +41,14 @@ const authApiSlice = createApi({
         body
       }),
       invalidatesTags: ["auth"]
+    }),
+
+    updatePassword: builder.mutation({
+      query: (body) => ({
+        url: "/auth/update-password",
+        method: "PATCH",
+        body
+      })
     })
   })
 });
@@ -49,6 +57,7 @@ export const {
   useLoginMutation,
   useGetProfileQuery,
   useRegisterMutation,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
+  useUpdatePasswordMutation
 } = authApiSlice;
 export default authApiSlice;

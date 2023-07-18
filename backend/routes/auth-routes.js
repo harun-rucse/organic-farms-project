@@ -12,5 +12,6 @@ router.post('/send-otp', [auth, verified], authController.sendOTP);
 
 router.get('/profile', auth, authController.getProfile);
 router.patch('/profile', [auth, uploadImage, saveImageUrl('users')], authController.updateProfile);
+router.patch('/update-password', auth, authController.updatePassword);
 
 module.exports = router;

@@ -1,61 +1,51 @@
 import React, { useEffect } from "react";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { BiUser } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { FcSettings } from "react-icons/fc";
 import Layout from "@/components/layout";
 import ProfileSidebar from "@/components/ProfileSidebar";
 import ProfileTopbar from "@/components/ProfileTopbar";
-import {
-  Form,
-  FormInput,
-  FormTextarea,
-  FormImagePicker,
-  FormSubmit
-} from "@/components/forms";
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation
-} from "@/store/apiSlices/authApiSlice";
+import { Form, FormInput, FormSubmit } from "@/components/forms";
+import { useUpdatePasswordMutation } from "@/store/apiSlices/authApiSlice";
+import { removeToken } from "@/store/reducers/authReducer";
 import Loader from "@/components/Loader";
 import useNotification from "@/hooks/useNotification";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Full Name"),
-  address: Yup.string().required().label("Address"),
-  phone: Yup.string()
+  currentPassword: Yup.string().min(6).required().label("Current Password"),
+  password: Yup.string().min(6).required().label("Password"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required()
-    .matches(/^\+8801[3-9]{1}[0-9]{8}$/, "Phone number is not valid")
-    .label("Phone number"),
-  image: Yup.string().label("Image")
+    .label("Confirm Password")
 });
 
-function ProfileEdit() {
-  const navigate = useNavigate();
+function Settings() {
+  const dispatch = useDispatch();
   const notification = useNotification();
 
-  const { data: profile, isLoading } = useGetProfileQuery();
-  const [updateProfile, { isLoading: loading, isSuccess, isError, error }] =
-    useUpdateProfileMutation();
+  const [updatePassword, { isLoading: loading, isSuccess, isError, error }] =
+    useUpdatePasswordMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      notification("Profile updated successfully", "success");
-      navigate("/profile");
+      notification("Password change successfully", "success");
+
+      dispatch(removeToken());
+      window.location.reload();
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, dispatch, notification]);
 
   const handleSubmit = (values) => {
-    const formData = new FormData();
+    const { currentPassword, password } = values;
 
-    formData.append("name", values.name);
-    formData.append("phone", values.phone);
-    formData.append("address", values.address);
-    if (values.image.length) formData.append("image", values.image[0]);
-
-    updateProfile(formData);
+    updatePassword({
+      currentPassword,
+      password
+    });
   };
 
-  if (isLoading || loading) {
+  if (loading) {
     return (
       <Layout>
         <Loader />
@@ -69,8 +59,8 @@ function ProfileEdit() {
         <ProfileSidebar />
         <div className="w-full flex flex-col gap-8">
           <ProfileTopbar
-            icon={BiUser}
-            title="Edit Profile"
+            icon={FcSettings}
+            title="Settings"
             link="/profile"
             linkText="Back To Profile"
           />
@@ -78,10 +68,9 @@ function ProfileEdit() {
           <div className="flex flex-col gap-4 bg-white p-8 rounded-xl">
             <Form
               initialValues={{
-                name: profile?.name,
-                phone: profile?.phone,
-                address: profile?.address,
-                image: profile?.image
+                currentPassword: "",
+                password: "",
+                confirmPassword: ""
               }}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
@@ -99,26 +88,27 @@ function ProfileEdit() {
                 </div>
               )}
               <div className="w-full flex flex-col gap-4">
-                <FormImagePicker name="image" label="Change Profile Image" />
-
-                <FormInput name="name" label="Full Name" type="text" required />
-
                 <FormInput
-                  name="phone"
-                  label="Phone number"
-                  type="text"
+                  name="currentPassword"
+                  label="Current Password"
+                  type="password"
                   required
                 />
-
-                <FormTextarea
-                  name="address"
-                  label="Address"
-                  type="text"
+                <FormInput
+                  name="password"
+                  label="New Password"
+                  type="password"
+                  required
+                />
+                <FormInput
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
                   required
                 />
 
                 <div className="mt-4">
-                  <FormSubmit label="Update Now" className="md:py-3" />
+                  <FormSubmit label="Change password" className="md:py-3" />
                 </div>
               </div>
             </Form>
@@ -129,4 +119,4 @@ function ProfileEdit() {
   );
 }
 
-export default ProfileEdit;
+export default Settings;
