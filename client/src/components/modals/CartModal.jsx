@@ -74,6 +74,11 @@ function CartModal({ isOpen, onClose }) {
     0
   );
 
+  const totalShipping = cartItems?.reduce(
+    (acc, item) => acc + item?.branchOffice?.deliveryFee * item.quantity,
+    0
+  );
+
   const handleAddToCart = (product) => {
     dispatch(addToCart({ product, quantity: 1 }));
   };
@@ -115,6 +120,12 @@ function CartModal({ isOpen, onClose }) {
               handleDeleteCartItem={handleDeleteCartItem}
             />
           ))}
+
+          {cartItems?.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full">
+              <p className="text-xl text-gray-600">Cart is empty</p>
+            </div>
+          )}
         </div>
 
         {/* Modal footer */}
@@ -123,8 +134,9 @@ function CartModal({ isOpen, onClose }) {
             <Button
               variant="contained"
               className="bg-green-600 hover:bg-green-500 py-2"
+              disabled={cartItems?.length === 0}
             >
-              Checkout Now (${totalPrice})
+              Checkout Now (${totalPrice + totalShipping})
             </Button>
           </Link>
           <Link to="/cart">

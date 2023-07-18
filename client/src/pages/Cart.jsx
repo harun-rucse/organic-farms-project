@@ -148,6 +148,7 @@ function Cart() {
             <Button
               className="mt-6 px-2 py-2.5 bg-blue-600 hover:bg-blue-500"
               variant="contained"
+              disabled={cartItems?.length === 0}
             >
               Checkout Now
             </Button>

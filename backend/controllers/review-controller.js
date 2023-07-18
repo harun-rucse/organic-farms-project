@@ -47,7 +47,11 @@ const createNewReview = catchAsync(async (req, res, next) => {
   if (error) return next(new AppError(error.details[0].message, 400));
 
   // make sure the user has not already reviewed this product
-  const review = await reviewService.getOneReview({ product: req.body.product, user: req.user._id });
+  const review = await reviewService.getOneReview({
+    product: req.body.product,
+    user: req.user._id,
+    order: req.body.order,
+  });
   if (review) return next(new AppError('You have already reviewed this product.', 400));
 
   // check if the user has ordered this product and the order is delivered
@@ -61,7 +65,7 @@ const createNewReview = catchAsync(async (req, res, next) => {
 
   req.body.user = req.user._id;
 
-  const payload = _.pick(req.body, ['review', 'rating', 'product', 'user']);
+  const payload = _.pick(req.body, ['review', 'rating', 'product', 'user', 'order']);
   const newReview = await reviewService.createNewReview(payload);
 
   res.status(201).json(newReview);
