@@ -19,6 +19,6 @@ router.route('/').get(restrictTo('admin', 'branch-manager', 'warehouse-employee'
 router
   .route('/:id')
   .get(restrictTo('admin', 'branch-manager', 'warehouse-employee'), orderController.getOneOrder)
-  .patch([restrictTo('admin', 'branch-manager', 'warehouse-employee'), verifyOTP], orderController.updateOneOrder);
+  .patch([restrictTo('admin', 'branch-manager', 'warehouse-employee')], orderController.updateOneOrder);
 
 module.exports = router;

@@ -58,7 +58,7 @@ export default function List() {
         <title> Organic-farms | Categories </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         <PageToolbar
           title="Categories"
           buttonLabel="Add new category"

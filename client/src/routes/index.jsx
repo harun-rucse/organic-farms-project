@@ -15,6 +15,7 @@ import PrivateOutlet from "./PrivateOutlet";
 import PublicOutlet from "./PublicOutlet";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentFail from "@/pages/PaymentFail";
+import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 
 export default function Router() {
@@ -30,6 +31,7 @@ export default function Router() {
         <Route path="/profile/edit" element={<ProfileEdit />} />
         <Route path="/profile/orders" element={<Order />} />
         <Route path="/profile/orders/:id" element={<OrderDetails />} />
+        <Route path="/profile/settings" element={<Settings />} />
         <Route path="/checkout" element={<Checkout />} />
       </Route>
 

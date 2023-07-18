@@ -150,7 +150,13 @@ function ProductDetails() {
                 }
                 `}
                 onClick={handleAddToCart}
-                disabled={alreadyInCart(product?._id)}
+                disabled={
+                  alreadyInCart(product?._id) ||
+                  quantity < product?.minimumOrder ||
+                  quantity > product?.maximumOrder ||
+                  quantity > product?.inStock ||
+                  product?.inStock <= 0
+                }
               >
                 {alreadyInCart(product?._id)
                   ? "Already in Cart"

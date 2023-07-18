@@ -62,10 +62,25 @@ const updateProfile = async (id, payload) => {
   return user;
 };
 
+const updatePassword = async (id, payload) => {
+  const user = await userService.getOneUser({ _id: id }).select('+password');
+  const isMatch = await user?.correctPassword(payload.currentPassword, user.password);
+
+  if (!isMatch) {
+    throw new AppError('Incorrect old password.', 401);
+  }
+
+  user.password = payload.password;
+  await user.save();
+
+  return user;
+};
+
 module.exports = {
   register,
   login,
   loginOrganization,
   getProfile,
   updateProfile,
+  updatePassword,
 };

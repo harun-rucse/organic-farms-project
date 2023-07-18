@@ -127,6 +127,26 @@ const updateProfile = catchAsync(async (req, res, next) => {
   res.status(200).json(user);
 });
 
+/**
+ * @desc    Update password
+ * @route   PATCH /api/auth/update-password
+ * @access  Private
+ */
+const updatePassword = catchAsync(async (req, res, next) => {
+  const { currentPassword, password } = req.body;
+
+  if (!currentPassword || !password) {
+    return next(new AppError('password is required.', 400));
+  }
+
+  const payload = _.pick(req.body, ['currentPassword', 'password']);
+  const user = await authService.updatePassword(req.user._id, payload);
+
+  const token = tokenService.generateJwtToken({ id: user._id });
+
+  res.status(200).json(token);
+});
+
 module.exports = {
   register,
   login,
@@ -134,4 +154,5 @@ module.exports = {
   getProfile,
   sendOTP,
   updateProfile,
+  updatePassword,
 };

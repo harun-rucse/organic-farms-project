@@ -58,7 +58,7 @@ export default function List() {
         <title> Organic-farms | Salaries </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         <PageToolbar
           title="Salaries"
           buttonLabel="Add new salary"

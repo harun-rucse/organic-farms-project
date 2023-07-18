@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 import { removeToken } from '@/store/reducers/authReducer';
@@ -9,14 +10,17 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: 'eva:home-fill',
+    linkTo: '/dashboard/app',
   },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
+    linkTo: '/dashboard/profile',
   },
   {
     label: 'Settings',
     icon: 'eva:settings-2-fill',
+    linkTo: '/dashboard/settings',
   },
 ];
 
@@ -94,7 +98,9 @@ export default function AccountPopover() {
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => (
             <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
+              <Link to={option.linkTo} style={{ textDecoration: 'none' }}>
+                {option.label}
+              </Link>
             </MenuItem>
           ))}
         </Stack>
