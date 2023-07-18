@@ -28,6 +28,9 @@ export default function OrderDetails() {
             <Button variant="outlined" color="error" onClick={() => navigate(-1)}>
               Back
             </Button>
+            <Button variant="outlined" color="info" onClick={() => navigate(`/dashboard/order/edit/${id}`)}>
+              Edit
+            </Button>
             <Button variant="outlined" color="primary" onClick={() => navigate(`/dashboard/order/${id}/pdf`)}>
               Print
             </Button>

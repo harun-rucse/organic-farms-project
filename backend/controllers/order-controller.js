@@ -72,6 +72,11 @@ const updateOneOrder = catchAsync(async (req, res, next) => {
       : { _id: req.params.id, branchOffice: req.user.branchOffice, orderStatus: { $nin: ['Cancelled', 'Delivered'] } };
 
   const payload = _.pick(req.body, ['orderStatus', 'orderDeliveredBy', 'lastUpdatedBy']);
+
+  // if order status is Delivered, then check if orderDeliveredBy is provided
+  if (payload.orderStatus === 'Delivered' && !payload.orderDeliveredBy)
+    return next(new AppError('Please provide the person who delivered the order.', 400));
+
   const updateOrder = await orderService.updateOneOrder(filter, payload);
   if (!updateOrder) return next(new AppError('No order found with this id.', 404));
 
