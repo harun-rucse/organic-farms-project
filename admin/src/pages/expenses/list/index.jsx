@@ -24,7 +24,7 @@ export default function List() {
         <title> Organic-farms | Expenses </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         <PageToolbar
           title="Expenses"
           buttonLabel="Add new expenses"

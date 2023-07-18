@@ -18,7 +18,7 @@ export default function List() {
         <title> Organic-farms | Transactions </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         {isError && (
           <Stack spacing={2} sx={{ mb: 3 }}>
             <Alert severity="error">{error?.data?.message}</Alert>

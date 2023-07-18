@@ -55,7 +55,7 @@ export default function List() {
         <title> Organic-farms | Farmers-card </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         {(isFetchError || isDeleteError) && (
           <Stack spacing={2} sx={{ mb: 3 }}>
             <Alert severity="error">{fetchError?.data?.message || deleteError?.data?.message}</Alert>

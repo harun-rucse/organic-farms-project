@@ -71,7 +71,7 @@ export default function List() {
         <title> Organic-farms | Farmers </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         <PageToolbar
           title="Farmers"
           buttonLabel="Add new farmer"

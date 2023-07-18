@@ -58,7 +58,7 @@ export default function List() {
         <title> Organic-farms | Branches </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth={false}>
         <PageToolbar
           title="Branches"
           buttonLabel="Add new branch"
