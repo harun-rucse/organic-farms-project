@@ -28,8 +28,10 @@ function Checkout() {
 
   const { data: profile, isLoading } = useGetProfileQuery();
   const { cartItems } = useSelector((state) => state.cart);
-  const [createOrder, { isLoading: isCreatingOrder, isSuccess, data }] =
-    useCreateOrderMutation();
+  const [
+    createOrder,
+    { isLoading: isCreatingOrder, isSuccess, data, isError, error }
+  ] = useCreateOrderMutation();
 
   useEffect(() => {
     if (isSuccess && data?.result) {
@@ -39,6 +41,12 @@ function Checkout() {
       window.location.replace(data?.result);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      notification(error?.data?.message, "error");
+    }
+  }, [isError]);
 
   const totalPrice = cartItems?.reduce(
     (acc, item) => acc + item.price * item.quantity,

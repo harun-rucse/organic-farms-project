@@ -52,6 +52,9 @@ const paymentInit = catchAsync(async (req, res, next) => {
       const productDetails = await productService.getOneProduct({ _id: item.product });
       if (!productDetails) return next(new AppError('Product not found.', 404));
 
+      if (productDetails.inStock < item.quantity)
+        return Promise.reject(new AppError(`Only ${productDetails.inStock} KG left in stock`, 400));
+
       if (productDetails.minimumOrder > item.quantity)
         return Promise.reject(new AppError(`You can order minimum ${productDetails.minimumOrder} KG`, 400));
 
@@ -91,7 +94,6 @@ const paymentInit = catchAsync(async (req, res, next) => {
   const newOrders = [];
   await Promise.all(
     orders.map(async (order) => {
-      //   await orderService.createNewOrder(order);
       const newOrder = await orderService.createNewOrder(order);
       newOrders.push(newOrder);
     })
