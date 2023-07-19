@@ -42,3 +42,20 @@ services:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - backend
+
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    container_name: client
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./client/.env.development
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend

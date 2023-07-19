@@ -113,80 +113,98 @@ function Shop() {
               {products?.result?.map((item) => (
                 <ProductCard key={item._id} item={item} view="grid" />
               ))}
+              {/* Show No item found message */}
+              {products?.result?.length === 0 && (
+                <div className="flex items-center justify-center col-span-full">
+                  <h3 className="text-xl text-gray-500 font-semibold">
+                    Products are not available
+                  </h3>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex flex-col gap-8">
               {products?.result?.map((item) => (
                 <ProductCard key={item._id} item={item} view="list" />
               ))}
+              {/* Show No item found message */}
+              {products?.result?.length === 0 && (
+                <div className="flex items-center justify-center col-span-full">
+                  <h3 className="text-xl text-gray-500 font-semibold">
+                    Products are not available
+                  </h3>
+                </div>
+              )}
             </div>
           )}
 
-          <div className="flex items-center justify-center gap-2 mt-6 text-gray-700 text-sm font-medium overflow-hidden">
-            <button
-              className={`w-8 h-8 px-6 flex justify-center items-center border border-gray-300 rounded-md
+          {products?.result?.length > 0 && (
+            <div className="flex items-center justify-center gap-2 mt-6 text-gray-700 text-sm font-medium overflow-hidden">
+              <button
+                className={`w-8 h-8 px-6 flex justify-center items-center border border-gray-300 rounded-md
               ${
                 currentPage === 1
                   ? "cursor-not-allowed"
                   : "cursor-pointer hover:bg-gray-200"
               }
               `}
-              onClick={() => {
-                if (currentPage === 1) return;
+                onClick={() => {
+                  if (currentPage === 1) return;
 
-                setQuery(`page=${currentPage - 1}&limit=${itemPerPage}
+                  setQuery(`page=${currentPage - 1}&limit=${itemPerPage}
                 &&${queryStr}&&sortBy=${sortBy}&&order=${order}
                 `);
-                setCurrentPage(currentPage - 1);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              Prev
-            </button>
-            {totalPage > 0 &&
-              [...Array(totalPage)].map((_, index) => (
-                <p
-                  key={index}
-                  className={`w-8 h-8 flex justify-center items-center border border-gray-300 rounded-md ${
-                    index + 1 === currentPage
-                      ? "bg-gray-200 cursor-not-allowed"
-                      : "cursor-pointer hover:bg-gray-200"
-                  }`}
-                  onClick={() => {
-                    if (index + 1 === currentPage) return;
+                  setCurrentPage(currentPage - 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                Prev
+              </button>
+              {totalPage > 0 &&
+                [...Array(totalPage)].map((_, index) => (
+                  <p
+                    key={index}
+                    className={`w-8 h-8 flex justify-center items-center border border-gray-300 rounded-md ${
+                      index + 1 === currentPage
+                        ? "bg-gray-200 cursor-not-allowed"
+                        : "cursor-pointer hover:bg-gray-200"
+                    }`}
+                    onClick={() => {
+                      if (index + 1 === currentPage) return;
 
-                    setQuery(
-                      `page=${
-                        index + 1
-                      }&limit=${itemPerPage}&&${queryStr}&&sortBy=${sortBy}&&order=${order}`
-                    );
-                    setCurrentPage(index + 1);
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                  }}
-                >
-                  {index + 1}
-                </p>
-              ))}
+                      setQuery(
+                        `page=${
+                          index + 1
+                        }&limit=${itemPerPage}&&${queryStr}&&sortBy=${sortBy}&&order=${order}`
+                      );
+                      setCurrentPage(index + 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  >
+                    {index + 1}
+                  </p>
+                ))}
 
-            <button
-              className={`w-8 h-8 px-6 flex justify-center items-center border border-gray-300 rounded-md 
+              <button
+                className={`w-8 h-8 px-6 flex justify-center items-center border border-gray-300 rounded-md 
               ${
                 currentPage === totalPage
                   ? "cursor-not-allowed"
                   : "cursor-pointer hover:bg-gray-200"
               }
               `}
-              onClick={() => {
-                if (currentPage === totalPage) return;
+                onClick={() => {
+                  if (currentPage === totalPage) return;
 
-                setQuery(`page=${currentPage + 1}&limit=${itemPerPage}`);
-                setCurrentPage(currentPage + 1);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              Next
-            </button>
-          </div>
+                  setQuery(`page=${currentPage + 1}&limit=${itemPerPage}`);
+                  setCurrentPage(currentPage + 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <FilterModal isOpen={isOpen} />

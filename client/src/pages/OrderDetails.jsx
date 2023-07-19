@@ -90,6 +90,18 @@ function OrderDetails() {
     );
   }
 
+  if (!order) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center h-screen">
+          <h1 className="text-2xl font-semibold text-gray-700">
+            Order not found
+          </h1>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="flex flex-col md:flex-row items-start gap-6 py-10">

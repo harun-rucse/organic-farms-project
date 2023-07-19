@@ -57,6 +57,14 @@ function Branch() {
             <SingleItem key={branch._id} item={branch} />
           ))}
         </div>
+        {/* Show No item found message */}
+        {branches?.result?.length === 0 && (
+          <div className="w-full flex items-center justify-center text-center col-span-full">
+            <h3 className="text-xl text-gray-500 font-semibold">
+              Branches are not available
+            </h3>
+          </div>
+        )}
       </div>
     </Layout>
   );

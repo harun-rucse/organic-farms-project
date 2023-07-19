@@ -7,9 +7,8 @@ function Footer() {
       <div className="flex flex-col gap-6">
         <h4 className="text-2xl md:text-3xl font-semibold">Organic Farms</h4>
         <p className="text-sm sm:text-lg md:w-96">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi tempore
-          dignissimos velit, enim neque a nisi. Odit animi consequuntur
-          voluptatem!
+          Harvesting Prosperity for Farmers. Nurturing Organic Agriculture. Shop
+          Fresh, Support Local.
         </p>
       </div>
       <div className="flex flex-col gap-8">

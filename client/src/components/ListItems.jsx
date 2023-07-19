@@ -69,6 +69,14 @@ function ListItems({ items }) {
           {item.name}
         </SingleItem>
       ))}
+      {/* Show No item found message */}
+      {items?.length === 0 && (
+        <div className="flex items-center justify-center col-span-full">
+          <h3 className="text-sm text-gray-500 font-semibold">
+            Categories are not available
+          </h3>
+        </div>
+      )}
     </div>
   );
 }

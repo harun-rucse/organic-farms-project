@@ -18,7 +18,7 @@ function Table({ title, searchPlaceholder, columns, data, total, setQuery }) {
     serverSide: true,
     searchPlaceholder,
     selectableRows: 'none',
-    responsive: 'simple',
+    responsive: 'vertical',
     rowsPerPage,
     count: total,
     rowsPerPageOptions: [5, 10, 20, 50, 100, 200],
