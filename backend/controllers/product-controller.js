@@ -152,7 +152,7 @@ const deleteOneProduct = catchAsync(async (req, res, next) => {
 
 /**
  * @desc    Search products
- * @route   DELETE /api/products/search?name=abc
+ * @route   GET /api/products/search?name=abc
  * @access  Public
  */
 const searchProducts = catchAsync(async (req, res, next) => {

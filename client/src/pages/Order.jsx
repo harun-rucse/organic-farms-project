@@ -90,6 +90,13 @@ function Order() {
                 ))}
               </tbody>
             </table>
+            {orders?.length === 0 && (
+              <div className="w-full mx-auto flex items-center justify-center text-center col-span-full">
+                <h3 className="text-xl text-gray-500 font-semibold">
+                  Not yet purchased any product
+                </h3>
+              </div>
+            )}
           </div>
         </div>
       </div>

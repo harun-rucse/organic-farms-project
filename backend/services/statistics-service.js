@@ -66,7 +66,7 @@ const getAllStatsCount = async (filter, month) => {
     Employee.countDocuments(filter),
     Farmer.countDocuments(filter),
     User.countDocuments({ role: 'customer' }),
-    Order.countDocuments({ ...orderFilter, orderStatus: 'Placed' }),
+    Order.countDocuments({ ...orderFilter, orderStatus: 'Processing' }),
     Order.countDocuments({ ...orderFilter, orderStatus: 'Delivered' }),
     Order.countDocuments({ ...orderFilter, orderStatus: 'Cancelled' }),
     Category.countDocuments(),

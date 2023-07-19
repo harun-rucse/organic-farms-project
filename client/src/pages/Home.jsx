@@ -80,12 +80,23 @@ function Home() {
               {products?.result?.slice(0, 6).map((item) => (
                 <ProductCard key={item._id} item={item} view="grid" />
               ))}
+
+              {/* Show No item found message */}
+              {products?.result?.length === 0 && (
+                <div className="flex items-center justify-center col-span-full">
+                  <h3 className="text-xl text-gray-500 font-semibold">
+                    Products are not available
+                  </h3>
+                </div>
+              )}
             </div>
-            <Link to="/shop" className="self-center">
-              <button className="px-4 py-2 mt-6 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
-                View All
-              </button>
-            </Link>
+            {products?.result?.length > 0 && (
+              <Link to="/shop" className="self-center">
+                <button className="px-4 py-2 mt-6 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                  View All
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

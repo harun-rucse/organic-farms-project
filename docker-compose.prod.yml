@@ -21,12 +21,28 @@ services:
       context: ./admin
     container_name: admin
     ports:
-      - '80:80'
+      - '3001:3001'
       - '443:443'
     env_file:
       - ./admin/.env.production
     volumes:
       - ./admin:/admin
       - /admin/node_modules
+    depends_on:
+      - backend
+
+  client:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./client
+    container_name: client
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - ./client/.env.production
+    volumes:
+      - ./client:/admin
+      - /client/node_modules
     depends_on:
       - backend

@@ -16,7 +16,7 @@ function NotFound() {
               Please check your URL
             </p>
           </div>
-          <Link to="/profile/orders">
+          <Link to="/">
             <Button className="py-2 md:py-3">Go to home</Button>
           </Link>
         </div>

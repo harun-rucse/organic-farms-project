@@ -65,6 +65,18 @@ function ProductDetails() {
     );
   }
 
+  if (!product) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center h-screen">
+          <h1 className="text-2xl font-semibold text-gray-700">
+            Product not found
+          </h1>
+        </div>
+      </Layout>
+    );
+  }
+
   const handleAddToCart = () => {
     dispatch(addToCart({ product, quantity }));
     notification("Product added to cart", "success");
