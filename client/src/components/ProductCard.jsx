@@ -18,7 +18,7 @@ function ProductCard({ item, view = "grid" }) {
 
   if (view === "grid") {
     return (
-      <div className="min-w-max flex flex-col items-center gap-4 bg-white rounded-lg shadow-sm relative">
+      <div className="w-full flex flex-col items-center gap-4 bg-white rounded-lg shadow-sm relative overflow-hidden">
         <div
           className={`absolute top-3 left-4 
         ${inStock ? "bg-green-500" : "bg-red-500"}
@@ -27,7 +27,7 @@ function ProductCard({ item, view = "grid" }) {
           {inStock ? "In Stock" : "Out of Stock"}
         </div>
         <img
-          className="w-40 h-auto object-contain"
+          className="w-full h-[15rem] object-cover"
           src={images && images[0]}
           alt={name}
         />
@@ -64,7 +64,7 @@ function ProductCard({ item, view = "grid" }) {
     );
   } else if (view === "list") {
     return (
-      <div className="w-full flex flex-col md:flex-row items-center gap-6 p-4 bg-white rounded-lg shadow-sm relative">
+      <div className="w-full flex flex-col md:flex-row items-center gap-6 bg-white rounded-lg shadow-sm relative overflow-hidden">
         <div
           className={`absolute top-3 left-4 
         ${inStock ? "bg-green-500" : "bg-red-500"}
@@ -73,11 +73,11 @@ function ProductCard({ item, view = "grid" }) {
           {inStock ? "In Stock" : "Out of Stock"}
         </div>
         <img
-          className="w-32 h-auto object-contain"
+          className="w-full md:w-48 h-[16rem] md:h-full object-cover"
           src={images && images[0]}
           alt={name}
         />
-        <div className="w-full flex flex-col gap-2 px-8 md:px-0 pb-6 md:pb-0">
+        <div className="w-full flex flex-col p-4 gap-2 px-8 md:px-0 pb-6 md:pb-0">
           <Link to={`/products/${_id}`}>
             <h4 className="text-lg font-semibold text-gray-700 hover:text-red-500 hover:underline">
               {name}

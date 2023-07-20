@@ -84,13 +84,13 @@ function ProductDetails() {
 
   return (
     <Layout>
-      <div className="flex justify-between items-start flex-col md:flex-row gap-6 md:gap-0 md:py-10">
-        <div className="w-full flex flex-col md:flex-row items-start justify-evenly pb-10 md:pd-0">
-          <div className="w-full md:w-3/5">
+      <div className="flex justify-between items-start flex-col lg:flex-row gap-6 lg:gap-0 lg:py-10">
+        <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-0 items-start justify-evenly pb-10 lg:pd-0">
+          <div className="w-full lg:w-[65%] overflow-hidden">
             <img
               src={product?.images[0]}
               alt={product?.name}
-              className="w-60 md:w-80 self-center object-cover"
+              className="w-full lg:w-[30rem] h-[16rem] lg:h-auto self-center object-cover rounded-lg"
             />
           </div>
           <div className="w-full flex flex-col gap-5 text-gray-700 text-sm">
@@ -139,7 +139,7 @@ function ProductDetails() {
                 <span>per KG</span>
               </b>
             </div>
-            <div className="md:w-[60%] flex flex-col gap-2 mt-4">
+            <div className="lg:w-[60%] flex flex-col gap-2 mt-4">
               <div className="flex bg-gray-50 rounded-lg">
                 <input
                   type="number"
@@ -154,7 +154,7 @@ function ProductDetails() {
                 </p>
               </div>
               <button
-                className={` text-white rounded-md px-4 py-2 
+                className={` text-white rounded-lg px-4 py-2 
                 ${
                   alreadyInCart(product?._id)
                     ? "bg-gray-400 cursor-not-allowed"

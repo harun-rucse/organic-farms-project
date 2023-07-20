@@ -29,7 +29,7 @@ const SearchItem = ({ item }) => {
   return (
     <Link
       to={`/products/${item._id}`}
-      className="flex items-center gap-2 border-b border-gray-100 py-4 px-2 md:px-6 hover:bg-gray-50"
+      className="flex items-center gap-2 border-b border-gray-100 py-4 px-2 lg:px-6 hover:bg-gray-50"
     >
       <img
         src={images && images[0]}
@@ -37,10 +37,10 @@ const SearchItem = ({ item }) => {
         className="w-12 h-12 object-contain"
       />
       <div className="flex flex-col gap-1">
-        <p className={"text-sm md:text-base font-semibold"}>{`${name} (${
+        <p className={"text-sm lg:text-base font-semibold"}>{`${name} (${
           inStock ? "In Stock" : "Out of Stock"
         })`}</p>
-        <div className="flex gap-2 md:gap-4 items-center">
+        <div className="flex gap-2 lg:gap-4 items-center">
           <strong className="text-xs text-gray-600">Price: {price}</strong>
           <p className="text-xs">
             Category:
@@ -119,20 +119,20 @@ function Header() {
           <Link to="/">Organic Farms</Link>
         </div>
 
-        <div className="hidden md:flex items-center gap-4 relative">
+        <div className="hidden lg:flex items-center gap-4 relative">
           <input
             type="text"
             placeholder="Search for products"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="border border-gray-300 rounded-md px-4 py-2 w-[12rem] sm:w-[24rem] lg:w-[32rem] focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="border border-gray-300 rounded-lg px-4 py-2 w-[12rem] sm:w-[24rem] lg:w-[32rem] focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           />
 
           {/* Search dropdow with search item */}
           <div
             className={`${
               !showSearchResults && "hidden"
-            } absolute top-11 left-0 w-full bg-white shadow-md rounded-md z-50 overflow-y-auto max-h-[35rem]`}
+            } absolute top-11 left-0 w-full bg-white shadow-lg rounded-lg z-50 overflow-y-auto max-h-[35rem]`}
           >
             {searchResults?.result?.length > 0 ? (
               searchResults?.result?.map((item) => (
@@ -175,20 +175,20 @@ function Header() {
           </HeaderItem>
         </div>
       </div>
-      <div className="flex md:hidden items-center gap-4 w-full relative">
+      <div className="flex lg:hidden items-center gap-4 w-full relative">
         <input
           type="text"
           placeholder="Search for products"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
         />
 
         {/* Search dropdow with search item */}
         <div
           className={`${
             !showSearchResults && "hidden"
-          } absolute top-11 left-0 w-full bg-white shadow-md rounded-md z-50 overflow-y-auto max-h-[35rem]`}
+          } absolute top-11 left-0 w-full bg-white shadow-lg rounded-lg z-50 overflow-y-auto max-h-[35rem]`}
         >
           {searchResults?.result?.length > 0 ? (
             searchResults?.result?.map((item) => (
