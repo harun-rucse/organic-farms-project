@@ -56,7 +56,7 @@ function ProductCreate() {
   }, [productError]);
 
   const handleSubmit = (values) => {
-    const farmer = farmers?.find((farmer) => farmer._id === values.farmer);
+    const farmer = farmers?.result?.find((farmer) => farmer._id === values.farmer);
 
     setValues({ ...values, phone: farmer?.phone });
     sendOtp({ phone: farmer?.phone });
