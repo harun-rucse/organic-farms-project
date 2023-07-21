@@ -85,7 +85,7 @@ function ProductDetails() {
   return (
     <Layout>
       <div className="flex justify-between items-start flex-col lg:flex-row gap-6 lg:gap-0 lg:py-10">
-        <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-0 items-start justify-evenly pb-10 lg:pd-0">
+        <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-20 items-start justify-evenly pb-10 lg:pd-0">
           <div className="w-full lg:w-[65%] overflow-hidden">
             <img
               src={product?.images[0]}
