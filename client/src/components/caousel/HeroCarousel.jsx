@@ -16,10 +16,10 @@ function HeroCarousel() {
           src="https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fgarlic.png&w=640&q=75"
         />
         <h1 className="text-xl md:text-4xl text-gray-200 font-semibold leading-9">
-          Get Your Order Within 2 Days
+          Get Your Order Within 4-5 Days
         </h1>
         <p className="text-gray-300 text-sm md:text-xl font-semibold">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, nemo!
+          Get best quality products from Organic firm
         </p>
       </div>
 
@@ -29,10 +29,10 @@ function HeroCarousel() {
           src="https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fgarlic.png&w=640&q=75"
         />
         <h1 className="text-xl md:text-4xl text-gray-200 font-semibold leading-9">
-          Get Your Order Within 2 Days
+          Find your necessary products here
         </h1>
         <p className="text-gray-300 text-sm md:text-xl font-semibold">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, nemo!
+          Get best quality products from Organic firm
         </p>
       </div>
     </Carousel>
