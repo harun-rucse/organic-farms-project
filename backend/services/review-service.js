@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Review.countDocuments(filter);
 };
 
-const getAllReviews = (filter = {}, query) => {
+const getAllReviews = (filter = {}, query = {}) => {
   return new APIFeatures(Review.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

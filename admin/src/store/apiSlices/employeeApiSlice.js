@@ -45,6 +45,10 @@ const employeeApiSlice = createApi({
       }),
       invalidatesTags: ['employees'],
     }),
+    getAllDeliveryPersons: builder.query({
+      query: (query) => (query ? `/employees/delivery-persons?${query}` : '/employees/delivery-persons'),
+      providesTags: ['employees'],
+    }),
   }),
 });
 
@@ -54,5 +58,6 @@ export const {
   useCreateEmployeeMutation,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
+  useGetAllDeliveryPersonsQuery,
 } = employeeApiSlice;
 export default employeeApiSlice;

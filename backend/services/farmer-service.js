@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Farmer.countDocuments(filter);
 };
 
-const getAllFarmers = (filter = {}, query) => {
+const getAllFarmers = (filter = {}, query = {}) => {
   return new APIFeatures(Farmer.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

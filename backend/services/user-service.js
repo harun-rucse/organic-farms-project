@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return User.countDocuments(filter);
 };
 
-const getAllUsers = (filter = {}, query) => {
+const getAllUsers = (filter = {}, query = {}) => {
   return new APIFeatures(User.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

@@ -5,7 +5,7 @@ const getTotalCount = (filter = {}) => {
   return SubCategory.countDocuments(filter);
 };
 
-const getAllSubCategories = (filter = {}, query) => {
+const getAllSubCategories = (filter = {}, query = {}) => {
   return new APIFeatures(SubCategory.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

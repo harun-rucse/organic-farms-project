@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Salary.countDocuments(filter);
 };
 
-const getAllSalaries = (filter = {}, query) => {
+const getAllSalaries = (filter = {}, query = {}) => {
   return new APIFeatures(Salary.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

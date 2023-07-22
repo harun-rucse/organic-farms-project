@@ -6,7 +6,7 @@ import OrderEditForm from './EditForm';
 import Loader from '@/components/Loader';
 import useNotification from '@/hooks/useNotification';
 import { useGetOrderQuery, useUpdateOrderMutation } from '@/store/apiSlices/orderApiSlice';
-import { useGetAllEmployeesQuery } from '@/store/apiSlices/employeeApiSlice';
+import { useGetAllDeliveryPersonsQuery } from '@/store/apiSlices/employeeApiSlice';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 
 function OrderUpdate() {
@@ -15,7 +15,9 @@ function OrderUpdate() {
   const notification = useNotification();
   const [query, setQuery] = useState('');
 
-  const { data: deleverdPersons, isLoading: isEmployeeLoading } = useGetAllEmployeesQuery(query ? query : undefined);
+  const { data: deleverdPersons, isLoading: isEmployeeLoading } = useGetAllDeliveryPersonsQuery(
+    query ? query : undefined
+  );
   const { data: order, isLoading: isOrderLoading, isSuccess: isOrderFetchSuccess } = useGetOrderQuery(id);
   const [updateOrder, { isLoading: loading, isSuccess, isError: isOrderError, error: orderError }] =
     useUpdateOrderMutation();

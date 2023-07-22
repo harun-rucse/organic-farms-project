@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Branch.countDocuments(filter);
 };
 
-const getAllBranches = (filter = {}, query) => {
+const getAllBranches = (filter = {}, query = {}) => {
   return new APIFeatures(Branch.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

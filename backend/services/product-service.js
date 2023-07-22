@@ -5,7 +5,7 @@ const getTotalCount = (filter = {}) => {
   return Product.countDocuments(filter);
 };
 
-const getAllProducts = (filter = {}, query) => {
+const getAllProducts = (filter = {}, query = {}) => {
   return new APIFeatures(Product.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

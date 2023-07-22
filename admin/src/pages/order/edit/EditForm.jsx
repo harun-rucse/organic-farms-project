@@ -40,7 +40,7 @@ function EditForm({ handleOnSubmit, order, deleverdPersons, loading }) {
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <FormSelectField label="Select delevered By" name="orderDeliveredBy" fullWidth required>
-                    {deleverdPersons?.result?.map((deleverdPerson) => (
+                    {deleverdPersons?.map((deleverdPerson) => (
                       <MenuItem key={deleverdPerson._id} value={deleverdPerson._id}>
                         {deleverdPerson?.user?.name}
                       </MenuItem>
