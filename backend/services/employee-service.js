@@ -7,7 +7,7 @@ const getTotalCount = (filter) => {
   return Employee.countDocuments(filter);
 };
 
-const getAllEmployees = (filter = {}, query) => {
+const getAllEmployees = (filter = {}, query = {}) => {
   return new APIFeatures(Employee.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 

@@ -108,7 +108,7 @@ function Result({ data }) {
       label: 'Received Number',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -116,7 +116,7 @@ function Result({ data }) {
       label: 'Total Amount',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -124,7 +124,7 @@ function Result({ data }) {
       label: 'Charge',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label color="error">{value}</Label>;
         },
@@ -135,7 +135,7 @@ function Result({ data }) {
       label: 'Payable Amount',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label color="primary">{value}</Label>;
         },
@@ -146,7 +146,7 @@ function Result({ data }) {
       label: 'Paid By',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label color={getPaymentMethodColor(value)}>{value}</Label>;
         },
@@ -154,10 +154,10 @@ function Result({ data }) {
     },
     {
       name: 'paymentStatus',
-      label: 'Status',
+      label: 'Payment Status',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label color={value === 'Paid' ? 'success' : 'error'}>{value}</Label>;
         },
@@ -165,10 +165,10 @@ function Result({ data }) {
     },
     {
       name: 'status',
-      label: 'Transaction Status',
+      label: 'Order Status',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label color={getTrxStatusColor(value)}>{value}</Label>;
         },
@@ -179,7 +179,7 @@ function Result({ data }) {
       label: 'Date',
       options: {
         filter: false,
-        sort: true,
+        sort: false,
         customBodyRender: (value) => {
           return <Label>{fDate(value)}</Label>;
         },

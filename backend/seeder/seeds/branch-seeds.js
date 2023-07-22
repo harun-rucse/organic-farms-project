@@ -8,8 +8,8 @@ module.exports = async (type) => {
       address: 'Rajshahi, Bangladesh',
       phone: '+8801741551374',
       createdBy: '5f9f1b9b8b7c1c2b8c8b8b8b',
-      deliveryFee: 100,
-      costPercentage: 10,
+      deliveryFee: 10,
+      costPercentage: 5,
     });
 
     await Branch.create({
@@ -18,8 +18,8 @@ module.exports = async (type) => {
       address: 'Dhaka, Bangladesh',
       phone: '+8801741551375',
       createdBy: '5f9f1b9b8b7c1c2b8c8b8b8b',
-      deliveryFee: 100,
-      costPercentage: 10,
+      deliveryFee: 15,
+      costPercentage: 5,
     });
   } else if (type === 'drop') {
     await Branch.deleteMany({});

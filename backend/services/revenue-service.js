@@ -5,7 +5,7 @@ const getTotalCount = (filter) => {
   return Revenue.countDocuments(filter);
 };
 
-const getAllRevenues = (filter = {}, query) => {
+const getAllRevenues = (filter = {}, query = {}) => {
   return new APIFeatures(Revenue.find(filter), query).filter().sort().limitFields().paginate().query;
 };
 
