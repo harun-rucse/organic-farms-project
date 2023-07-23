@@ -56,6 +56,7 @@ const restrictTo = (...roles) => {
 
 const verifyOTP = catchAsync(async (req, res, next) => {
   const module = req.baseUrl.split('/')[2];
+  // otp for testing purpose
   const { otp, hash } = req.body;
   let phone;
 
