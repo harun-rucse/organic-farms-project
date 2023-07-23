@@ -60,6 +60,10 @@ export default function Nav({ openNav, onCloseNav }) {
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account?.role}
               </Typography>
+
+              <Typography variant="body2" sx={{ color: 'text.secondary', display: 'block' }}>
+                {account?.branch?.name || 'CEO & Founder, Organic Frams'}
+              </Typography>
             </Box>
           </StyledAccount>
         </Link>

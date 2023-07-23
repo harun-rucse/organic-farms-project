@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 const productService = require('../services/product-service');
 const branchService = require('../services/branch-service');
+const smsService = require('../services/sms-service');
 const { Transaction } = require('./transaction-model');
 
 const orderSchema = new Schema(
@@ -172,6 +173,14 @@ orderSchema.post(/^findOneAndUpdate/, async function (doc) {
       transactions.push(transaction);
     })
   );
+
+  // Send the order confirmation SMS to the customer
+  // smsService.sendSMS(order?.customer?.phone, `Your order has been placed successfully. Order ID: ${order._id}`);
+
+  // Send the SMS to the farmer about the new order
+  // farmers.forEach(async (farmer) => {
+  //   smsService.sendSMS(farmer?.phone, `You have a new order. Order ID: ${order._id}`);
+  // });
 
   await Transaction.insertMany(transactions);
 });

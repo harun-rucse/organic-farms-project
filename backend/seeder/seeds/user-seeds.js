@@ -4,11 +4,11 @@ module.exports = async (type) => {
   if (type === 'seed') {
     await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b8b',
-      name: 'Admin',
-      phone: '+8801790362665',
+      name: 'Harun Or Rashid',
+      phone: '+8801741551374',
       address: 'Rajshahi, Bangladesh',
       password: 'password',
-      image: 'https://res.cloudinary.com/harun-rucse/image/upload/v1679509330/users/default.png',
+      image: 'https://res.cloudinary.com/harun-rucse/image/upload/v1690092346/employees/bjr4o5vn1oqvsrwupu5b.jpg',
       role: 'admin',
       verified: true,
     });
@@ -38,7 +38,7 @@ module.exports = async (type) => {
     await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b90',
       name: 'Mr. Mamun',
-      phone: '+8801790362670',
+      phone: '+8801790362668',
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689865898/employees/rivriggfvapsi7apua61.jpg',
@@ -49,7 +49,7 @@ module.exports = async (type) => {
     await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b91',
       name: 'Mr. Shihab Uddin',
-      phone: '+8801790362671',
+      phone: '+8801790362669',
       address: 'Dhaka, Bangladesh',
       password: 'password',
       image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689865774/employees/aspqvfeahijyhvtxl6id.jpg',
@@ -60,7 +60,7 @@ module.exports = async (type) => {
     await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b92',
       name: 'Mr. Rakib',
-      phone: '+8801790362673',
+      phone: '+8801790362670',
       address: 'Rajshahi, Bangladesh',
       password: 'password',
       image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689865739/employees/zexhxzm0z1stnof0pjc6.jpg',
@@ -104,7 +104,7 @@ module.exports = async (type) => {
     await User.create({
       _id: '64b9509a1ec8e5af69d3edfe',
       name: 'মো: সায়েম',
-      phone: '+8801654234544',
+      phone: '+8801790362673',
       address: 'বিনোদপুর, রাজশাহী',
       password: 'password',
       image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689866458/users/t910smhuzu77dooemjyc.jpg',
