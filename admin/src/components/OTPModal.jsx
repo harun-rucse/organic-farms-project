@@ -111,13 +111,13 @@ function OTPModal({ title, message, open, handleClose, handleClick, isSending })
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus variant="contained" color="primary" onClick={handleModalClose}>
+          <Button autoFocus variant="contained" color="error" onClick={handleModalClose}>
             Cancel
           </Button>
           <LoadingButton
             autoFocus
             variant="contained"
-            color="error"
+            color="primary"
             loading={isSending}
             onClick={handleSubmit}
             disabled={digits.includes('')}

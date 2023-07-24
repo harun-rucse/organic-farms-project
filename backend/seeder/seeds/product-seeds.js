@@ -3,24 +3,24 @@ const { Product } = require('../../models/product-model');
 
 module.exports = async (type) => {
   if (type === 'seed') {
-    await Product.create({
-      _id: '64b959cb1ec8e5af69d3f010',
-      name: 'দেশীয় শসা',
-      subcategory: '64b9570b1ec8e5af69d3ef8f',
-      price: 40,
-      description: 'কীটনাশক মুক্ত দেশীয় শসা',
-      minimumOrder: 10,
-      maximumOrder: 100,
-      maxDeliveryDays: 7,
-      farmer: '64b953f41ec8e5af69d3ee92',
-      ratingQty: 0,
-      ratingQty: 0,
-      inStock: 50,
-      images: ['http://res.cloudinary.com/harun-rucse/image/upload/v1689868752/products/ugcyck6uow8xirnmjn93.jpg'],
-      active: true,
-      branchOffice: '5f9f1b9b8b8c1c2b8c8b8b90',
-      createdBy: '5f9f1b9b8b7c1c2b8c8b8b8b',
-    });
+    // await Product.create({
+    //   _id: '64b959cb1ec8e5af69d3f010',
+    //   name: 'দেশীয় শসা',
+    //   subcategory: '64b9570b1ec8e5af69d3ef8f',
+    //   price: 40,
+    //   description: 'কীটনাশক মুক্ত দেশীয় শসা',
+    //   minimumOrder: 10,
+    //   maximumOrder: 100,
+    //   maxDeliveryDays: 7,
+    //   farmer: '64b953f41ec8e5af69d3ee92',
+    //   ratingQty: 0,
+    //   ratingQty: 0,
+    //   inStock: 50,
+    //   images: ['http://res.cloudinary.com/harun-rucse/image/upload/v1689868752/products/ugcyck6uow8xirnmjn93.jpg'],
+    //   active: true,
+    //   branchOffice: '5f9f1b9b8b8c1c2b8c8b8b90',
+    //   createdBy: '5f9f1b9b8b7c1c2b8c8b8b8b',
+    // });
 
     await Product.create({
       _id: '64b95ad31ec8e5af69d3f036',
@@ -43,10 +43,10 @@ module.exports = async (type) => {
 
     await Product.create({
       _id: '64b95b801ec8e5af69d3f057',
-      name: 'জিরা চাউল',
+      name: 'জিরা চাল',
       subcategory: '64b957671ec8e5af69d3efa7',
       price: 70,
-      description: 'ফ্রেশ জিরা চাউল',
+      description: 'ফ্রেশ জিরা চাল',
       minimumOrder: 50,
       maximumOrder: 500,
       maxDeliveryDays: 6,
@@ -62,10 +62,10 @@ module.exports = async (type) => {
 
     await Product.create({
       _id: '64b95c211ec8e5af69d3f07f',
-      name: 'বাসমতি চাউল',
-      subcategory: '64b957671ec8e5af69d3efa7',
+      name: 'বাসমতি চাল',
+      subcategory: '64b957761ec8e5af69d3efaf',
       price: 70,
-      description: 'বাছাই করা বাসমতি চাউল',
+      description: 'বাছাই করা বাসমতি চাল',
       minimumOrder: 80,
       maximumOrder: 600,
       maxDeliveryDays: 7,

@@ -5,11 +5,13 @@ const farmerSeeds = require('./seeds/farmer-seeds');
 const categorySeeds = require('./seeds/category-seeds');
 const subCategorySeeds = require('./seeds/subcategory-seeds');
 const productSeeds = require('./seeds/product-seeds');
-const expenseSeeds = require('./seeds/expense-seeds');
+// const expenseSeeds = require('./seeds/expense-seeds');
 const { Order } = require('../models/order-model');
 const { Transaction } = require('../models/transaction-model');
 const { Revenue } = require('../models/revenue-model');
 const { Review } = require('../models/review-model');
+const { FarmerCard } = require('../models/farmer-card-model');
+const { Expense } = require('../models/expense-model');
 
 const seed = async () => {
   if (process.argv[2] === '--import') {
@@ -32,7 +34,7 @@ const seedAll = async () => {
   await categorySeeds('seed');
   await subCategorySeeds('seed');
   await productSeeds('seed');
-  await expenseSeeds('seed');
+  // await expenseSeeds('seed');
   console.log('Seeding complete!');
 };
 
@@ -45,11 +47,13 @@ const dropAll = async () => {
   await categorySeeds('drop');
   await subCategorySeeds('drop');
   await productSeeds('drop');
-  await expenseSeeds('drop');
+  // await expenseSeeds('drop');
   await Order.deleteMany({});
   await Transaction.deleteMany({});
   await Revenue.deleteMany({});
   await Review.deleteMany({});
+  await FarmerCard.deleteMany({});
+  await Expense.deleteMany({});
   console.log('Dropping complete!');
 };
 
