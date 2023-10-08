@@ -46,7 +46,7 @@ function ProductCard({ item, view = "grid" }) {
 
           <ProductRatings qty={ratingQty} rating={ratingAvg} />
 
-          <p className="text-rose-500 text-lg font-bold">${price}/kg</p>
+          <p className="text-rose-500 text-lg font-bold">Tk. {price}/kg</p>
           <p className="text-sm">
             Category:
             <span className="font-bold text-gray-600 ml-1">
@@ -86,7 +86,7 @@ function ProductCard({ item, view = "grid" }) {
 
           <ProductRatings qty={ratingQty} rating={ratingAvg} />
 
-          <p className="text-rose-500 text-lg font-bold">${price}/kg</p>
+          <p className="text-rose-500 text-lg font-bold">Tk. {price}/kg</p>
           <div className="flex gap-2">
             <div className="flex items-center gap-2">
               <b className="text-gray-700">Sold By</b>

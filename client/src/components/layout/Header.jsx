@@ -116,7 +116,12 @@ function Header() {
           </HeaderItem>
         </div>
         <div className="text-lg sm:text-xl lg:text-xl font-semibold">
-          <Link to="/">Organic Farms</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/logo.svg" alt="logo" className="w-10" />
+            <span className="hidden lg:inline-block ml-2 text-green-700">
+              Organic Farms
+            </span>
+          </Link>
         </div>
 
         <div className="hidden lg:flex items-center gap-4 relative">
