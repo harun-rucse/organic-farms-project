@@ -18,6 +18,9 @@
     "testTimeout": 50000
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
   "devDependencies": {
     "@faker-js/faker": "^7.4.0",
     "jest": "27",
