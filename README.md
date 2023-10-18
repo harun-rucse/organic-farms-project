@@ -1,19 +1,29 @@
 # Organic Farms
 
-A platform for connecting consumers directly with organic farmers, offering fair prices and quality products. This is our Final year group project.
+#### A platform for connecting consumers directly with organic farmers, offering fair prices and quality products. This is our Final year group project.
 
-## Getting Started
+## [`Frontend Live Link`](https://organicfarms.vercel.app/)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## [`Backend Live Link`](https://admin-organicfarms.vercel.app/)
 
-### Prerequisites
+## Backend Test Account Credentials
 
-What things you need to install the software and how to install them:
+- Email Address : `harun@example.com`
+- Password : `pass1234`
 
-- Node.js
-- MongoDB
-- React
-- Express
+## Tech Stack
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+&nbsp;&nbsp;![Node.js](https://img.shields.io/badge/Node.js-%3E?style=for-the-badge&logo=Node.js&logoColor=white)
+&nbsp;&nbsp;![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-%5E1.5.0-764ABC?style=for-the-badge&logo=Redux%20Toolkit-%5E1.5.0-764ABC&logoColor=white)
+&nbsp;&nbsp;![Formik](https://img.shields.io/badge/Formik-blue?style=for-the-badge&logo=Formik&logoColor=white)
+&nbsp;&nbsp;![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%5E2.2.6-3?style=for-the-badge&logo=Tailwind%20CSS-%5E2.2.6-3&logoColor=white)
+&nbsp;&nbsp;![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+&nbsp;&nbsp;![React Icons](https://img.shields.io/badge/React_Icons-5588FF?style=for-the-badge&logo=React_Icons&logoColor=black)
+&nbsp;&nbsp;![Express.js](https://img.shields.io/badge/Express.js-%5E4.17.1-000000?style=for-the-badge&logo=Express.js-%5E4.17.1-000000&logoColor=white)
+&nbsp;&nbsp;![MongoDB](https://img.shields.io/badge/MongoDB-%5E4.4.4-47A248?style=for-the-badge&logo=MongoDB-%5E4.4.4-47A248&logoColor=white)
+&nbsp;&nbsp;![Mongoose](https://img.shields.io/badge/Mongoose-%5E6.0.9-880B6E?style=for-the-badge&logo=Mongoose-%5E6.0.9-880B6E&logoColor=white)
+&nbsp;&nbsp;![Docker](https://img.shields.io/badge/Docker-Latest-2496ED?style=for-the-badge&logo=Docker-Latest-2496ED&logoColor=white)
 
 ### Installing
 
@@ -54,10 +64,6 @@ docker-compose -f docker-compose.prod.yml up -d --build
 ```
 yarn run seed --refresh
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system.
 
 ## Built With
 
