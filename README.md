@@ -8,8 +8,40 @@
 
 ## Backend Test Account Credentials
 
-- Email Address : `harun@example.com`
-- Password : `pass1234`
+#### Role: Admin
+
+- Phone number : `+8801741551374`
+- Password : `password`
+
+#### Role: Branch-Manager (Dhaka)
+
+- Phone number : `+8801790362667`
+- Password : `password`
+
+#### Role: Branch-Manager (Rajshahi)
+
+- Phone number : `+8801790362666`
+- Password : `password`
+
+#### Role: Office-Employee (Dhaka)
+
+- Phone number : `+8801790362669`
+- Password : `password`
+
+#### Role: Office-Employee (Rajshahi)
+
+- Phone number : `+8801790362668`
+- Password : `password`
+
+#### Role: Warehouse-Employee (Rajshahi)
+
+- Phone number : `+8801790362670`
+- Password : `password`
+
+## Frontend Test Account Credentials
+
+- Phone number : `+8801311223344`
+- Password : `password`
 
 ## Tech Stack
 
