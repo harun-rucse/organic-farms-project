@@ -18,7 +18,7 @@ const cartReducer = createSlice({
       );
 
       if (existingProduct) {
-        existingProduct.quantity += 1;
+        existingProduct.quantity = Number(existingProduct?.quantity) + 1;
       } else {
         state.cartItems.push({ ...product, quantity });
       }

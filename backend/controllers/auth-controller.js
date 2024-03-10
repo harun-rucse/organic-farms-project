@@ -100,7 +100,7 @@ const sendOTP = catchAsync(async (req, res, next) => {
   }
 
   const otp = otpService.generateOTP();
-  await otpService.sendOTP(phone, otp);
+  // await otpService.sendOTP(phone, otp);
 
   const expires = Date.now() + process.env.OTP_EXPIRES_IN * 60 * 1000;
   const data = `${phone}.${otp}.${expires}`;

@@ -36,8 +36,8 @@ module.exports = async (type) => {
 
     await Category.create({
       _id: '64b9567a1ec8e5af69d3eefb',
-      name: 'চাউল',
-      description: 'চাউল',
+      name: 'চাল',
+      description: 'চাল',
       image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689867902/categories/az2hzxayol2yikyhpo5w.jpg',
       createdBy: '5f9f1b9b8b7c1c2b8c8b8b8b',
     });

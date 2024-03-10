@@ -122,6 +122,7 @@ const updateOneEmployee = catchAsync(async (req, res, next) => {
   if (req.user.role !== 'admin') {
     delete req.body.verified;
     delete req.body.branchOffice;
+    delete req.body.salary;
 
     if (req.body.role === 'branch-manager' || req.body.role === 'admin')
       return next(new AppError(`You are not authorized to update "${req.body.role}".`, 403));

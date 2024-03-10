@@ -48,6 +48,15 @@ module.exports = async (type) => {
     });
 
     await Employee.create({
+      _id: '5f9f1b7b8b8c1c2b8c8b8b97',
+      user: '5f9f1b9b8b7c1c2b8c8b8b96',
+      role: 'warehouse-employee',
+      branchOffice: '5f9f1b9b8b8c1c2b8c8b8b91',
+      salary: 7000,
+      createdBy: '5f9f1b9b8b7c1c2b8c8b8b8c',
+    });
+
+    await Employee.create({
       _id: '5f9f1b7b8b8c1c2b8c8b8b95',
       user: '5f9f1b9b8b7c1c2b8c8b8b93',
       role: 'delivery-person',

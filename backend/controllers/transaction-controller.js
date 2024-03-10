@@ -19,7 +19,7 @@ const getAllTransactions = catchAsync(async (req, res, next) => {
 /**
  * @desc    Get single transaction
  * @route   GET /api/transactions/id
- * @access  Private(admin, branch-manager, warehouse-employee)
+ * @access  Private(admin, branch-manager)
  */
 const getOneTransaction = catchAsync(async (req, res, next) => {
   const filter =
@@ -34,11 +34,18 @@ const getOneTransaction = catchAsync(async (req, res, next) => {
 /**
  * @desc    Update single transaction
  * @route   PATCH /api/transactions/id
- * @access  Private(admin, branch-manager, warehouse-employee)
+ * @access  Private(admin, branch-manager)
  */
 const updateOneTransaction = catchAsync(async (req, res, next) => {
   const { error } = validateTransactionUpdate(req.body);
   if (error) return next(new AppError(error.details[0].message, 400));
+
+  // Check transaction status
+  const transaction = await transactionService.getOneTransaction({ _id: req.params.id, status: 'Completed' });
+  if (!transaction) return next(new AppError('Transaction is not Completed yet!', 400));
+
+  const trx = await transactionService.getOneTransaction({ _id: req.params.id, paymentStatus: 'Paid' });
+  if (trx) return next(new AppError('Already paid for this transaction!', 400));
 
   // Set lastUpdatedBy to the logged in user
   req.body.lastUpdatedBy = req.user._id;

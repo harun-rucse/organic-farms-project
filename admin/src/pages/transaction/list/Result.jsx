@@ -165,7 +165,7 @@ function Result({ data }) {
     },
     {
       name: 'status',
-      label: 'Order Status',
+      label: 'Status',
       options: {
         filter: false,
         sort: false,

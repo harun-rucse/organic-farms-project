@@ -58,6 +58,17 @@ module.exports = async (type) => {
     });
 
     await User.create({
+      _id: '5f9f1b9b8b7c1c2b8c8b8b96',
+      name: 'Mr. Kebria',
+      phone: '+8801790362679',
+      address: 'Dhaka, Bangladesh',
+      password: 'password',
+      image: 'http://res.cloudinary.com/harun-rucse/image/upload/v1689865739/employees/zexhxzm0z1stnof0pjc6.jpg',
+      role: 'warehouse-employee',
+      verified: true,
+    });
+
+    await User.create({
       _id: '5f9f1b9b8b7c1c2b8c8b8b92',
       name: 'Mr. Rakib',
       phone: '+8801790362670',
