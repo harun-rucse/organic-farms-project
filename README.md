@@ -40,7 +40,7 @@
 
 ## Frontend Test Account Credentials
 
-- Phone number : `+8801311223344`
+- Phone number : `+8801790362673`
 - Password : `password`
 
 ## Tech Stack
