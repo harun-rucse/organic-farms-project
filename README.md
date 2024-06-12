@@ -2,6 +2,8 @@
 
 #### A platform for connecting consumers directly with organic farmers, offering fair prices and quality products. This is our Final year group project.
 
+#### N.B: It required refresh after 1-2 minute for live link because of free hosting
+
 ## [`Frontend Live Link`](https://organicfarms.vercel.app/)
 
 ## [`Backend Live Link`](https://admin-organicfarms.vercel.app/)
